@@ -38,13 +38,10 @@ public class Sword : MonoBehaviour
     private bool _attacking;
     private Vector3 _originalPos;
     private Quaternion _originalRot;
-    
 
-    private Vector3 _attackStartPosition;
-    private Vector3 _attackEndPosition;
-    private Vector3 _rotAxis;
-    private float _rotAngle;
-    
+
+    private Func<float, Vector3> _movementCurve = _ => Vector3.zero;
+
     private Quaternion _attackStartRot;
     private Quaternion _attackEndRot;
     
@@ -90,7 +87,7 @@ public class Sword : MonoBehaviour
     {
         if(!_attacking) return;
 
-        transform.position = Vector3.Lerp( _attackStartPosition, _attackEndPosition,  _attackTimer / swingDuration);
+        transform.position = _movementCurve(_attackTimer / swingDuration);
         transform.rotation = Quaternion.Lerp(_attackStartRot, _attackEndRot, _attackTimer / swingDuration);
         _attackTimer += Time.deltaTime;
         if(_attackTimer >= swingDuration) ResetPosition();
@@ -101,57 +98,61 @@ public class Sword : MonoBehaviour
         return true;
     }
 
-    Tuple<Vector3, Vector3> GetDirectionalControlPoints(AttackDirection direction)
+    Func<float, Vector3> GetMovementCurve(AttackDirection direction)
     {
-        var northPos = north.transform.position;
-        var southPos = south.transform.position;
-        var eastPos = east.transform.position;
-        var westPos = west.transform.position;
-
-        var nePos = Vector3.Lerp(northPos, eastPos, 0.5f);
-        var nwPos = Vector3.Lerp(northPos, westPos, 0.5f);
-        var sePos = Vector3.Lerp(southPos, eastPos, 0.5f);
-        var swPos = Vector3.Lerp(southPos, westPos, 0.5f);
-
-        switch (direction)
+        return t =>
         {
-            case AttackDirection.NorthToSouth:
-                return new Tuple<Vector3, Vector3>(northPos, southPos);
-            case AttackDirection.SouthToNorth:
-                return new Tuple<Vector3, Vector3>(southPos, northPos);
-            case AttackDirection.EastToWest:
-                return new Tuple<Vector3, Vector3>(eastPos, westPos);
-            case AttackDirection.WestToEast:
-                return new Tuple<Vector3, Vector3>(westPos, eastPos);
-            case AttackDirection.NeToSw:
-                return new Tuple<Vector3, Vector3>(nePos, swPos);
-            case AttackDirection.SwToNe:
-                return new Tuple<Vector3, Vector3>(swPos, nePos);
-           case AttackDirection.NwToSe: 
-               return new Tuple<Vector3, Vector3>(nwPos, sePos);
-           case AttackDirection.SeToNw:
-               return new Tuple<Vector3, Vector3>(sePos, nwPos);
-        }
+            var northPos = north.transform.position;
+            var southPos = south.transform.position;
+            var eastPos = east.transform.position;
+            var westPos = west.transform.position;
 
-        throw new ArgumentException("Illegal direction: " + direction);
+            var nePos = Vector3.Lerp(northPos, eastPos, 0.5f);
+            var nwPos = Vector3.Lerp(northPos, westPos, 0.5f);
+            var sePos = Vector3.Lerp(southPos, eastPos, 0.5f);
+            var swPos = Vector3.Lerp(southPos, westPos, 0.5f);
+
+            switch (direction)
+            {
+                case AttackDirection.NorthToSouth:
+                    return Vector3.Lerp(northPos, southPos, t);
+                case AttackDirection.SouthToNorth:
+                    return Vector3.Lerp(southPos, northPos, t);
+                case AttackDirection.EastToWest:
+                    return Vector3.Lerp(eastPos, westPos, t);
+                case AttackDirection.WestToEast:
+                    return Vector3.Lerp(westPos, eastPos, t);
+                case AttackDirection.NeToSw:
+                    return Vector3.Lerp(nePos, swPos, t);
+                case AttackDirection.SwToNe:
+                    return Vector3.Lerp(swPos, nePos, t);
+                case AttackDirection.NwToSe:
+                    return Vector3.Lerp(nwPos, sePos, t);
+                case AttackDirection.SeToNw:
+                    return Vector3.Lerp(sePos, nwPos, t);
+            }
+
+            throw new ArgumentException("Illegal direction: " + direction);
+
+        };
     }
     public void Swing(AttackDirection direction)
     {
         if(!CanAttack()) return;
         
         _attackTimer = 0f;
-        var controlPoints = GetDirectionalControlPoints(direction);
-        _attackStartPosition = controlPoints.Item1;
-        _attackEndPosition = controlPoints.Item2;
+        _movementCurve = GetMovementCurve(direction);
+        var attackStartPosition = _movementCurve(0);
+        var attackEndPosition = _movementCurve(1);
 
 
         transform.position = model.transform.position;
-        transform.LookAt(_attackEndPosition);
+        transform.LookAt(attackEndPosition);
         _attackEndRot = transform.rotation;
         
-        transform.LookAt(_attackStartPosition);
+        transform.LookAt(attackStartPosition);
         _attackStartRot = transform.rotation;
-        transform.position = _attackStartPosition;
+        transform.position = attackStartPosition;
 
         _attacking = true;
     }
@@ -161,11 +162,10 @@ public class Sword : MonoBehaviour
         if(!CanAttack()) return;
         
         _attackTimer = 0f;
-        _attackStartPosition = stabStart.transform.position;
-        _attackEndPosition = stabEnd.transform.position;
+        _movementCurve = t => Vector3.Lerp(stabStart.transform.position, stabEnd.transform.position, t);
 
-        transform.position = _attackStartPosition;
-        transform.LookAt(_attackEndPosition);
+        transform.position = _movementCurve(0);
+        transform.LookAt(_movementCurve(1));
         _attackStartRot = _attackEndRot = transform.rotation;
 
         _attacking = true;
