@@ -24,7 +24,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     ""name"": ""Controls"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""PlayerNormal"",
             ""id"": ""bf534a02-9b00-406f-a9e0-7ef1da826880"",
             ""actions"": [
                 {
@@ -35,15 +35,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Jump"",
-                    ""type"": ""Button"",
-                    ""id"": ""67fa1fa3-cfeb-42d7-86ed-92ea912f5806"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Attack"",
@@ -80,6 +71,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""1ae2535a-d29f-41d8-9f98-889f74b19d86"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9eb56d6-555a-42d3-bef4-46ee5d033aef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -91,17 +100,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";PhoneWithGamepad"",
                     ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""328ad75b-061c-4b95-856f-3313da806495"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PhoneWithGamepad"",
-                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -148,6 +146,136 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""TouchTap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c605312-4bfe-4ea2-89dd-8a858371ae3f"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6c29c0d-0afe-4187-826c-f760f3e9a38f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""HoldingBomb"",
+            ""id"": ""9b1b3e0d-3a15-4ff9-92fe-ef1ef960a075"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""be0cd4ce-4729-4b9a-8128-f02238d07038"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""1a0d578a-3e64-41c0-bf2d-39424ba1b055"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""301046e0-f63c-4431-9696-4fd420cade7d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Put"",
+                    ""type"": ""Button"",
+                    ""id"": ""097a952b-8857-46f8-8986-5ccd9de07f2d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""3535e302-3009-494e-9855-d40940999383"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0d012767-50ed-4ecc-8a1d-84c6ff673f87"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";PhoneWithGamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""041c7603-15ea-4f8b-bc73-3b3ee7b6782f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02a741f1-4a29-48f8-b95a-34376792306e"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0cade6bd-0706-4d5c-bc4c-3a140a236705"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Put"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfc96872-7336-4bed-bf29-d01f856a1d93"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -172,14 +300,22 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_TouchPosition = m_Player.FindAction("TouchPosition", throwIfNotFound: true);
-        m_Player_TouchPress = m_Player.FindAction("TouchPress", throwIfNotFound: true);
-        m_Player_TouchTap = m_Player.FindAction("TouchTap", throwIfNotFound: true);
+        // PlayerNormal
+        m_PlayerNormal = asset.FindActionMap("PlayerNormal", throwIfNotFound: true);
+        m_PlayerNormal_Move = m_PlayerNormal.FindAction("Move", throwIfNotFound: true);
+        m_PlayerNormal_Attack = m_PlayerNormal.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerNormal_TouchPosition = m_PlayerNormal.FindAction("TouchPosition", throwIfNotFound: true);
+        m_PlayerNormal_TouchPress = m_PlayerNormal.FindAction("TouchPress", throwIfNotFound: true);
+        m_PlayerNormal_TouchTap = m_PlayerNormal.FindAction("TouchTap", throwIfNotFound: true);
+        m_PlayerNormal_UseItem = m_PlayerNormal.FindAction("UseItem", throwIfNotFound: true);
+        m_PlayerNormal_Jump = m_PlayerNormal.FindAction("Jump", throwIfNotFound: true);
+        // HoldingBomb
+        m_HoldingBomb = asset.FindActionMap("HoldingBomb", throwIfNotFound: true);
+        m_HoldingBomb_Move = m_HoldingBomb.FindAction("Move", throwIfNotFound: true);
+        m_HoldingBomb_Jump = m_HoldingBomb.FindAction("Jump", throwIfNotFound: true);
+        m_HoldingBomb_Throw = m_HoldingBomb.FindAction("Throw", throwIfNotFound: true);
+        m_HoldingBomb_Put = m_HoldingBomb.FindAction("Put", throwIfNotFound: true);
+        m_HoldingBomb_Cancel = m_HoldingBomb.FindAction("Cancel", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -240,40 +376,39 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_TouchPosition;
-    private readonly InputAction m_Player_TouchPress;
-    private readonly InputAction m_Player_TouchTap;
-    public struct PlayerActions
+    // PlayerNormal
+    private readonly InputActionMap m_PlayerNormal;
+    private List<IPlayerNormalActions> m_PlayerNormalActionsCallbackInterfaces = new List<IPlayerNormalActions>();
+    private readonly InputAction m_PlayerNormal_Move;
+    private readonly InputAction m_PlayerNormal_Attack;
+    private readonly InputAction m_PlayerNormal_TouchPosition;
+    private readonly InputAction m_PlayerNormal_TouchPress;
+    private readonly InputAction m_PlayerNormal_TouchTap;
+    private readonly InputAction m_PlayerNormal_UseItem;
+    private readonly InputAction m_PlayerNormal_Jump;
+    public struct PlayerNormalActions
     {
         private @Controls m_Wrapper;
-        public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
-        public InputAction @TouchPosition => m_Wrapper.m_Player_TouchPosition;
-        public InputAction @TouchPress => m_Wrapper.m_Player_TouchPress;
-        public InputAction @TouchTap => m_Wrapper.m_Player_TouchTap;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public PlayerNormalActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_PlayerNormal_Move;
+        public InputAction @Attack => m_Wrapper.m_PlayerNormal_Attack;
+        public InputAction @TouchPosition => m_Wrapper.m_PlayerNormal_TouchPosition;
+        public InputAction @TouchPress => m_Wrapper.m_PlayerNormal_TouchPress;
+        public InputAction @TouchTap => m_Wrapper.m_PlayerNormal_TouchTap;
+        public InputAction @UseItem => m_Wrapper.m_PlayerNormal_UseItem;
+        public InputAction @Jump => m_Wrapper.m_PlayerNormal_Jump;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerNormal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(PlayerNormalActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerNormalActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerNormalActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerNormalActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
@@ -286,16 +421,19 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @TouchTap.started += instance.OnTouchTap;
             @TouchTap.performed += instance.OnTouchTap;
             @TouchTap.canceled += instance.OnTouchTap;
+            @UseItem.started += instance.OnUseItem;
+            @UseItem.performed += instance.OnUseItem;
+            @UseItem.canceled += instance.OnUseItem;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IPlayerNormalActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
@@ -308,23 +446,107 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @TouchTap.started -= instance.OnTouchTap;
             @TouchTap.performed -= instance.OnTouchTap;
             @TouchTap.canceled -= instance.OnTouchTap;
+            @UseItem.started -= instance.OnUseItem;
+            @UseItem.performed -= instance.OnUseItem;
+            @UseItem.canceled -= instance.OnUseItem;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IPlayerNormalActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerNormalActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IPlayerNormalActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerNormalActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerNormalActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public PlayerNormalActions @PlayerNormal => new PlayerNormalActions(this);
+
+    // HoldingBomb
+    private readonly InputActionMap m_HoldingBomb;
+    private List<IHoldingBombActions> m_HoldingBombActionsCallbackInterfaces = new List<IHoldingBombActions>();
+    private readonly InputAction m_HoldingBomb_Move;
+    private readonly InputAction m_HoldingBomb_Jump;
+    private readonly InputAction m_HoldingBomb_Throw;
+    private readonly InputAction m_HoldingBomb_Put;
+    private readonly InputAction m_HoldingBomb_Cancel;
+    public struct HoldingBombActions
+    {
+        private @Controls m_Wrapper;
+        public HoldingBombActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_HoldingBomb_Move;
+        public InputAction @Jump => m_Wrapper.m_HoldingBomb_Jump;
+        public InputAction @Throw => m_Wrapper.m_HoldingBomb_Throw;
+        public InputAction @Put => m_Wrapper.m_HoldingBomb_Put;
+        public InputAction @Cancel => m_Wrapper.m_HoldingBomb_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_HoldingBomb; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HoldingBombActions set) { return set.Get(); }
+        public void AddCallbacks(IHoldingBombActions instance)
+        {
+            if (instance == null || m_Wrapper.m_HoldingBombActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HoldingBombActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Throw.started += instance.OnThrow;
+            @Throw.performed += instance.OnThrow;
+            @Throw.canceled += instance.OnThrow;
+            @Put.started += instance.OnPut;
+            @Put.performed += instance.OnPut;
+            @Put.canceled += instance.OnPut;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+        }
+
+        private void UnregisterCallbacks(IHoldingBombActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Throw.started -= instance.OnThrow;
+            @Throw.performed -= instance.OnThrow;
+            @Throw.canceled -= instance.OnThrow;
+            @Put.started -= instance.OnPut;
+            @Put.performed -= instance.OnPut;
+            @Put.canceled -= instance.OnPut;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+        }
+
+        public void RemoveCallbacks(IHoldingBombActions instance)
+        {
+            if (m_Wrapper.m_HoldingBombActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IHoldingBombActions instance)
+        {
+            foreach (var item in m_Wrapper.m_HoldingBombActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_HoldingBombActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public HoldingBombActions @HoldingBomb => new HoldingBombActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -372,14 +594,23 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_PhoneWithGamepadSchemeIndex];
         }
     }
-    public interface IPlayerActions
+    public interface IPlayerNormalActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnTouchPosition(InputAction.CallbackContext context);
         void OnTouchPress(InputAction.CallbackContext context);
         void OnTouchTap(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+    }
+    public interface IHoldingBombActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnThrow(InputAction.CallbackContext context);
+        void OnPut(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

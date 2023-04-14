@@ -2,7 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+
+
+public enum PlayerItem
+{
+    None,
+    Bomb
+};
+
+public enum ControlScheme
+{
+    Normal,
+    HoldingBomb
+}
 
 public class Player : MonoBehaviour
 {
@@ -13,13 +27,24 @@ public class Player : MonoBehaviour
     public float movementConstant = 5f;
     public float jumpForce = 50f;
 
-    [Header("Equipment")] 
+    [Header("Items and Equipment")]
+    public PlayerItem defaultItem = PlayerItem.Bomb;
     public Sword sword;
+    public Bomb bomb;
+    public float bombThrowForce = 50f;
+    public float bombThrowingAngle = 30f;
 
+    [Header("Items Control Points")] 
+    public bool drawControlPoints;
+    public GameObject bombHold;
+    public GameObject bombPut;
+    
+    
     [Header("Controls")] 
     public float minSwipeForSwing = 1f;
     public float maxDistForDoubleTap = 10f;
     public double maxTimeForDoubleTap = 0.30f;
+    
 
     private double _lastTapTime = 0;
     private Vector2 _lastTapPosition;
@@ -34,34 +59,74 @@ public class Player : MonoBehaviour
     
     
     private bool _onFloor;
+    private bool _isInvincable = false;
     private Rigidbody _playerRigidBody;
-
+    
+    private PlayerItem _currentItemEquipped;
+    private Bomb _currentBombInstance;
+    
+    
+    
     void Jump()
     {
         if(!_onFloor) return;
        _playerRigidBody.AddForce(0, jumpForce, 0);
     }
-    void Awake()
+
+    void InitJump(InputAction action)
     {
-        _controls = new Controls();
-        _controls.Player.Move.performed += ctx => _move = ctx.ReadValue<Vector2>();
-        _controls.Player.Move.canceled += _ => _move = Vector2.zero;
-        _controls.Player.Jump.performed += _ => Jump();
-        _controls.Player.TouchPress.performed += _ =>
+        action.performed += _ => Jump();
+    }
+
+    void InitMove(InputAction action)
+    {
+        action.performed += ctx => _move = ctx.ReadValue<Vector2>();
+        action.canceled += _ => _move = Vector2.zero;
+    }
+
+    void HoldBomb()
+    {
+        _currentBombInstance = Instantiate(bomb, gameObject.transform);
+        _currentBombInstance.transform.position = bombHold.transform.position;
+    }
+    
+    void PullItem()
+    {
+        _controls.PlayerNormal.Disable();
+        switch (_currentItemEquipped)
         {
-            _touchStart = _touchEnd = _controls.Player.TouchPosition.ReadValue<Vector2>();
+            case PlayerItem.None:
+                _controls.PlayerNormal.Enable();
+                return;
+            case PlayerItem.Bomb:
+                _controls.HoldingBomb.Enable();
+                HoldBomb();
+                return;
+        }
+    }
+
+    void InitNormalControls()
+    {
+        InitJump(_controls.PlayerNormal.Jump);
+        InitMove(_controls.PlayerNormal.Move);
+
+        _controls.PlayerNormal.UseItem.performed += _ => PullItem();
+        
+        _controls.PlayerNormal.TouchPress.performed += _ =>
+        {
+            _touchStart = _touchEnd = _controls.PlayerNormal.TouchPosition.ReadValue<Vector2>();
             _touching = true;
         };
-        _controls.Player.TouchPress.canceled += _ =>
+        _controls.PlayerNormal.TouchPress.canceled += _ =>
         {
             _touching = false;
             Swing(_touchStart, _touchEnd);
         };
 
-        _controls.Player.TouchTap.performed += _ =>
+        _controls.PlayerNormal.TouchTap.performed += _ =>
         {
             double tapTime = Time.fixedTimeAsDouble;
-            var tapPosition = _controls.Player.TouchPosition.ReadValue<Vector2>();
+            var tapPosition = _controls.PlayerNormal.TouchPosition.ReadValue<Vector2>();
             if (tapTime - _lastTapTime > maxTimeForDoubleTap ||
                 Vector2.Distance(ScaledPixel(_lastTapPosition), ScaledPixel(tapPosition)) > maxDistForDoubleTap)
                 // double tap wasn't performed - values should be saved to check next time
@@ -75,12 +140,75 @@ public class Player : MonoBehaviour
                 Stab();
             }
         };
-        _controls.Player.Attack.performed += _ => sword.Swing(attackDirectionForTest);
+        _controls.PlayerNormal.Attack.performed += _ => sword.Swing(attackDirectionForTest);
+    }
+
+
+    void CancelBomb()
+    {
+        
+        Destroy(_currentBombInstance.gameObject);
+        _controls.HoldingBomb.Disable();
+        _controls.PlayerNormal.Enable();
+    }
+
+    void ThrowBomb()
+    {
+        
+        
+        _currentBombInstance.transform.parent = transform.parent;
+        _currentBombInstance.Activate();
+        
+        var throwingDirection = (Quaternion.AngleAxis(
+            -bombThrowingAngle, model.transform.right) * model.transform.forward).normalized;
+        _currentBombInstance.GetComponent<Rigidbody>().AddForce(
+                bombThrowForce * throwingDirection.x,
+                bombThrowForce * throwingDirection.y,
+                bombThrowForce * throwingDirection.z
+        );
+        
+        _controls.HoldingBomb.Disable();
+        _controls.PlayerNormal.Enable();
+    }
+
+    void PutBomb()
+    {
+        _currentBombInstance.transform.position = bombPut.transform.position;
+        _currentBombInstance.transform.parent = transform.parent;
+        _currentBombInstance.Activate();
+        
+        _controls.HoldingBomb.Disable();
+        _controls.PlayerNormal.Enable();
+    }
+    void InitBombControls()
+    {
+        InitMove(_controls.HoldingBomb.Move);
+        _controls.HoldingBomb.Put.performed += _ => PutBomb();
+        _controls.HoldingBomb.Cancel.performed += _ => CancelBomb();
+        _controls.HoldingBomb.Throw.performed += _ => ThrowBomb();
+    }
+    
+    void Awake()
+    {
+        _controls = new Controls();
+        _currentItemEquipped = defaultItem;
+        InitNormalControls();
+        InitBombControls();
     }
     // Start is called before the first frame update
     void Start()
     {
         _playerRigidBody = GetComponent<Rigidbody>();
+        if (drawControlPoints)
+        {
+            bombHold.GetComponent<Renderer>().enabled = true;
+            bombPut.GetComponent<Renderer>().enabled = true;
+        }
+        else
+        {
+            bombHold.GetComponent<Renderer>().enabled = false;
+            bombPut.GetComponent<Renderer>().enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -104,7 +232,12 @@ public class Player : MonoBehaviour
     {
         CheckIfOnFloor();
         Move(_move);
-        if(_touching) _touchEnd = _controls.Player.TouchPosition.ReadValue<Vector2>();
+        if(_touching) _touchEnd = _controls.PlayerNormal.TouchPosition.ReadValue<Vector2>();
+    }
+
+    void Hit()
+    {
+        
     }
     
     static readonly Dictionary<int, AttackDirection> InterpolatedDirections = new Dictionary<int, AttackDirection>{
@@ -158,12 +291,16 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        _controls.Player.Enable();
+        _controls.PlayerNormal.Enable();
     }
 
     private void OnDisable()
     {
-        _controls.Player.Disable();
+        _controls.Disable();
     }
-    
+
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log($"Collusion with particle {other.tag}");
+    }
 }

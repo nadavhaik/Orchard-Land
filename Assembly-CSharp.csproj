@@ -47,8 +47,10 @@
      <Compile Include="Assets/Project/Scripts/Player/Controls.cs" />
      <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
      <Compile Include="Assets/Project/LibraryCode/MyMath.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/Bomb.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Settings" />
+     <Folder Include="Assets/Project/Materials/Explosion" />
      <Folder Include="Assets/Project/Materials" />
      <Folder Include="Assets/Project/LibraryCode" />
      <Folder Include="Assets/Project/Scripts/Player" />
