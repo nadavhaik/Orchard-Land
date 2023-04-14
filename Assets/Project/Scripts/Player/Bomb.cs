@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -43,5 +44,10 @@ public class Bomb : MonoBehaviour
         if (_activated) _timer += Time.deltaTime;
         if(_timer > duration) Explode();
         // if(_exploded && _explosionInstance == null) Destroy(gameObject);
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+      if(other.CompareTag("Explosion")) Explode();
     }
 }
