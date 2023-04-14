@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
             else
             { // double tap was performed
                 _lastTapTime = 0;
-                sword.Stab();
+                Stab();
             }
         };
         _controls.Player.Attack.performed += _ => sword.Swing(attackDirectionForTest);
