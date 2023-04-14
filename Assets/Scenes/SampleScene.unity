@@ -310,7 +310,7 @@ MonoBehaviour:
   defaultItem: 1
   sword: {fileID: 1595149093}
   bomb: {fileID: 3108686180829823963, guid: a607c8add45c194e18fea576c7a4b533, type: 3}
-  bombThrowForce: 700
+  bombThrowForce: 900
   bombThrowingAngle: 30
   drawControlPoints: 0
   bombHold: {fileID: 656712767}
