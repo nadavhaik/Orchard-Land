@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
         // 8 -> len(dict)
         // 45 -> 360 / len(dict)
         if (angle < 0) angle += 360f;
-        int interpolatedAngle = (Mathf.RoundToInt((angle / 360f) * 8) * 45) % 360; // nearest 45° integer multiplier in [0, 360)
+        int interpolatedAngle = (Mathf.RoundToInt((angle / 360f) * 8) * 45) % 360; // nearest 45° integer multiplier in [-180, 180)
         if (!InterpolatedDirections.ContainsKey(interpolatedAngle))
         {
             throw new ArithmeticException("Got an unexpected angle: " + interpolatedAngle);
