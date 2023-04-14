@@ -63,11 +63,9 @@ public class Player : MonoBehaviour
             double tapTime = Time.fixedTimeAsDouble;
             var tapPosition = _controls.Player.TouchPosition.ReadValue<Vector2>();
             if (tapTime - _lastTapTime > maxTimeForDoubleTap ||
-                Vector2.Distance(ScaledToScreen(_lastTapPosition), ScaledToScreen(tapPosition)) > maxDistForDoubleTap)
+                Vector2.Distance(ScaledPixel(_lastTapPosition), ScaledPixel(tapPosition)) > maxDistForDoubleTap)
                 // double tap wasn't performed - values should be saved to check next time
             {
-                Debug.Log($"dt from last tap is {tapTime - _lastTapTime}");
-                Debug.Log($"distance from last tap is {Vector2.Distance(ScaledToScreen(_lastTapPosition), ScaledToScreen(tapPosition))}");
                 _lastTapPosition = tapPosition;
                 _lastTapTime = tapTime;
             }
@@ -77,7 +75,7 @@ public class Player : MonoBehaviour
                 sword.Stab();
             }
         };
-        _controls.Player.Attack.performed += _ => Swing(attackDirectionForTest);
+        _controls.Player.Attack.performed += _ => sword.Swing(attackDirectionForTest);
     }
     // Start is called before the first frame update
     void Start()
@@ -99,15 +97,9 @@ public class Player : MonoBehaviour
     void CheckIfOnFloor()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.01f))
-        {
-            _onFloor = true;
-        }
-        else
-        {
-            _onFloor = false;
-        }
+        _onFloor = Physics.Raycast(transform.position, Vector3.down, out hit, 1.01f);
     }
+    
     void Update()
     {
         CheckIfOnFloor();
@@ -141,29 +133,28 @@ public class Player : MonoBehaviour
         return InterpolatedDirections[interpolatedAngle];
     }
 
-    static Vector2 ScaledToScreen(Vector2 screenPoint)
+    static Vector2 ScaledPixel(Vector2 onScreenPixel)
     {
-        return 100f * new Vector2(screenPoint.x / Screen.width, screenPoint.y / Screen.height);
+        return 100f * new Vector2(onScreenPixel.x / Screen.width, onScreenPixel.y / Screen.height);
     }
 
     void Swing(Vector2 start, Vector2 end)
 
     {
-        if(Vector2.Distance(start, end) < minSwipeForSwing) return;
-        Vector2 scaledStart = ScaledToScreen(start);
-        Vector2 scaledEnd = ScaledToScreen(end);
+        if(!_onFloor || Vector2.Distance(start, end) < minSwipeForSwing) return;
+        Vector2 scaledStart = ScaledPixel(start);
+        Vector2 scaledEnd = ScaledPixel(end);
         
         var swingDirection = scaledEnd - scaledStart;
         float angle = Vector2.SignedAngle(Vector2.right, swingDirection);
-        Swing(GetDirection(angle));
+        sword.Swing(GetDirection(angle));
     }
 
-    void Swing(AttackDirection direction)
+    void Stab()
     {
-        sword.Swing(direction);
+        if(!_onFloor) return;
+        sword.Stab();
     }
-    
-    void Stab() {sword.Stab();}
 
     private void OnEnable()
     {
@@ -174,20 +165,5 @@ public class Player : MonoBehaviour
     {
         _controls.Player.Disable();
     }
-
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Floor"))
-    //     {
-    //         _onFloor = true;
-    //     }
-    // }
-    //
-    // private void OnCollisionExit(Collision collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Floor"))
-    //     {
-    //         _onFloor = false;
-    //     }
-    // }
+    
 }
