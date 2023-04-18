@@ -10,24 +10,22 @@ public class Bomb : MonoBehaviour
     private bool _activated;
     private float _timer;
     public GameObject explosion;
-    private float _originalMass;
+    public float mass;
     
     // Start is called before the first frame update
     void Start()
     {
         _activated = false;
         _timer = 0f;
-        _originalMass = GetComponent<Rigidbody>().mass;
-        GetComponent<Rigidbody>().detectCollisions = false;
-        GetComponent<Rigidbody>().useGravity = false;
-        GetComponent<Rigidbody>().mass = 0;
     }
 
     public void Activate()
     {
-        GetComponent<Rigidbody>().detectCollisions = true;
-        GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<Rigidbody>().mass = _originalMass;
+        var rb = gameObject.AddComponent<Rigidbody>();
+        rb.detectCollisions = true;
+        rb.useGravity = true;
+        rb.mass = mass;
+        
         _activated = true;
     }
 
@@ -43,6 +41,7 @@ public class Bomb : MonoBehaviour
     {
         if (_activated) _timer += Time.deltaTime;
         if(_timer > duration) Explode();
+        
         // if(_exploded && _explosionInstance == null) Destroy(gameObject);
     }
 

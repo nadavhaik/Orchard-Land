@@ -146,7 +146,6 @@ public class Player : MonoBehaviour
 
     void CancelBomb()
     {
-        
         Destroy(_currentBombInstance.gameObject);
         _controls.HoldingBomb.Disable();
         _controls.PlayerNormal.Enable();
@@ -161,11 +160,8 @@ public class Player : MonoBehaviour
         
         var throwingDirection = (Quaternion.AngleAxis(
             -bombThrowingAngle, model.transform.right) * model.transform.forward).normalized;
-        _currentBombInstance.GetComponent<Rigidbody>().AddForce(
-                bombThrowForce * throwingDirection.x,
-                bombThrowForce * throwingDirection.y,
-                bombThrowForce * throwingDirection.z
-        );
+        var throwForce3d = bombThrowForce * throwingDirection; 
+        _currentBombInstance.GetComponent<Rigidbody>().AddForce(throwForce3d);
         
         _controls.HoldingBomb.Disable();
         _controls.PlayerNormal.Enable();
@@ -183,6 +179,8 @@ public class Player : MonoBehaviour
     void InitBombControls()
     {
         InitMove(_controls.HoldingBomb.Move);
+        InitJump(_controls.HoldingBomb.Jump);
+
         _controls.HoldingBomb.Put.performed += _ => PutBomb();
         _controls.HoldingBomb.Cancel.performed += _ => CancelBomb();
         _controls.HoldingBomb.Throw.performed += _ => ThrowBomb();
@@ -233,6 +231,10 @@ public class Player : MonoBehaviour
         CheckIfOnFloor();
         Move(_move);
         if(_touching) _touchEnd = _controls.PlayerNormal.TouchPosition.ReadValue<Vector2>();
+        // if (_controls.HoldingBomb.enabled)
+        // {
+        //     _currentBombInstance.transform.position = bombHold.transform.position;
+        // }
     }
 
     void Hit()
