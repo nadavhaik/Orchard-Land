@@ -13,7 +13,6 @@ public class Arrow : MonoBehaviour
     public GameObject body;
     private Rigidbody _rb;
     private bool _active = false;
-    private Vector3 _shootingDirection;
     public float fixFactor = 10f;
     void Start()
     {
