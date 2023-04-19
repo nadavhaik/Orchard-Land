@@ -89,6 +89,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PullBow"",
+                    ""type"": ""Button"",
+                    ""id"": ""59a9582d-c958-4eb3-868e-7e592e714307"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -166,6 +175,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""PhoneWithGamepad"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6cd5e8d-ba04-4411-a4eb-6cc21e89986c"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""PullBow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -258,7 +278,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0cade6bd-0706-4d5c-bc4c-3a140a236705"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -269,11 +289,139 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cfc96872-7336-4bed-bf29-d01f856a1d93"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""BowPov"",
+            ""id"": ""01e29dcb-286d-4513-b2f4-0965ab9cf944"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""d5d7bc99-f92e-42f5-a792-399684488a9c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""1ef9c504-4a48-46da-a60e-973a7c95cd38"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ButtonShoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""97a29a54-fae2-4064-99be-804754383397"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""42bab7bb-49d5-4925-b759-28fe221ff299"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TouchPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""da05d122-3022-4f5d-a224-8c4637cd0ef4"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TouchPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""37c8cb4b-9e5b-423d-be36-65f136a3e551"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""bc39fb27-3e77-4d45-9515-5c0dab6e4b6e"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0610a57-6a02-4ab0-8c6d-81afa629b50b"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63f4ef87-e83b-4273-9b71-f6359ca55994"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""ButtonShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1cdff6a6-4f49-4b0f-9169-50a95024b5e6"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4460aa37-08ab-42a1-91a7-8b965ccbeb3a"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""TouchPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76a53961-3b4b-463f-b05e-3c1aa8d5b60f"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""TouchPress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -309,6 +457,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_PlayerNormal_TouchTap = m_PlayerNormal.FindAction("TouchTap", throwIfNotFound: true);
         m_PlayerNormal_UseItem = m_PlayerNormal.FindAction("UseItem", throwIfNotFound: true);
         m_PlayerNormal_Jump = m_PlayerNormal.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerNormal_PullBow = m_PlayerNormal.FindAction("PullBow", throwIfNotFound: true);
         // HoldingBomb
         m_HoldingBomb = asset.FindActionMap("HoldingBomb", throwIfNotFound: true);
         m_HoldingBomb_Move = m_HoldingBomb.FindAction("Move", throwIfNotFound: true);
@@ -316,6 +465,14 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_HoldingBomb_Throw = m_HoldingBomb.FindAction("Throw", throwIfNotFound: true);
         m_HoldingBomb_Put = m_HoldingBomb.FindAction("Put", throwIfNotFound: true);
         m_HoldingBomb_Cancel = m_HoldingBomb.FindAction("Cancel", throwIfNotFound: true);
+        // BowPov
+        m_BowPov = asset.FindActionMap("BowPov", throwIfNotFound: true);
+        m_BowPov_Move = m_BowPov.FindAction("Move", throwIfNotFound: true);
+        m_BowPov_Rotate = m_BowPov.FindAction("Rotate", throwIfNotFound: true);
+        m_BowPov_ButtonShoot = m_BowPov.FindAction("ButtonShoot", throwIfNotFound: true);
+        m_BowPov_Cancel = m_BowPov.FindAction("Cancel", throwIfNotFound: true);
+        m_BowPov_TouchPosition = m_BowPov.FindAction("TouchPosition", throwIfNotFound: true);
+        m_BowPov_TouchPress = m_BowPov.FindAction("TouchPress", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -386,6 +543,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerNormal_TouchTap;
     private readonly InputAction m_PlayerNormal_UseItem;
     private readonly InputAction m_PlayerNormal_Jump;
+    private readonly InputAction m_PlayerNormal_PullBow;
     public struct PlayerNormalActions
     {
         private @Controls m_Wrapper;
@@ -397,6 +555,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @TouchTap => m_Wrapper.m_PlayerNormal_TouchTap;
         public InputAction @UseItem => m_Wrapper.m_PlayerNormal_UseItem;
         public InputAction @Jump => m_Wrapper.m_PlayerNormal_Jump;
+        public InputAction @PullBow => m_Wrapper.m_PlayerNormal_PullBow;
         public InputActionMap Get() { return m_Wrapper.m_PlayerNormal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -427,6 +586,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @PullBow.started += instance.OnPullBow;
+            @PullBow.performed += instance.OnPullBow;
+            @PullBow.canceled += instance.OnPullBow;
         }
 
         private void UnregisterCallbacks(IPlayerNormalActions instance)
@@ -452,6 +614,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @PullBow.started -= instance.OnPullBow;
+            @PullBow.performed -= instance.OnPullBow;
+            @PullBow.canceled -= instance.OnPullBow;
         }
 
         public void RemoveCallbacks(IPlayerNormalActions instance)
@@ -548,6 +713,92 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public HoldingBombActions @HoldingBomb => new HoldingBombActions(this);
 
+    // BowPov
+    private readonly InputActionMap m_BowPov;
+    private List<IBowPovActions> m_BowPovActionsCallbackInterfaces = new List<IBowPovActions>();
+    private readonly InputAction m_BowPov_Move;
+    private readonly InputAction m_BowPov_Rotate;
+    private readonly InputAction m_BowPov_ButtonShoot;
+    private readonly InputAction m_BowPov_Cancel;
+    private readonly InputAction m_BowPov_TouchPosition;
+    private readonly InputAction m_BowPov_TouchPress;
+    public struct BowPovActions
+    {
+        private @Controls m_Wrapper;
+        public BowPovActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_BowPov_Move;
+        public InputAction @Rotate => m_Wrapper.m_BowPov_Rotate;
+        public InputAction @ButtonShoot => m_Wrapper.m_BowPov_ButtonShoot;
+        public InputAction @Cancel => m_Wrapper.m_BowPov_Cancel;
+        public InputAction @TouchPosition => m_Wrapper.m_BowPov_TouchPosition;
+        public InputAction @TouchPress => m_Wrapper.m_BowPov_TouchPress;
+        public InputActionMap Get() { return m_Wrapper.m_BowPov; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BowPovActions set) { return set.Get(); }
+        public void AddCallbacks(IBowPovActions instance)
+        {
+            if (instance == null || m_Wrapper.m_BowPovActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BowPovActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
+            @ButtonShoot.started += instance.OnButtonShoot;
+            @ButtonShoot.performed += instance.OnButtonShoot;
+            @ButtonShoot.canceled += instance.OnButtonShoot;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+            @TouchPosition.started += instance.OnTouchPosition;
+            @TouchPosition.performed += instance.OnTouchPosition;
+            @TouchPosition.canceled += instance.OnTouchPosition;
+            @TouchPress.started += instance.OnTouchPress;
+            @TouchPress.performed += instance.OnTouchPress;
+            @TouchPress.canceled += instance.OnTouchPress;
+        }
+
+        private void UnregisterCallbacks(IBowPovActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
+            @ButtonShoot.started -= instance.OnButtonShoot;
+            @ButtonShoot.performed -= instance.OnButtonShoot;
+            @ButtonShoot.canceled -= instance.OnButtonShoot;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+            @TouchPosition.started -= instance.OnTouchPosition;
+            @TouchPosition.performed -= instance.OnTouchPosition;
+            @TouchPosition.canceled -= instance.OnTouchPosition;
+            @TouchPress.started -= instance.OnTouchPress;
+            @TouchPress.performed -= instance.OnTouchPress;
+            @TouchPress.canceled -= instance.OnTouchPress;
+        }
+
+        public void RemoveCallbacks(IBowPovActions instance)
+        {
+            if (m_Wrapper.m_BowPovActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IBowPovActions instance)
+        {
+            foreach (var item in m_Wrapper.m_BowPovActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_BowPovActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public BowPovActions @BowPov => new BowPovActions(this);
+
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
@@ -603,6 +854,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnTouchTap(InputAction.CallbackContext context);
         void OnUseItem(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnPullBow(InputAction.CallbackContext context);
     }
     public interface IHoldingBombActions
     {
@@ -611,6 +863,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnThrow(InputAction.CallbackContext context);
         void OnPut(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
+    }
+    public interface IBowPovActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
+        void OnButtonShoot(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
+        void OnTouchPosition(InputAction.CallbackContext context);
+        void OnTouchPress(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

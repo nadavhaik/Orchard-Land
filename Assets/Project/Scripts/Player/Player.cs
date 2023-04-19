@@ -22,17 +22,27 @@ public class Player : MonoBehaviour
 {
     [Header("Visuals")] 
     public GameObject model;
+
+    [Header("CameraControls")] 
+    public Camera mainCamera;
+
+    public Camera bowCamera;
     
     [Header("Movement")]
     public float movementConstant = 5f;
+
+    public float bowRotationConstant = 5f;
     public float jumpForce = 50f;
 
     [Header("Items and Equipment")]
     public PlayerItem defaultItem = PlayerItem.Bomb;
     public Sword sword;
     public Bomb bomb;
+    public Bow bow;
+    public Arrow arrow;
     public float bombThrowForce = 50f;
     public float bombThrowingAngle = 30f;
+    public float arrowsCooldown = 0.5f;
 
     [Header("Items Control Points")] 
     public bool drawControlPoints;
@@ -51,7 +61,9 @@ public class Player : MonoBehaviour
     public AttackDirection attackDirectionForTest;
     
     private Controls _controls;
-    private Vector2 _move;
+    private InputAction _touchPositionSource;
+    private Vector2 _leftStick;
+    private Vector2 _rightStick;
 
     private Vector2 _touchStart;
     private Vector2 _touchEnd;
@@ -64,6 +76,7 @@ public class Player : MonoBehaviour
     
     private PlayerItem _currentItemEquipped;
     private Bomb _currentBombInstance;
+    private Arrow _currentArrowInstance;
     
     
     
@@ -80,8 +93,22 @@ public class Player : MonoBehaviour
 
     void InitMove(InputAction action)
     {
-        action.performed += ctx => _move = ctx.ReadValue<Vector2>();
-        action.canceled += _ => _move = Vector2.zero;
+        action.performed += ctx => _leftStick = ctx.ReadValue<Vector2>();
+        action.canceled += _ => _leftStick = Vector2.zero;
+    }
+    
+    void InitRotate(InputAction action)
+    {
+        action.performed += ctx => _rightStick = ctx.ReadValue<Vector2>();
+        action.canceled += _ => _rightStick = Vector2.zero;
+    }
+
+    void InitArrow()
+    {
+        _currentArrowInstance = Instantiate(arrow);
+        _currentArrowInstance.transform.position = bow.arrowStart.transform.position;
+        _currentArrowInstance.transform.rotation = bow.transform.rotation;
+        _currentArrowInstance.transform.parent = bow.transform;
     }
 
     void HoldBomb()
@@ -105,23 +132,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    void InitTouch(InputAction touchPress, InputAction touchPosition)
+    {
+        touchPress.performed += _ =>
+        {
+            _touchStart = _touchEnd = touchPosition.ReadValue<Vector2>();
+            _touching = true;
+            _touchPositionSource = touchPosition;
+        };
+        touchPosition.canceled += _ => _touching = false;
+    }
+
     void InitNormalControls()
     {
         InitJump(_controls.PlayerNormal.Jump);
         InitMove(_controls.PlayerNormal.Move);
 
         _controls.PlayerNormal.UseItem.performed += _ => PullItem();
+
+        InitTouch(_controls.PlayerNormal.TouchPress, _controls.PlayerNormal.TouchPosition);
+        _controls.PlayerNormal.TouchPress.canceled += _ => Swing(_touchStart, _touchEnd);
         
-        _controls.PlayerNormal.TouchPress.performed += _ =>
-        {
-            _touchStart = _touchEnd = _controls.PlayerNormal.TouchPosition.ReadValue<Vector2>();
-            _touching = true;
-        };
-        _controls.PlayerNormal.TouchPress.canceled += _ =>
-        {
-            _touching = false;
-            Swing(_touchStart, _touchEnd);
-        };
 
         _controls.PlayerNormal.TouchTap.performed += _ =>
         {
@@ -141,6 +172,14 @@ public class Player : MonoBehaviour
             }
         };
         _controls.PlayerNormal.Attack.performed += _ => sword.Swing(attackDirectionForTest);
+        _controls.PlayerNormal.PullBow.performed += _ =>
+        {
+            _controls.PlayerNormal.Disable();
+            mainCamera.enabled = false;
+            _controls.BowPov.Enable();
+            bowCamera.enabled = true;
+            Invoke( nameof(InitArrow), arrowsCooldown);
+        };
     }
 
 
@@ -153,8 +192,6 @@ public class Player : MonoBehaviour
 
     void ThrowBomb()
     {
-        
-        
         _currentBombInstance.transform.parent = transform.parent;
         _currentBombInstance.Activate();
         
@@ -186,12 +223,44 @@ public class Player : MonoBehaviour
         _controls.HoldingBomb.Throw.performed += _ => ThrowBomb();
     }
     
+
+    void InitBowPovControls()
+    {
+        InitMove(_controls.BowPov.Move);
+        InitRotate(_controls.BowPov.Rotate);
+        InitTouch(_controls.BowPov.TouchPress, _controls.BowPov.TouchPosition);
+        _controls.BowPov.ButtonShoot.performed += _ =>
+        {
+            if(_currentArrowInstance == null) return;
+            _currentArrowInstance.transform.position = bow.arrowEnd.transform.position;
+            // _currentBombInstance.transform.LookAt(bow.arrowStart.transform.position);
+            bow.Shoot(_currentArrowInstance);
+            Physics.IgnoreCollision(gameObject.GetComponent<Collider>(),
+                _currentArrowInstance.GetComponent<Collider>());
+            _currentArrowInstance = null;
+            Invoke( nameof(InitArrow), arrowsCooldown);
+        };
+        _controls.BowPov.Cancel.performed += _ =>
+        {
+            if (_currentArrowInstance != null)
+            {
+                Destroy(_currentArrowInstance.gameObject);
+            }
+            bow.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            _controls.BowPov.Disable();
+            bowCamera.enabled = false;
+            _controls.PlayerNormal.Enable();
+            mainCamera.enabled = true;
+        };
+    }
+    
     void Awake()
     {
         _controls = new Controls();
         _currentItemEquipped = defaultItem;
         InitNormalControls();
         InitBombControls();
+        InitBowPovControls();
     }
     // Start is called before the first frame update
     void Start()
@@ -209,15 +278,53 @@ public class Player : MonoBehaviour
         }
     }
 
+    bool InPov() { return _controls.BowPov.enabled; }
+
     // Update is called once per frame
 
-    void Move(Vector2 movement)
+    void MovePov(Vector2 movement)
     {
-        if(movement == Vector2.zero) return;
+        transform.position += model.transform.rotation * new Vector3(movement.x, 0, movement.y) * (movementConstant * Time.deltaTime); // on the xz plane
+    }
+
+    void MoveTps(Vector2 movement)
+    { 
         var deltaMovement = new Vector3(movement.x, 0, movement.y) * (movementConstant * Time.deltaTime); // on the xz plane
         var newPosition = transform.position + deltaMovement;
         model.transform.LookAt(newPosition);
         transform.position = newPosition;
+        
+    }
+
+    void Move(Vector2 movement)
+    {
+        if(movement == Vector2.zero) return;
+        if(InPov()) 
+            MovePov(movement);
+        else 
+            MoveTps(movement);
+    }
+
+    void RotateBow(Vector2 movement)
+    {
+        float rotationConst = bowRotationConstant * Time.deltaTime;
+        model.transform.Rotate(Vector3.up, rotationConst * movement.x);
+        bow.Rotate(rotationConst * movement.y);
+        
+    }
+
+    void RotateTps(Vector2 movement)
+    {
+        
+    }
+
+    void Rotate(Vector2 movement)
+    {
+        if(movement == Vector2.zero) return;
+        if(_controls.BowPov.enabled) 
+            RotateBow(movement);
+        else
+            RotateTps(movement);
     }
 
     void CheckIfOnFloor()
@@ -229,8 +336,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         CheckIfOnFloor();
-        Move(_move);
-        if(_touching) _touchEnd = _controls.PlayerNormal.TouchPosition.ReadValue<Vector2>();
+        Move(_leftStick);
+        Rotate(_rightStick);
+        
+        if(_touching) _touchEnd = _touchPositionSource.ReadValue<Vector2>();
         // if (_controls.HoldingBomb.enabled)
         // {
         //     _currentBombInstance.transform.position = bombHold.transform.position;
@@ -294,6 +403,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _controls.PlayerNormal.Enable();
+        _controls.BowPov.Disable();
     }
 
     private void OnDisable()
