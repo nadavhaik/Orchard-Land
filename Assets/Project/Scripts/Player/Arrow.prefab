@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51cc8c4ef2cdd7009f91ff6ec822b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootingForce: 1000
+  shootingForce: 800
   mass: 1
   head: {fileID: 4882482653102317196}
   body: {fileID: 7405916242873884496}

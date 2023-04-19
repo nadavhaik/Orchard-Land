@@ -17,7 +17,7 @@ public class Arrow : MonoBehaviour
     public float fixFactor = 10f;
     void Start()
     {
-        Destroy(gameObject, 15f);
+       
     }
 
     void FixHead()
@@ -43,10 +43,7 @@ public class Arrow : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         Debug.Log($"Collusion with {other.transform.tag}: {other.collider.gameObject}");
-        if (other.transform.CompareTag("Floor"))
-        {
-            _active = false;    
-        }
+        _active = false;
     }
 
     public void Shoot(float tension)
@@ -63,6 +60,7 @@ public class Arrow : MonoBehaviour
         var shootingForce3d = shootingForce * tension * transform.forward;
         _rb.AddForce(shootingForce3d, ForceMode.Acceleration);
         _active = true;
+        Destroy(gameObject, 15f);
         // GetComponent<Rigidbody>().AddForce(shootingForce * tension * transform.forward);
     }
 }
