@@ -44,6 +44,7 @@
      <Compile Include="Assets/Project/LibraryCode/PolarCoordinates.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/PlugController.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Player.cs" />
+     <Compile Include="Assets/Project/Scripts/Enviroment/SwordCollidable.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireBuilder.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Sword.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Controls.cs" />
@@ -76,6 +77,7 @@
      <Folder Include="Assets/Project/Scripts" />
      <Folder Include="Assets/Scenes" />
      <Folder Include="Assets/WireBuilder" />
+     <Folder Include="Assets/Project/Scripts/Enviroment" />
      <Folder Include="Assets/Project" />
      <Reference Include="UnityEngine">
      <HintPath>/home/nadavh/Unity/Hub/Editor/2021.3.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

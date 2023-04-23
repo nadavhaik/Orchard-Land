@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -25,9 +26,10 @@ public class Player : MonoBehaviour
 
     [Header("CameraControls")] 
     public MainCamera mainCamera;
-
     public Camera bowCamera;
     public SwitchingCamera switchingCamera;
+    public float maxLockDistance = 5f;
+    public float minUnlockDistance = 15f;
     
     [Header("Movement")]
     public float movementConstant = 5f;
@@ -87,7 +89,9 @@ public class Player : MonoBehaviour
 
     private bool _currentlySwitchingCameras;
     private Camera _mainCameraObj;
+    
     private bool _cameraLocked;
+    private GameObject _lockedOn;
     
     
     
@@ -178,16 +182,31 @@ public class Player : MonoBehaviour
         touchPosition.canceled += _ => _touching = false;
     }
 
+    static bool IsLockable(Collider c)
+    {
+        return c.CompareTag("TestCube");
+    }
+
 
     void LockCamera()
     {
         _cameraLocked = true;
+        var currentPosition = transform.position;
+        var colliders = Physics.OverlapSphere(currentPosition, maxLockDistance)
+            .Where(collider => IsLockable(collider))
+            .OrderBy(collider => Vector3.Distance(currentPosition, collider.transform.position));
+        if (colliders.Any())
+        {
+            _lockedOn = colliders.First().gameObject;
+        }
+
         mainCamera.Lock();
     }
 
     void UnlockCamera()
     {
         _cameraLocked = false;
+        _lockedOn = null;
         mainCamera.Unlock();
     }
 
@@ -204,7 +223,6 @@ public class Player : MonoBehaviour
         InitRotate(_controls.PlayerNormal.Rotate);
 
         _controls.PlayerNormal.UseItem.performed += _ => PullItem();
-        InitLock(_controls.PlayerNormal.LockCamera);
         
 
         InitTouch(_controls.PlayerNormal.TouchPress, _controls.PlayerNormal.TouchPosition);
@@ -233,6 +251,7 @@ public class Player : MonoBehaviour
         {
             if(_currentlySwitchingCameras) return;
             _controls.PlayerNormal.Disable();
+            _controls.LockCamera.Disable();
             _currentlySwitchingCameras = true;
             WieldBow();
             Instantiate(switchingCamera).Init(_mainCameraObj, bowCamera, 
@@ -279,7 +298,7 @@ public class Player : MonoBehaviour
     {
         InitMove(_controls.HoldingBomb.Move);
         InitJump(_controls.HoldingBomb.Jump);
-        InitLock(_controls.HoldingBomb.LockCamera);
+        
 
         _controls.HoldingBomb.Put.performed += _ => PutBomb();
         _controls.HoldingBomb.Cancel.performed += _ => CancelBomb();
@@ -318,8 +337,11 @@ public class Player : MonoBehaviour
             
             mainCamera.ResetPosition();
             Instantiate(switchingCamera).Init(bowCamera, _mainCameraObj, 
-                () => _currentlySwitchingCameras = false
-            );
+                () =>
+                {
+                    _currentlySwitchingCameras = false;
+                    _controls.LockCamera.LockCamera.Enable();
+                });
             UnwieldBow();
             _controls.PlayerNormal.Enable();
         };
@@ -332,6 +354,7 @@ public class Player : MonoBehaviour
         InitNormalControls();
         InitBombControls();
         InitBowPovControls();
+        InitLock(_controls.LockCamera.LockCamera);
     }
     // Start is called before the first frame update
 
@@ -358,7 +381,6 @@ public class Player : MonoBehaviour
         {
             controlPoint.GetComponent<Renderer>().enabled = drawControlPoints;
         }
-        
         
     }
 
@@ -421,12 +443,20 @@ public class Player : MonoBehaviour
         CheckIfOnFloor();
         Move(_leftStick);
         Rotate(_rightStick);
+        if (_lockedOn != null)
+        {
+            if (Vector3.Distance(transform.position, _lockedOn.transform.position) > minUnlockDistance)
+            {
+                UnlockCamera();
+            }
+            else
+            {
+                model.transform.LookAt(_lockedOn.transform.position);    
+            }
+        }
         
         if(_touching) _touchEnd = _touchPositionSource.ReadValue<Vector2>();
-        // if (_controls.HoldingBomb.enabled)
-        // {
-        //     _currentBombInstance.transform.position = bombHold.transform.position;
-        // }
+
     }
 
     void Hit()
@@ -486,6 +516,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _controls.PlayerNormal.Enable();
+        _controls.LockCamera.Enable();
         _controls.BowPov.Disable();
     }
 

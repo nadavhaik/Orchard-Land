@@ -8,6 +8,7 @@ TagManager:
   - Sword
   - Explosion
   - Arrow
+  - TestCube
   layers:
   - Default
   - TransparentFX
