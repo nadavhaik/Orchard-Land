@@ -11,7 +11,6 @@ public class SwordCollidable : MonoBehaviour
     public float swordForce = 15f;
     void Start()
     {
-        
     }
 
     // Update is called once per frame
