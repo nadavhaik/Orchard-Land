@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     public float bombThrowForce = 50f;
     public float bombThrowingAngle = 30f;
     public float arrowsCooldown = 0.2f;
-    [FormerlySerializedAs("ignoreArrowSelfCollision")] public float ignoreArrowSelfCollisionFor = 0.1f;
+    public float ignoreArrowSelfCollisionFor = 0.1f;
 
 
     [Header("Items Control Points")] 
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
     void InitArrow()
     {
         Arrow newArrow = Instantiate(arrow);
-        if (_prevArrowInstance != null && _prevArrowInstance.gameObject != null)
+        if (_prevArrowInstance != null)
         {
             TemporaryIgnoreSelfArrowCollision(_prevArrowInstance, newArrow);
         }
@@ -295,7 +295,6 @@ public class Player : MonoBehaviour
                 () => _currentlySwitchingCameras = false
             );
             _controls.PlayerNormal.Enable();
-
         };
     }
     
