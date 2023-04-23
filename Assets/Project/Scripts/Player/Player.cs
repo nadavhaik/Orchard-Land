@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     public GameObject model;
 
     [Header("CameraControls")] 
-    public Camera mainCamera;
+    public MainCamera mainCamera;
 
     public Camera bowCamera;
     public SwitchingCamera switchingCamera;
@@ -86,6 +86,8 @@ public class Player : MonoBehaviour
     private Arrow _prevArrowInstance;
 
     private bool _currentlySwitchingCameras;
+    private Camera _mainCameraObj;
+    private bool _cameraLocked;
     
     
     
@@ -151,17 +153,18 @@ public class Player : MonoBehaviour
     
     void PullItem()
     {
-        _controls.PlayerNormal.Disable();
+        // _controls.PlayerNormal.Disable();
         switch (_currentItemEquipped)
         {
             case PlayerItem.None:
-                _controls.PlayerNormal.Enable();
                 return;
             case PlayerItem.Bomb:
                 _controls.HoldingBomb.Enable();
                 HoldBomb();
-                return;
+                break;
         }
+
+        _controls.PlayerNormal.Disable();
     }
 
     void InitTouch(InputAction touchPress, InputAction touchPosition)
@@ -175,12 +178,34 @@ public class Player : MonoBehaviour
         touchPosition.canceled += _ => _touching = false;
     }
 
+
+    void LockCamera()
+    {
+        _cameraLocked = true;
+        mainCamera.Lock();
+    }
+
+    void UnlockCamera()
+    {
+        _cameraLocked = false;
+        mainCamera.Unlock();
+    }
+
+    void InitLock(InputAction action)
+    {
+        action.performed += _ => LockCamera();
+        action.canceled += _ => UnlockCamera();
+    }
+
     void InitNormalControls()
     {
         InitJump(_controls.PlayerNormal.Jump);
         InitMove(_controls.PlayerNormal.Move);
+        InitRotate(_controls.PlayerNormal.Rotate);
 
         _controls.PlayerNormal.UseItem.performed += _ => PullItem();
+        InitLock(_controls.PlayerNormal.LockCamera);
+        
 
         InitTouch(_controls.PlayerNormal.TouchPress, _controls.PlayerNormal.TouchPosition);
         _controls.PlayerNormal.TouchPress.canceled += _ => Swing(_touchStart, _touchEnd);
@@ -210,7 +235,7 @@ public class Player : MonoBehaviour
             _controls.PlayerNormal.Disable();
             _currentlySwitchingCameras = true;
             WieldBow();
-            Instantiate(switchingCamera).Init(mainCamera, bowCamera, 
+            Instantiate(switchingCamera).Init(_mainCameraObj, bowCamera, 
                 () => _currentlySwitchingCameras = false);
             _controls.BowPov.Enable();
             // mainCamera.enabled = false;
@@ -254,6 +279,7 @@ public class Player : MonoBehaviour
     {
         InitMove(_controls.HoldingBomb.Move);
         InitJump(_controls.HoldingBomb.Jump);
+        InitLock(_controls.HoldingBomb.LockCamera);
 
         _controls.HoldingBomb.Put.performed += _ => PutBomb();
         _controls.HoldingBomb.Cancel.performed += _ => CancelBomb();
@@ -289,11 +315,12 @@ public class Player : MonoBehaviour
             {
                 Destroy(_currentArrowInstance.gameObject);
             }
-
-            UnwieldBow();
-            Instantiate(switchingCamera).Init(bowCamera, mainCamera, 
+            
+            mainCamera.ResetPosition();
+            Instantiate(switchingCamera).Init(bowCamera, _mainCameraObj, 
                 () => _currentlySwitchingCameras = false
             );
+            UnwieldBow();
             _controls.PlayerNormal.Enable();
         };
     }
@@ -324,6 +351,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         _playerRigidBody = GetComponent<Rigidbody>();
+        _mainCameraObj = mainCamera.GetComponent<Camera>();
         
         GameObject[] controlPoints = { bombHold, bombPut, bowBack, bowHold };
         foreach (var controlPoint in controlPoints)
@@ -338,15 +366,15 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
 
-    void MovePov(Vector2 movement)
+    void MoveLocked(Vector2 movement)
     {
         transform.position += model.transform.rotation * new Vector3(movement.x, 0, movement.y) * (movementConstant * Time.deltaTime); // on the xz plane
     }
 
     void MoveTps(Vector2 movement)
     { 
-        var deltaMovement = new Vector3(movement.x, 0, movement.y) * (movementConstant * Time.deltaTime); // on the xz plane
-        var newPosition = transform.position + deltaMovement;
+        var deltaMovement = _mainCameraObj.transform.rotation * new Vector3(movement.x, 0, movement.y) * (movementConstant * Time.deltaTime); // on the xz plane
+        var newPosition = transform.position + new Vector3(deltaMovement.x, 0, deltaMovement.z);
         model.transform.LookAt(newPosition);
         transform.position = newPosition;
         
@@ -355,8 +383,8 @@ public class Player : MonoBehaviour
     void Move(Vector2 movement)
     {
         if(movement == Vector2.zero) return;
-        if(InPov()) 
-            MovePov(movement);
+        if(InPov() || _cameraLocked) 
+            MoveLocked(movement);
         else 
             MoveTps(movement);
     }
@@ -366,12 +394,11 @@ public class Player : MonoBehaviour
         float rotationConst = bowRotationConstant * Time.deltaTime;
         model.transform.Rotate(Vector3.up, rotationConst * movement.x);
         bow.Rotate(rotationConst * movement.y);
-        
     }
 
-    void RotateTps(Vector2 movement)
+    void RotateTps(Vector2 rotation)
     {
-        
+        mainCamera.Rotate(rotation);
     }
 
     void Rotate(Vector2 movement)

@@ -37,6 +37,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""af220c8b-2d08-428b-80eb-9cb52dd3f8a0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""b76b05e5-3342-4de1-ac95-4b2cb611a11a"",
@@ -94,6 +103,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""PullBow"",
                     ""type"": ""Button"",
                     ""id"": ""59a9582d-c958-4eb3-868e-7e592e714307"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b9547f5-54dc-4a0e-90fb-8e4979c16c36"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -188,6 +206,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""PullBow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f44e341e-3216-4070-ba65-ecdd9763e882"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38f50775-d922-4599-927b-1da580c62f97"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""LockCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -203,6 +243,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LockCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""027968f5-ef0c-4b29-ae19-390358ccdadd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Jump"",
@@ -294,6 +343,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0696042-2e9f-4908-9430-45ac5565c7e4"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""LockCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -451,6 +511,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // PlayerNormal
         m_PlayerNormal = asset.FindActionMap("PlayerNormal", throwIfNotFound: true);
         m_PlayerNormal_Move = m_PlayerNormal.FindAction("Move", throwIfNotFound: true);
+        m_PlayerNormal_Rotate = m_PlayerNormal.FindAction("Rotate", throwIfNotFound: true);
         m_PlayerNormal_Attack = m_PlayerNormal.FindAction("Attack", throwIfNotFound: true);
         m_PlayerNormal_TouchPosition = m_PlayerNormal.FindAction("TouchPosition", throwIfNotFound: true);
         m_PlayerNormal_TouchPress = m_PlayerNormal.FindAction("TouchPress", throwIfNotFound: true);
@@ -458,9 +519,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_PlayerNormal_UseItem = m_PlayerNormal.FindAction("UseItem", throwIfNotFound: true);
         m_PlayerNormal_Jump = m_PlayerNormal.FindAction("Jump", throwIfNotFound: true);
         m_PlayerNormal_PullBow = m_PlayerNormal.FindAction("PullBow", throwIfNotFound: true);
+        m_PlayerNormal_LockCamera = m_PlayerNormal.FindAction("LockCamera", throwIfNotFound: true);
         // HoldingBomb
         m_HoldingBomb = asset.FindActionMap("HoldingBomb", throwIfNotFound: true);
         m_HoldingBomb_Move = m_HoldingBomb.FindAction("Move", throwIfNotFound: true);
+        m_HoldingBomb_LockCamera = m_HoldingBomb.FindAction("LockCamera", throwIfNotFound: true);
         m_HoldingBomb_Jump = m_HoldingBomb.FindAction("Jump", throwIfNotFound: true);
         m_HoldingBomb_Throw = m_HoldingBomb.FindAction("Throw", throwIfNotFound: true);
         m_HoldingBomb_Put = m_HoldingBomb.FindAction("Put", throwIfNotFound: true);
@@ -537,6 +600,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerNormal;
     private List<IPlayerNormalActions> m_PlayerNormalActionsCallbackInterfaces = new List<IPlayerNormalActions>();
     private readonly InputAction m_PlayerNormal_Move;
+    private readonly InputAction m_PlayerNormal_Rotate;
     private readonly InputAction m_PlayerNormal_Attack;
     private readonly InputAction m_PlayerNormal_TouchPosition;
     private readonly InputAction m_PlayerNormal_TouchPress;
@@ -544,11 +608,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerNormal_UseItem;
     private readonly InputAction m_PlayerNormal_Jump;
     private readonly InputAction m_PlayerNormal_PullBow;
+    private readonly InputAction m_PlayerNormal_LockCamera;
     public struct PlayerNormalActions
     {
         private @Controls m_Wrapper;
         public PlayerNormalActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerNormal_Move;
+        public InputAction @Rotate => m_Wrapper.m_PlayerNormal_Rotate;
         public InputAction @Attack => m_Wrapper.m_PlayerNormal_Attack;
         public InputAction @TouchPosition => m_Wrapper.m_PlayerNormal_TouchPosition;
         public InputAction @TouchPress => m_Wrapper.m_PlayerNormal_TouchPress;
@@ -556,6 +622,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @UseItem => m_Wrapper.m_PlayerNormal_UseItem;
         public InputAction @Jump => m_Wrapper.m_PlayerNormal_Jump;
         public InputAction @PullBow => m_Wrapper.m_PlayerNormal_PullBow;
+        public InputAction @LockCamera => m_Wrapper.m_PlayerNormal_LockCamera;
         public InputActionMap Get() { return m_Wrapper.m_PlayerNormal; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -568,6 +635,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
@@ -589,6 +659,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PullBow.started += instance.OnPullBow;
             @PullBow.performed += instance.OnPullBow;
             @PullBow.canceled += instance.OnPullBow;
+            @LockCamera.started += instance.OnLockCamera;
+            @LockCamera.performed += instance.OnLockCamera;
+            @LockCamera.canceled += instance.OnLockCamera;
         }
 
         private void UnregisterCallbacks(IPlayerNormalActions instance)
@@ -596,6 +669,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
@@ -617,6 +693,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @PullBow.started -= instance.OnPullBow;
             @PullBow.performed -= instance.OnPullBow;
             @PullBow.canceled -= instance.OnPullBow;
+            @LockCamera.started -= instance.OnLockCamera;
+            @LockCamera.performed -= instance.OnLockCamera;
+            @LockCamera.canceled -= instance.OnLockCamera;
         }
 
         public void RemoveCallbacks(IPlayerNormalActions instance)
@@ -639,6 +718,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_HoldingBomb;
     private List<IHoldingBombActions> m_HoldingBombActionsCallbackInterfaces = new List<IHoldingBombActions>();
     private readonly InputAction m_HoldingBomb_Move;
+    private readonly InputAction m_HoldingBomb_LockCamera;
     private readonly InputAction m_HoldingBomb_Jump;
     private readonly InputAction m_HoldingBomb_Throw;
     private readonly InputAction m_HoldingBomb_Put;
@@ -648,6 +728,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         private @Controls m_Wrapper;
         public HoldingBombActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_HoldingBomb_Move;
+        public InputAction @LockCamera => m_Wrapper.m_HoldingBomb_LockCamera;
         public InputAction @Jump => m_Wrapper.m_HoldingBomb_Jump;
         public InputAction @Throw => m_Wrapper.m_HoldingBomb_Throw;
         public InputAction @Put => m_Wrapper.m_HoldingBomb_Put;
@@ -664,6 +745,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @LockCamera.started += instance.OnLockCamera;
+            @LockCamera.performed += instance.OnLockCamera;
+            @LockCamera.canceled += instance.OnLockCamera;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -683,6 +767,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @LockCamera.started -= instance.OnLockCamera;
+            @LockCamera.performed -= instance.OnLockCamera;
+            @LockCamera.canceled -= instance.OnLockCamera;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -848,6 +935,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface IPlayerNormalActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnTouchPosition(InputAction.CallbackContext context);
         void OnTouchPress(InputAction.CallbackContext context);
@@ -855,10 +943,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnUseItem(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnPullBow(InputAction.CallbackContext context);
+        void OnLockCamera(InputAction.CallbackContext context);
     }
     public interface IHoldingBombActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnLockCamera(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnPut(InputAction.CallbackContext context);

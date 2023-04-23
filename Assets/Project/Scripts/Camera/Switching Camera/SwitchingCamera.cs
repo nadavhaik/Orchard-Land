@@ -8,7 +8,8 @@ public class SwitchingCamera : MonoBehaviour
 {
     public float speed = 5f;
 
-    private Camera _start;
+    private Vector3 _startPosition;
+    private Quaternion _startRotation;
     private Camera _dest;
     private Action _afterKilled;
 
@@ -20,14 +21,15 @@ public class SwitchingCamera : MonoBehaviour
 
     public void Init(Camera start, Camera dest, Action afterKilled)
     {
-        _start = start;
+        _startPosition = start.transform.position;
+        _startRotation = start.transform.rotation;
         _dest = dest;
         _afterKilled = afterKilled;
-        _start.enabled = false;
+        start.enabled = false;
         enabled = true;
         
-        transform.position = _start.transform.position;
-        transform.rotation = _start.transform.rotation;
+        transform.position = _startPosition;
+        transform.rotation = _startRotation;
     }
 
     public void Init(Camera start, Camera dest)
@@ -50,15 +52,15 @@ public class SwitchingCamera : MonoBehaviour
         if(!enabled) return;
 
         var distanceFromDest = Vector3.Distance(transform.position, _dest.transform.position);
-        float totalDistance = Vector3.Distance(_start.transform.position, _dest.transform.position);
+        float totalDistance = Vector3.Distance(_startPosition, _dest.transform.position);
         float distancePerFrame = speed * totalDistance * Time.deltaTime;
         
         if(distanceFromDest <= distancePerFrame) Kill();
         
         var t = 1f - (distanceFromDest / totalDistance) + (distancePerFrame / totalDistance);
         
-        transform.position = Vector3.Lerp(_start.transform.position, _dest.transform.position, t);
-        transform.rotation = Quaternion.Lerp(_start.transform.rotation, _dest.transform.rotation, t);
+        transform.position = Vector3.Lerp(_startPosition, _dest.transform.position, t);
+        transform.rotation = Quaternion.Lerp(_startRotation, _dest.transform.rotation, t);
 
     }
 }
