@@ -45,35 +45,37 @@ public class Sword : MonoBehaviour
     private Quaternion _attackStartRot;
     private Quaternion _attackEndRot;
     
+    private const string NotActiveTag = "Untagged"; 
+    private const string ActiveSwordTag = "Sword";
+    private bool Attacking
+    {
+        get => _attacking;
+        set
+        {
+            _attacking = value;
+            tag = _attacking ? ActiveSwordTag : NotActiveTag;
+        }
+    }
+    
 
     void Start()
     {
         _originalPos = transform.localPosition;
         _originalRot = transform.localRotation;
-        
-        if (drawControlPoints)
+
+        GameObject[] controlPoints = { north, south, east, west, stabStart, stabEnd };
+        foreach (var controlPoint in controlPoints)
         {
-            north.GetComponent<Renderer>().enabled = true;
-            south.GetComponent<Renderer>().enabled = true;
-            east.GetComponent<Renderer>().enabled = true;
-            west.GetComponent<Renderer>().enabled = true;
-            stabStart.GetComponent<Renderer>().enabled = true;
-            stabEnd.GetComponent<Renderer>().enabled = true;
+            controlPoint.GetComponent<Renderer>().enabled = drawControlPoints;
         }
-        else
-        {
-            north.GetComponent<Renderer>().enabled = false;
-            south.GetComponent<Renderer>().enabled = false;
-            east.GetComponent<Renderer>().enabled = false;
-            west.GetComponent<Renderer>().enabled = false;
-            stabStart.GetComponent<Renderer>().enabled = false;
-            stabEnd.GetComponent<Renderer>().enabled = false;
-        }
+
+        Attacking = false;
+
     }
 
     void ResetPosition()
     {
-        _attacking = false;
+        Attacking = false;
         _targetRotation = _originalRot;
         _targetPosition = _originalPos;
 
@@ -85,12 +87,11 @@ public class Sword : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!_attacking) return;
+        if(!Attacking) return;
 
         transform.position = _movementCurve(_attackTimer / swingDuration);
         transform.rotation = Quaternion.Lerp(_attackStartRot, _attackEndRot, _attackTimer / swingDuration);
         _attackTimer += Time.deltaTime;
-        if(_attackTimer >= swingDuration) ResetPosition();
     }
 
     bool CanAttack()
@@ -154,20 +155,30 @@ public class Sword : MonoBehaviour
         _attackStartRot = transform.rotation;
         transform.position = attackStartPosition;
 
-        _attacking = true;
+        StartAttack();
+    }
+
+    private void StartAttack()
+    {
+        _attackTimer = 0f; // for animation interpolations only!
+
+        // resetting the logical timer:  
+        CancelInvoke(nameof(ResetPosition));
+        Invoke(nameof(ResetPosition), swingDuration);
+        
+        Attacking = true;
     }
 
     public void Stab()
     {
         if(!CanAttack()) return;
         
-        _attackTimer = 0f;
         _movementCurve = t => Vector3.Lerp(stabStart.transform.position, stabEnd.transform.position, t);
 
         transform.position = _movementCurve(0);
         transform.LookAt(_movementCurve(1));
         _attackStartRot = _attackEndRot = transform.rotation;
 
-        _attacking = true;
+        StartAttack();
     }
 }

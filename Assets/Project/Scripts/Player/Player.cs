@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public Camera mainCamera;
 
     public Camera bowCamera;
+    public SwitchingCamera switchingCamera;
     
     [Header("Movement")]
     public float movementConstant = 5f;
@@ -42,12 +43,17 @@ public class Player : MonoBehaviour
     public Arrow arrow;
     public float bombThrowForce = 50f;
     public float bombThrowingAngle = 30f;
-    public float arrowsCooldown = 0.5f;
+    public float arrowsCooldown = 0.2f;
+    [FormerlySerializedAs("ignoreArrowSelfCollision")] public float ignoreArrowSelfCollisionFor = 0.1f;
+
 
     [Header("Items Control Points")] 
     public bool drawControlPoints;
     public GameObject bombHold;
     public GameObject bombPut;
+    public GameObject bowHold;
+    public GameObject bowBack;
+    
     
     
     [Header("Controls")] 
@@ -77,6 +83,9 @@ public class Player : MonoBehaviour
     private PlayerItem _currentItemEquipped;
     private Bomb _currentBombInstance;
     private Arrow _currentArrowInstance;
+    private Arrow _prevArrowInstance;
+
+    private bool _currentlySwitchingCameras;
     
     
     
@@ -103,9 +112,32 @@ public class Player : MonoBehaviour
         action.canceled += _ => _rightStick = Vector2.zero;
     }
 
+    private Stack<Action> _cancelIgnoreSelfArrow = new();
+    private void CancelIgnoreSelfArrow()
+    {
+        _cancelIgnoreSelfArrow.Pop()();
+    }
+
+    private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
+    {
+        var collider1 = arrow1.GetComponent<Collider>();
+        var collider2 = arrow2.GetComponent<Collider>();
+        
+        Physics.IgnoreCollision(collider1, collider2, true);
+        _cancelIgnoreSelfArrow.Push(() =>
+            Physics.IgnoreCollision(collider1, collider2, false));
+            
+        Invoke(nameof(CancelIgnoreSelfArrow), ignoreArrowSelfCollisionFor);
+    }
+
     void InitArrow()
     {
-        _currentArrowInstance = Instantiate(arrow);
+        Arrow newArrow = Instantiate(arrow);
+        if (_prevArrowInstance != null && _prevArrowInstance.gameObject != null)
+        {
+            TemporaryIgnoreSelfArrowCollision(_prevArrowInstance, newArrow);
+        }
+        _currentArrowInstance = newArrow;
         _currentArrowInstance.transform.position = bow.arrowStart.transform.position;
         _currentArrowInstance.transform.rotation = bow.transform.rotation;
         _currentArrowInstance.transform.parent = bow.transform;
@@ -174,10 +206,15 @@ public class Player : MonoBehaviour
         _controls.PlayerNormal.Attack.performed += _ => sword.Swing(attackDirectionForTest);
         _controls.PlayerNormal.PullBow.performed += _ =>
         {
+            if(_currentlySwitchingCameras) return;
             _controls.PlayerNormal.Disable();
-            mainCamera.enabled = false;
+            _currentlySwitchingCameras = true;
+            WieldBow();
+            Instantiate(switchingCamera).Init(mainCamera, bowCamera, 
+                () => _currentlySwitchingCameras = false);
             _controls.BowPov.Enable();
-            bowCamera.enabled = true;
+            // mainCamera.enabled = false;
+            // bowCamera.enabled = true;
             Invoke( nameof(InitArrow), arrowsCooldown);
         };
     }
@@ -237,20 +274,28 @@ public class Player : MonoBehaviour
             bow.Shoot(_currentArrowInstance);
             Physics.IgnoreCollision(gameObject.GetComponent<Collider>(),
                 _currentArrowInstance.GetComponent<Collider>());
+            
+            _prevArrowInstance = _currentArrowInstance;
             _currentArrowInstance = null;
             Invoke( nameof(InitArrow), arrowsCooldown);
         };
         _controls.BowPov.Cancel.performed += _ =>
         {
+            if(_currentlySwitchingCameras) return;
+            _controls.BowPov.Disable();
+            _currentlySwitchingCameras = true;
+            
             if (_currentArrowInstance != null)
             {
                 Destroy(_currentArrowInstance.gameObject);
             }
-            bow.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-            _controls.BowPov.Disable();
-            bowCamera.enabled = false;
+
+            UnwieldBow();
+            Instantiate(switchingCamera).Init(bowCamera, mainCamera, 
+                () => _currentlySwitchingCameras = false
+            );
             _controls.PlayerNormal.Enable();
-            mainCamera.enabled = true;
+
         };
     }
     
@@ -263,19 +308,31 @@ public class Player : MonoBehaviour
         InitBowPovControls();
     }
     // Start is called before the first frame update
+
+
+    void WieldBow()
+    {
+        bow.transform.position = bowHold.transform.position;
+        bow.transform.rotation = bowHold.transform.rotation;
+    }
+
+    void UnwieldBow()
+    {
+        bow.transform.position = bowBack.transform.position;
+        bow.transform.rotation = bowBack.transform.rotation;
+    }
+    
     void Start()
     {
         _playerRigidBody = GetComponent<Rigidbody>();
-        if (drawControlPoints)
+        
+        GameObject[] controlPoints = { bombHold, bombPut, bowBack, bowHold };
+        foreach (var controlPoint in controlPoints)
         {
-            bombHold.GetComponent<Renderer>().enabled = true;
-            bombPut.GetComponent<Renderer>().enabled = true;
+            controlPoint.GetComponent<Renderer>().enabled = drawControlPoints;
         }
-        else
-        {
-            bombHold.GetComponent<Renderer>().enabled = false;
-            bombPut.GetComponent<Renderer>().enabled = false;
-        }
+        
+        
     }
 
     bool InPov() { return _controls.BowPov.enabled; }

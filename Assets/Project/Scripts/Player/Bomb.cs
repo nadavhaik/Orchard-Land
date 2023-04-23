@@ -7,16 +7,12 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     public float duration = 5f;
-    private bool _activated;
-    private float _timer;
     public GameObject explosion;
     public float mass;
     
     // Start is called before the first frame update
     void Start()
     {
-        _activated = false;
-        _timer = 0f;
     }
 
     public void Activate()
@@ -26,7 +22,7 @@ public class Bomb : MonoBehaviour
         rb.useGravity = true;
         rb.mass = mass;
         
-        _activated = true;
+        Invoke(nameof(Explode), duration);
     }
 
     void Explode()
@@ -39,10 +35,7 @@ public class Bomb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_activated) _timer += Time.deltaTime;
-        if(_timer > duration) Explode();
         
-        // if(_exploded && _explosionInstance == null) Destroy(gameObject);
     }
 
     private void OnParticleCollision(GameObject other)

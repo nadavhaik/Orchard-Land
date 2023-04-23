@@ -54,6 +54,7 @@
      <Compile Include="Assets/WireBuilder/Scripts/TubeRenderer.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bomb.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
+     <Compile Include="Assets/Project/Scripts/Switching Camera/SwitchingCamera.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Settings" />
      <Folder Include="Assets/Project/Materials/Explosion" />
@@ -62,6 +63,7 @@
      <Folder Include="Assets/WireBuilder/Models" />
      <Folder Include="Assets/WireBuilder/Presets" />
      <Folder Include="Assets/Project/Materials" />
+     <Folder Include="Assets/Project/Scripts/Switching Camera" />
      <Folder Include="Assets/Project/LibraryCode" />
      <Folder Include="Assets/WireBuilder/Prefabs" />
      <Folder Include="Assets/WireBuilder/Materials" />

@@ -14,17 +14,11 @@ public class Bow : MonoBehaviour
 
     void Start()
     {
-        if (debugControlPoints)
+        GameObject[] controlPoints = { arrowStart, arrowEnd };
+        foreach (var controlPoint in controlPoints)
         {
-            arrowStart.GetComponent<Renderer>().enabled = true;
-            arrowEnd.GetComponent<Renderer>().enabled = true;
+            controlPoint.GetComponent<Renderer>().enabled = debugControlPoints;
         }
-        else
-        {
-            arrowStart.GetComponent<Renderer>().enabled = false;
-            arrowEnd.GetComponent<Renderer>().enabled = false;
-        }
-        
     }
 
     public void Rotate(float angle)

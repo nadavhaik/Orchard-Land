@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8773831419446299864}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: Arrow
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   mass: 1
   head: {fileID: 4882482653102317196}
   body: {fileID: 7405916242873884496}
-  fixFactor: 10
+  lifeTime: 15
 --- !u!65 &8773831419446299864
 BoxCollider:
   m_ObjectHideFlags: 0
