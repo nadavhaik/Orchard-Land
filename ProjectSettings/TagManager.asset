@@ -12,6 +12,7 @@ TagManager:
   - LockableEnemy
   - DefendingShield
   - ParryingShield
+  - Pendulum
   layers:
   - Default
   - TransparentFX
