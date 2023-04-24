@@ -9,6 +9,9 @@ TagManager:
   - Explosion
   - Arrow
   - TestCube
+  - LockableEnemy
+  - DefendingShield
+  - ParryingShield
   layers:
   - Default
   - TransparentFX

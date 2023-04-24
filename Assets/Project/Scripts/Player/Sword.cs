@@ -44,15 +44,17 @@ public class Sword : MonoBehaviour
 
     private Quaternion _attackStartRot;
     private Quaternion _attackEndRot;
+    private BoxCollider _collider;
     
     private const string NotActiveTag = "Untagged"; 
     private const string ActiveSwordTag = "Sword";
-    private bool Attacking
+    public bool Attacking
     {
         get => _attacking;
-        set
+        private set
         {
             _attacking = value;
+            // _collider.enabled = _attacking;
             tag = _attacking ? ActiveSwordTag : NotActiveTag;
         }
     }
@@ -62,6 +64,7 @@ public class Sword : MonoBehaviour
     {
         _originalPos = transform.localPosition;
         _originalRot = transform.localRotation;
+        _collider = GetComponent<BoxCollider>();
 
         GameObject[] controlPoints = { north, south, east, west, stabStart, stabEnd };
         foreach (var controlPoint in controlPoints)
@@ -70,7 +73,6 @@ public class Sword : MonoBehaviour
         }
 
         Attacking = false;
-
     }
 
     void ResetPosition()
@@ -94,7 +96,7 @@ public class Sword : MonoBehaviour
         _attackTimer += Time.deltaTime;
     }
 
-    bool CanAttack()
+    public bool CanAttack()
     {
         return true;
     }

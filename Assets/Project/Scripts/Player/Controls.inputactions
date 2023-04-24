@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Motion",
+                    "type": "Value",
+                    "id": "9377e647-79ce-43dc-816f-5e7f40c747e4",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -184,6 +193,17 @@
                     "processors": "",
                     "groups": "PhoneWithGamepad",
                     "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1246340-2b2a-4a9c-aeca-a20ca01261a6",
+                    "path": "<Accelerometer>/acceleration",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PhoneWithGamepad",
+                    "action": "Motion",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

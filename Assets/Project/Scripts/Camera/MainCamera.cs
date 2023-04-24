@@ -7,6 +7,7 @@ public class MainCamera : MonoBehaviour
 {
 
 
+    public Player player;
     public GameObject model;
 
     public float distanceFromPlayer = 10f;
@@ -17,10 +18,12 @@ public class MainCamera : MonoBehaviour
     public float maxHeight = 5f;
     // public float startAngle = 180f;
     public float lockSpeed = 10f;
+    public float angleDiffForStopLocking = 0.5f;
     
     private float _xzAngle;
     private float _yOffset;
     private bool _locked;
+    private bool _locking;
 
     private float Height
     {
@@ -74,28 +77,35 @@ public class MainCamera : MonoBehaviour
 
     public void Rotate(Vector2 rotation)
     {
-        if(_locked) return;
+        if(_locking) return;
         var rotationVec = Time.deltaTime * rotation;
         _xzAngle -= rotationSpeed * rotationVec.x;
-        Height += heightChangeSpeed * rotationVec.y;
+        Height -= heightChangeSpeed * rotationVec.y;
         CalculatePosition();
     }
 
     public void Lock()
     {
         _locked = true;
+        _locking = true;
     }
 
     public void Unlock()
     {
         _locked = false;
+        _locking = false;
     }
 
     // Update is called once per frame
 
     void Update()
     {
-        if(!_locked || Mathf.Approximately(StartAngle, _xzAngle)) return;
+        if(!_locking) return;
+        if(Mathf.Abs(StartAngle - _xzAngle) < angleDiffForStopLocking)
+        {
+            _locking = false;
+            return;
+        }
         var t = Time.deltaTime * lockSpeed;
         _xzAngle = Mathf.LerpAngle(_xzAngle, StartAngle, t);
         Height = Mathf.Lerp(Height, startHeight, t);

@@ -55,10 +55,12 @@
      <Compile Include="Assets/Project/Scripts/Player/Bow.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/TubeRenderer.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bomb.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/Shield.cs" />
+     <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
-     <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Folder Include="Assets" />
+     <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Settings" />
      <Folder Include="Assets/Project/Scripts/Camera" />
      <Folder Include="Assets/Project/Materials/Explosion" />
@@ -66,11 +68,13 @@
      <Folder Include="Assets/Project/Materials/Bow" />
      <Folder Include="Assets/WireBuilder/Models" />
      <Folder Include="Assets/WireBuilder/Presets" />
+     <Folder Include="Assets/Project/Audio" />
      <Folder Include="Assets/Project/Materials" />
      <Folder Include="Assets/Project/Scripts/Camera/Switching Camera" />
      <Folder Include="Assets/Project/LibraryCode" />
      <Folder Include="Assets/WireBuilder/Prefabs" />
      <Folder Include="Assets/WireBuilder/Materials" />
+     <Folder Include="Assets/Project/Scripts/GeneralPrefabs" />
      <Folder Include="Assets/Project/Scripts/Player" />
      <Folder Include="Assets/TutorialInfo/Scripts" />
      <Folder Include="Assets/TutorialInfo/Icons" />

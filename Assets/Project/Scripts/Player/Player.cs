@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     [Header("Items and Equipment")]
     public PlayerItem defaultItem = PlayerItem.Bomb;
     public Sword sword;
+    public Shield shield;
     public Bomb bomb;
     public Bow bow;
     public Arrow arrow;
@@ -62,6 +63,7 @@ public class Player : MonoBehaviour
     public float minSwipeForSwing = 1f;
     public float maxDistForDoubleTap = 10f;
     public double maxTimeForDoubleTap = 0.30f;
+    public float minAccForParry = 2.0f;
     
 
     private double _lastTapTime = 0;
@@ -92,6 +94,11 @@ public class Player : MonoBehaviour
     
     private bool _cameraLocked;
     private GameObject _lockedOn;
+
+    public bool LockedOnATarget
+    {
+        get => _lockedOn != null;
+    }
     
     
     
@@ -184,7 +191,7 @@ public class Player : MonoBehaviour
 
     static bool IsLockable(Collider c)
     {
-        return c.CompareTag("TestCube");
+        return c.CompareTag("LockableEnemy");
     }
 
 
@@ -199,7 +206,7 @@ public class Player : MonoBehaviour
         {
             _lockedOn = colliders.First().gameObject;
         }
-
+        shield.Defend();
         mainCamera.Lock();
     }
 
@@ -207,6 +214,7 @@ public class Player : MonoBehaviour
     {
         _cameraLocked = false;
         _lockedOn = null;
+        shield.PutOnBack();
         mainCamera.Unlock();
     }
 
@@ -216,6 +224,16 @@ public class Player : MonoBehaviour
         action.canceled += _ => UnlockCamera();
     }
 
+    bool CanParry()
+    {
+        return !sword.Attacking && shield.CurrentState == ShieldState.Defending;
+    }
+
+    void Parry()
+    {
+        if(CanParry()) shield.Parry();
+    }
+
     void InitNormalControls()
     {
         InitJump(_controls.PlayerNormal.Jump);
@@ -223,6 +241,11 @@ public class Player : MonoBehaviour
         InitRotate(_controls.PlayerNormal.Rotate);
 
         _controls.PlayerNormal.UseItem.performed += _ => PullItem();
+        _controls.PlayerNormal.Motion.performed += ctx =>
+        {
+            var acc = ctx.ReadValue<Vector3>().magnitude;
+            if(acc >= minAccForParry) Parry();
+        };
         
 
         InitTouch(_controls.PlayerNormal.TouchPress, _controls.PlayerNormal.TouchPosition);
@@ -375,6 +398,17 @@ public class Player : MonoBehaviour
     {
         _playerRigidBody = GetComponent<Rigidbody>();
         _mainCameraObj = mainCamera.GetComponent<Camera>();
+        
+        var playerCollider = GetComponent<Collider>();
+        var swordCollider = sword.GetComponent<Collider>();
+        var shieldCollider = shield.GetComponent<Collider>();
+        
+        
+        
+        Physics.IgnoreCollision(playerCollider, shieldCollider);
+        Physics.IgnoreCollision(swordCollider, shieldCollider);
+        Physics.IgnoreCollision(playerCollider, swordCollider);
+        
         
         GameObject[] controlPoints = { bombHold, bombPut, bowBack, bowHold };
         foreach (var controlPoint in controlPoints)

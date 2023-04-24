@@ -10,7 +10,10 @@ public class Pendulum : SwordCollidable
     private Rigidbody _rb;
     private AudioSource _audioSource;
     public GameObject lockable;
+    public float minTimeBetweenHits = 0.5f;
+    private bool _hittable = true;
 
+    void MarkHittable() => _hittable = true;
 
     void Start()
     {
@@ -21,11 +24,28 @@ public class Pendulum : SwordCollidable
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!other.transform.CompareTag("Sword")) return;
+       Hit(other);
+    }
+    
+    private void OnTriggerStay(Collider other)
+    {
+        Hit(other);
+    }
+
+    void Hit(Collider other)
+    {
+        if(!_hittable || !other.transform.CompareTag("Sword")) return;
+        
+        _hittable = false;
         Vector3 collisionDirection = (transform.position - other.transform.position).normalized;
         _rb.AddForce(swordForce * collisionDirection, ForceMode.Impulse);
         _audioSource.Play();
+
+        CancelInvoke(nameof(MarkHittable));
+        Invoke(nameof(MarkHittable), minTimeBetweenHits);
     }
+    
+    
     
 
     // Update is called once per frame
