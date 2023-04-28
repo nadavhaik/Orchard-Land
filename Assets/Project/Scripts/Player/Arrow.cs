@@ -14,7 +14,7 @@ public class Arrow : MonoBehaviour
     private Rigidbody _rb;
     public float lifeTime = 15f;
 
-    
+    private bool _shouldSetNotActive;
     private bool _isActive;
     private const string NotActiveTag = "Untagged"; 
     private const string ActiveArrowTag = "Arrow";
@@ -45,6 +45,15 @@ public class Arrow : MonoBehaviour
             RotationInterpolation(body.transform.forward, _rb.velocity.normalized, Time.deltaTime * g);
     }
 
+    private void LateUpdate()
+    {
+        if (_shouldSetNotActive)
+        {
+            _shouldSetNotActive = false;
+            IsActive = false;
+        }
+    }
+
     private void FixedUpdate()
     {
         FixHead();
@@ -57,7 +66,8 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        IsActive = false;
+        _shouldSetNotActive = true;
+        // IsActive = false;
         // transform.parent = other.transform;
     }
 
