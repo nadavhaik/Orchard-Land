@@ -9,10 +9,13 @@ public class Bomb : MonoBehaviour
     public float duration = 5f;
     public GameObject explosion;
     public float mass;
+
+    private AudioSource _audioSource;
     
     // Start is called before the first frame update
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void Activate()
@@ -23,6 +26,7 @@ public class Bomb : MonoBehaviour
         rb.mass = mass;
         
         Invoke(nameof(Explode), duration);
+        _audioSource.Play();
     }
 
     void Explode()

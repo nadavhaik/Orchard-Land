@@ -80,6 +80,7 @@
      <Folder Include="Assets/WireBuilder/Materials" />
      <Folder Include="Assets/Project/Scripts/GeneralPrefabs" />
      <Folder Include="Assets/Project/Scripts/Player" />
+     <None Include="Assets/Project/external credits.txt" />
      <Folder Include="Assets/Project/Scripts/Enemies" />
      <Folder Include="Assets/TutorialInfo/Scripts" />
      <Folder Include="Assets/TutorialInfo/Icons" />
