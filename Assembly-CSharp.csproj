@@ -41,8 +41,10 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets/Project/Scripts/Hittable.cs" />
      <Compile Include="Assets/Project/LibraryCode/PolarCoordinates.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/PlugController.cs" />
+     <Compile Include="Assets/Project/Scripts/Enemies/SimpleEnemy.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Player.cs" />
      <Compile Include="Assets/Project/Scripts/Enviroment/SwordCollidable.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireBuilder.cs" />
@@ -54,14 +56,13 @@
      <Compile Include="Assets/Project/LibraryCode/MyMath.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bow.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/TubeRenderer.cs" />
+     <Compile Include="Assets/Project/Scripts/Enemies/Enemy.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bomb.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Shield.cs" />
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
-     <Compile Include="Assets/Project/Scripts/Enemies/Enemy.cs" />
-     <Compile Include="Assets/Project/Scripts/Hittable.cs" />
-     <Compile Include="Assets/Project/Scripts/Enemies/SimpleEnemy.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/HasTemporaryHitbox.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Settings" />

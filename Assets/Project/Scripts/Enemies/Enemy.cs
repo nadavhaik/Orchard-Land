@@ -5,15 +5,13 @@ using UnityEngine;
 
 public abstract class Enemy : Hittable
 {
-    protected virtual void Start()
+
+    protected override void InitHitHandlers()
     {
         SetHealthReducerHandler("Sword", 10f);
         SetHealthReducerHandler("Arrow", 5f);
     }
 
-    protected override void TryToHit(Collider other)
-    {
-        base.TryToHit(other);
-        if(health <= 0) Destroy(gameObject);
-    }
+    protected override void Kill() => Destroy(gameObject);
+
 }

@@ -683,6 +683,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869248a6c0b966546b4af50cc4db81db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 500
+  minTimeBetweenHits: 1
   model: {fileID: 94077034}
   mainCamera: {fileID: 330585548}
   bowCamera: {fileID: 1301157340}

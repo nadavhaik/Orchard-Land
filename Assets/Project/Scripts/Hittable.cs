@@ -8,7 +8,7 @@ public abstract class Hittable : MonoBehaviour
     public float health;
     public float minTimeBetweenHits = 0.05f;
     protected double lastHitTime;
-    protected Dictionary<string, Action> hitHandlers = new(); 
+    private Dictionary<string, Action> _hitHandlers = new(); 
     private bool _hittable = true;
     
     void MarkHittable() => _hittable = true;
@@ -18,31 +18,44 @@ public abstract class Hittable : MonoBehaviour
 
     protected void OnTriggerEnter(Collider other) => TryToHit(other);
     protected void OnTriggerStay(Collider other) => TryToHit(other);
-    
-    protected virtual void TryToHit(Collider other)
+
+    protected abstract void InitHitHandlers();
+
+    protected virtual void Start()
     {
-        if(!_hittable || !hitHandlers.ContainsKey(other.tag)) return;
+        InitHitHandlers();
+    }
+
+    private void TryToHit(Collider other)
+    {
+        if(!_hittable || !_hitHandlers.ContainsKey(other.tag)) return;
         CancelInvoke(nameof(MarkHittable));
         _hittable = false;
-        hitHandlers[other.tag]();
+        _hitHandlers[other.tag]();
         lastHitTime = Time.fixedTimeAsDouble;
         Invoke(nameof(MarkHittable), minTimeBetweenHits);
     }
 
-    protected void AddHandler(string tag, Action handler)
+    protected void SetHandler(string tag, Action handler)
     {
-        hitHandlers[tag] = handler;
+        _hitHandlers[tag] = handler;
     }
 
     protected void SetHealthReducerHandler(string tag, float reduce)
     {
-        AddHandler(tag, () =>
+        SetHandler(tag, () =>
         {
             AnimateHit();
             health -= reduce;
         });
     }
 
+    protected virtual void Update()
+    {
+        if(health <= 0) Kill();
+    }
+
     protected abstract void AnimateHit();
-    
+    protected abstract void Kill();
+
 }

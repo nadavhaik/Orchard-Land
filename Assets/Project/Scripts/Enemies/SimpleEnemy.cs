@@ -6,10 +6,7 @@ public class SimpleEnemy : Enemy
 {
     // Start is called before the first frame update
 
-    protected override void AnimateHit()
-    {
-        
-    }
+    protected override void AnimateHit() { }
 
     // protected override void Start()
     // {
@@ -17,8 +14,4 @@ public class SimpleEnemy : Enemy
     // }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -19,7 +19,7 @@ public enum ControlScheme
     HoldingBomb
 }
 
-public class Player : MonoBehaviour
+public class Player : Hittable
 {
     [Header("Visuals")] 
     public GameObject model;
@@ -100,8 +100,9 @@ public class Player : MonoBehaviour
         get => _lockedOn != null;
     }
     
-    
-    
+    protected override void AnimateHit() { }
+
+
     void Jump()
     {
         if(!_onFloor) return;
@@ -393,9 +394,17 @@ public class Player : MonoBehaviour
         bow.transform.position = bowBack.transform.position;
         bow.transform.rotation = bowBack.transform.rotation;
     }
-    
-    void Start()
+
+    protected override void InitHitHandlers()
     {
+        SetHealthReducerHandler("SimpleEnemy", 10f);
+        SetHealthReducerHandler("Explosion", 20f);
+    }
+    
+    protected override void Start()
+    {
+        base.Start();
+
         _playerRigidBody = GetComponent<Rigidbody>();
         _mainCameraObj = mainCamera.GetComponent<Camera>();
         
@@ -419,9 +428,7 @@ public class Player : MonoBehaviour
     }
 
     bool InPov() { return _controls.BowPov.enabled; }
-
-    // Update is called once per frame
-
+    
     void MoveLocked(Vector2 movement)
     {
         transform.position += model.transform.rotation * new Vector3(movement.x, 0, movement.y) * (movementConstant * Time.deltaTime); // on the xz plane
@@ -471,9 +478,16 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         _onFloor = Physics.Raycast(transform.position, Vector3.down, out hit, 1.01f);
     }
-    
-    void Update()
+
+    protected override void Kill()
     {
+        Debug.Log("Game Over");
+        Destroy(gameObject);
+    }
+    
+    protected override void Update()
+    {
+        base.Update();
         CheckIfOnFloor();
         Move(_leftStick);
         Rotate(_rightStick);
@@ -490,14 +504,8 @@ public class Player : MonoBehaviour
         }
         
         if(_touching) _touchEnd = _touchPositionSource.ReadValue<Vector2>();
-
     }
 
-    void Hit()
-    {
-        
-    }
-    
     static readonly Dictionary<int, AttackDirection> InterpolatedDirections = new Dictionary<int, AttackDirection>{
             {0, AttackDirection.WestToEast},
             {45, AttackDirection.SwToNe},
@@ -559,8 +567,5 @@ public class Player : MonoBehaviour
         _controls.Disable();
     }
 
-    private void OnParticleCollision(GameObject other)
-    {
-        Debug.Log($"Collusion with particle {other.tag}");
-    }
+
 }

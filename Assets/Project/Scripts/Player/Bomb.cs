@@ -38,8 +38,9 @@ public class Bomb : MonoBehaviour
         
     }
 
-    private void OnParticleCollision(GameObject other)
+    private void OnTriggerEnter(Collider other)
     {
-      if(other.CompareTag("Explosion")) Explode();
+        if(other.CompareTag("Explosion")) Explode();
     }
+
 }
