@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,14 +14,14 @@ public class Shield : MonoBehaviour
     public GameObject parryEnd;
     public float parryDuration = 2f;
     public GameObject model;
-    
+
     public ShieldState CurrentState { get; private set; }
     private float _parryTimer;
     private Collider _collider;
 
     public void Parry()
     {
-        if(CurrentState != ShieldState.Defending) Defend();
+        if (CurrentState != ShieldState.Defending) Defend();
         _collider.enabled = true;
         tag = "ParryingShield";
         _parryTimer = 0f;
@@ -29,7 +30,7 @@ public class Shield : MonoBehaviour
 
     public void Defend()
     {
-        _collider.enabled = false;
+        _collider.enabled = true;
         tag = "DefendingShield";
         transform.position = defendPosition.transform.position;
         transform.rotation = defendPosition.transform.rotation;
@@ -44,7 +45,7 @@ public class Shield : MonoBehaviour
         transform.rotation = backPosition.transform.rotation;
         CurrentState = ShieldState.OnBack;
     }
-    
+
     void Start()
     {
         _collider = GetComponent<Collider>();
@@ -53,12 +54,12 @@ public class Shield : MonoBehaviour
     }
 
     // Update is called once per frame
-    
+
     void Update()
     {
-        if(CurrentState != ShieldState.Parrying) return;
-        
-        if(_parryTimer >= parryDuration) Defend();
+        if (CurrentState != ShieldState.Parrying) return;
+
+        if (_parryTimer >= parryDuration) Defend();
         else
         {
             transform.position = Vector3.Lerp(defendPosition.transform.position, parryEnd.transform.position,

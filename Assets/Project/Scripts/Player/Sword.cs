@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public enum AttackDirection
@@ -31,6 +32,9 @@ public class Sword : MonoBehaviour
     public GameObject stabStart;
     public GameObject stabEnd;
     public bool drawControlPoints;
+    
+    [Header("Tagging")]
+    public string ActiveSwordTag = "Sword";
 
     private float _attackTimer;
     private Quaternion _targetRotation;
@@ -46,8 +50,13 @@ public class Sword : MonoBehaviour
     private Quaternion _attackEndRot;
     private BoxCollider _collider;
     
-    private const string NotActiveTag = "Untagged"; 
-    private const string ActiveSwordTag = "Sword";
+    private const string NotActiveTag = "Untagged";
+
+    public UnityEvent opponentDefendedEvent = new();
+    public UnityEvent opponentParriedEvent = new();
+
+    private AudioSource _audioSource;
+
     public bool Attacking
     {
         get => _attacking;
@@ -65,6 +74,7 @@ public class Sword : MonoBehaviour
         _originalPos = transform.localPosition;
         _originalRot = transform.localRotation;
         _collider = GetComponent<BoxCollider>();
+        _audioSource = GetComponent<AudioSource>();
 
         GameObject[] controlPoints = { north, south, east, west, stabStart, stabEnd };
         foreach (var controlPoint in controlPoints)
@@ -73,6 +83,38 @@ public class Sword : MonoBehaviour
         }
 
         Attacking = false;
+    }
+
+    private void HandleDefended()
+    {
+        opponentDefendedEvent.Invoke();
+        ResetPosition();
+        _audioSource.Play();
+    }
+
+    private void HandleParried()
+    {
+        Debug.Log("Parried!");
+        opponentParriedEvent.Invoke();
+        ResetPosition();
+        _audioSource.Play();
+    }
+
+    void CheckTrigger(Collider other)
+    {
+        if(!Attacking) return;
+        if (other.CompareTag("DefendingShield")) HandleDefended();
+        else if (other.CompareTag("ParryingShield")) HandleParried();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        CheckTrigger(other);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+       CheckTrigger(other);
     }
 
     void ResetPosition()

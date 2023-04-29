@@ -45,13 +45,16 @@
      <Compile Include="Assets/Project/LibraryCode/PolarCoordinates.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/PlugController.cs" />
      <Compile Include="Assets/Project/Scripts/Enemies/SimpleEnemy.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/HasTemporaryHitbox.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Player.cs" />
      <Compile Include="Assets/Project/Scripts/Enviroment/SwordCollidable.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireBuilder.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Sword.cs" />
+     <Compile Include="Assets/Project/Scripts/Enemies/RealEnemy.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Controls.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/Switching Camera/SwitchingCamera.cs" />
      <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
+     <Compile Include="Assets/Project/LibraryCode/EnumFuncs.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Arrow.cs" />
      <Compile Include="Assets/Project/LibraryCode/MyMath.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bow.cs" />
@@ -62,7 +65,6 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
-     <Compile Include="Assets/Project/Scripts/Player/HasTemporaryHitbox.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Settings" />

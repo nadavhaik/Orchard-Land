@@ -410,6 +410,7 @@ public class Player : Hittable
     {
         SetHealthReducerHandler("SimpleEnemy", 10f);
         SetHealthReducerHandler("Explosion", 20f);
+        SetHealthReducerHandler("EnemySword", 50f);
     }
     
     protected override void Start()

@@ -13,6 +13,7 @@ TagManager:
   - DefendingShield
   - ParryingShield
   - Pendulum
+  - EnemySword
   layers:
   - Default
   - TransparentFX
