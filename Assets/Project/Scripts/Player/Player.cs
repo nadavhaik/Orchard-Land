@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 
 public enum PlayerItem
@@ -46,6 +47,8 @@ public class Player : Hittable
     public Arrow arrow;
     public float bombThrowForce = 50f;
     public float bombThrowingAngle = 30f;
+    public float minBombPlaceForce = 0f;
+    [FormerlySerializedAs("max0ombPlaceForce")] public float maxBombPlaceForce = 2f;
     public float arrowsCooldown = 0.2f;
     public float ignoreArrowSelfCollisionFor = 0.1f;
 
@@ -313,7 +316,15 @@ public class Player : Hittable
     {
         _currentBombInstance.transform.position = bombPut.transform.position;
         _currentBombInstance.transform.parent = transform.parent;
+
         _currentBombInstance.Activate();
+        
+        var oneOrMinusOne = 2f * (Mathf.Round(Random.Range(0, 1)) - 0.5f);
+        var pushForce = new Vector3(
+            Random.Range(minBombPlaceForce, maxBombPlaceForce) * oneOrMinusOne,
+            0f,
+            Random.Range(minBombPlaceForce, maxBombPlaceForce));
+        _currentBombInstance.GetComponent<Rigidbody>().AddForce(model.transform.rotation * pushForce);
         
         _controls.HoldingBomb.Disable();
         _controls.PlayerNormal.Enable();

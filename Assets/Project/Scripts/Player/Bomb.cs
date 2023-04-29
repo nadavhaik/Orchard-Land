@@ -11,11 +11,18 @@ public class Bomb : MonoBehaviour
     public float mass;
 
     private AudioSource _audioSource;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        var allBombs = GameObject.FindObjectsOfType<Bomb>();
+        var myCollider = GetComponent<Collider>();
+        foreach (var bomb in allBombs)
+        {
+            if(bomb == this) continue;
+            Physics.IgnoreCollision(myCollider, bomb.GetComponent<Collider>());
+        }
     }
 
     public void Activate()

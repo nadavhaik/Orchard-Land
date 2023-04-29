@@ -703,6 +703,8 @@ MonoBehaviour:
   arrow: {fileID: 889123615753839034, guid: 706f7d684a98416129a6b78595218424, type: 3}
   bombThrowForce: 900
   bombThrowingAngle: 15
+  minBombPlaceForce: 20
+  max0ombPlaceForce: 50
   arrowsCooldown: 0.05
   ignoreArrowSelfCollisionFor: 0.1
   drawControlPoints: 0
