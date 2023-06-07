@@ -67,6 +67,9 @@ public class Player : Hittable
     public float maxDistForDoubleTap = 10f;
     public double maxTimeForDoubleTap = 0.30f;
     public float minAccForParry = 2.0f;
+    public float parrySlowMotionDuration = 1.0f;
+    public float regularMotionTimeScale = 1.0f;
+    public float slowMotionTimeScale = 0.5f;
     
 
     private double _lastTapTime = 0;
@@ -97,6 +100,8 @@ public class Player : Hittable
     
     private bool _cameraLocked;
     private GameObject _lockedOn;
+
+    private bool _inSlowMotion = false;
 
     public bool LockedOnATarget
     {
@@ -228,6 +233,8 @@ public class Player : Hittable
         action.canceled += _ => UnlockCamera();
     }
 
+
+
     bool CanParry()
     {
         return !sword.Attacking && shield.CurrentState == ShieldState.Defending;
@@ -236,6 +243,28 @@ public class Player : Hittable
     void Parry()
     {
         if(CanParry()) shield.Parry();
+    }
+
+    public void StopSlowMotion()
+    {
+        Debug.Log("Stopped Slow motion!");
+        _inSlowMotion = false;
+        Time.timeScale = regularMotionTimeScale;
+        Time.fixedDeltaTime /= slowMotionTimeScale;
+    }
+    public void EnterSlowMotion(float duration)
+    {
+        Debug.Log("Entered Slow motion!");
+        _inSlowMotion = true;
+        Time.timeScale = slowMotionTimeScale;
+        Time.fixedDeltaTime *= slowMotionTimeScale;
+        Invoke(nameof(StopSlowMotion), duration * slowMotionTimeScale);
+    }
+
+    public void HandleParry()
+    {
+        if(_inSlowMotion) return;
+        EnterSlowMotion(parrySlowMotionDuration);
     }
 
     void InitNormalControls()

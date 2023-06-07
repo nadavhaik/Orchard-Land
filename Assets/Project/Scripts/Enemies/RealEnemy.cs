@@ -17,6 +17,7 @@ public class RealEnemy : Enemy
     public float minTimeBetweenAttacks = 1f;
     public float maxTimeBetweenAttacks = 10f;
     public float stunTime = 3f;
+    public float cooldownForPredictableAttacks = 0.5f;
     public Sword enemySword;
     public float parryForce = 2f;
     private bool _stunned = false;
@@ -44,6 +45,7 @@ public class RealEnemy : Enemy
         
         enemySword.opponentDefendedEvent.AddListener(OnDefended);
         enemySword.opponentParriedEvent.AddListener(OnParried);
+        enemySword.opponentParriedEvent.AddListener(player.HandleParry);
     }
 
     void OnDefended()
@@ -97,8 +99,8 @@ public class RealEnemy : Enemy
     void MarkAttackIsDone() => _currentState = EnemyState.Fighting;
     void Attack()
     {
-        enemySword.Swing(EnumFuncs.RandomEnumValue<AttackDirection>());
-        Invoke(nameof(MarkAttackIsDone), enemySword.swingDuration);
+        enemySword.SwingPredictably(EnumFuncs.RandomEnumValue<AttackDirection>(), cooldownForPredictableAttacks);
+        Invoke(nameof(MarkAttackIsDone), enemySword.swingDuration + cooldownForPredictableAttacks);
     }
 
     // Update is called once per frame

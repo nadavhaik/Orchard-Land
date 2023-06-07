@@ -799,6 +799,9 @@ MonoBehaviour:
   maxDistForDoubleTap: 20
   maxTimeForDoubleTap: 0.2
   minAccForParry: 2
+  parrySlowMotionDuration: 4
+  regularMotionTimeScale: 1
+  slowMotionTimeScale: 0.1
   attackDirectionForTest: 4
 --- !u!4 &310275842
 Transform:
@@ -1043,9 +1046,10 @@ MonoBehaviour:
   yieldDistance: 50
   minAttackDistance: 3
   maxDistanceFromStartPoint: 1
-  minTimeBetweenAttacks: 1
-  maxTimeBetweenAttacks: 5
+  minTimeBetweenAttacks: 0.5
+  maxTimeBetweenAttacks: 1
   stunTime: 3
+  cooldownForPredictableAttacks: 0.5
   enemySword: {fileID: 1156861064}
   parryForce: 10
 --- !u!54 &333552500
@@ -3480,7 +3484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d7b7f3b1a7adbfa94cdee04f040b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingDuration: 0.2
+  swingDuration: 0.15
   handle: {fileID: 968412011}
   model: {fileID: 334259808}
   north: {fileID: 339287505}
