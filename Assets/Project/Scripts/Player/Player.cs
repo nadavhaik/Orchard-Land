@@ -22,6 +22,8 @@ public enum ControlScheme
 
 public class Player : Hittable
 {
+    public HealthBar uiHealthBar;
+    
     [Header("Visuals")] 
     public GameObject model;
 
@@ -102,6 +104,11 @@ public class Player : Hittable
     private GameObject _lockedOn;
 
     private bool _inSlowMotion = false;
+
+    protected override void UpdateHealthBar()
+    {
+        
+    }
 
     public bool LockedOnATarget
     {
@@ -439,12 +446,13 @@ public class Player : Hittable
     {
         SetHealthReducerHandler("SimpleEnemy", 10f);
         SetHealthReducerHandler("Explosion", 20f);
-        SetHealthReducerHandler("EnemySword", 50f);
+        SetHealthReducerHandler("EnemySword", 200f);
     }
     
     protected override void Start()
     {
         base.Start();
+        healthBar = uiHealthBar;
 
         _playerRigidBody = GetComponent<Rigidbody>();
         _mainCameraObj = mainCamera.GetComponent<Camera>();

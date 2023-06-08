@@ -65,6 +65,9 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
+     <Compile Include="Assets/Project/Scripts/HP/HealthBar.cs" />
+     <Compile Include="Assets/Project/Scripts/HP/PlayerHealthBar.cs" />
+     <Compile Include="Assets/Project/Scripts/HP/EnemyHealthBar.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Settings" />
@@ -93,6 +96,7 @@
      <Folder Include="Assets/WireBuilder" />
      <Folder Include="Assets/Project/Scripts/Enviroment" />
      <Folder Include="Assets/Project" />
+     <Folder Include="Assets/Project/Scripts/HP" />
      <Reference Include="UnityEngine">
      <HintPath>/home/nadavh/Unity/Hub/Editor/2021.3.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
@@ -818,6 +822,9 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Sprite.Editor">
+     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

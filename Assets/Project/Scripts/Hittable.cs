@@ -5,7 +5,8 @@ using UnityEngine;
 
 public abstract class Hittable : MonoBehaviour
 {
-    public float health;
+    protected HealthBar healthBar;
+    
     public float minTimeBetweenHits = 0.05f;
     protected double lastHitTime;
     private Dictionary<string, Action> _hitHandlers = new(); 
@@ -41,18 +42,28 @@ public abstract class Hittable : MonoBehaviour
         _hitHandlers[tag] = handler;
     }
 
+    protected abstract void UpdateHealthBar();
+
     protected void SetHealthReducerHandler(string tag, float reduce)
     {
         SetHandler(tag, () =>
         {
             AnimateHit();
-            health -= reduce;
+            if(healthBar == null) return;
+            healthBar.Reduce(reduce);
+            UpdateHealthBar();
         });
     }
 
     protected virtual void Update()
     {
-        if(health <= 0) Kill();
+        if(healthBar == null) return;
+        if (healthBar.CurrentHealth <= 0)
+        {
+            // Destroy(healthBar);
+            Debug.Log($"Killing {gameObject.tag}");
+            Kill();
+        }
     }
 
     protected abstract void AnimateHit();

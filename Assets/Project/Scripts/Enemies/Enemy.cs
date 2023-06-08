@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class Enemy : Hittable
 {
+    public EnemyHealthBar healthBarPrefab;
+    public float maxHealth;
 
     private static bool Is01(float a) {
         return a > 0 && a < 1;
@@ -32,6 +34,22 @@ public abstract class Enemy : Hittable
         return inCameraFrustum && inFrontOfCamera && !objectBlockingPoint;
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        if(healthBarPrefab == null) return;
+        healthBarPrefab.maxHealth = maxHealth;
+        healthBar = Instantiate(healthBarPrefab, transform);
+
+        Debug.Log("instansiated");
+    }
+    
+
+    protected override void UpdateHealthBar()
+    {
+        
+    }
+
 
     protected override void InitHitHandlers()
     {
@@ -39,6 +57,9 @@ public abstract class Enemy : Hittable
         SetHealthReducerHandler("Arrow", 5f);
     }
 
-    protected override void Kill() => Destroy(gameObject);
-
+    protected override void Kill()
+    {
+        // Destroy(healthBar);
+        Destroy(gameObject);
+    }
 }

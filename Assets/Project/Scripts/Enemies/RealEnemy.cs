@@ -35,6 +35,8 @@ public class RealEnemy : Enemy
         _rb.AddForce(-parryForce * transform.forward);
         Invoke(nameof(MarkNotStunned), stunTime);
     }
+
+    
     
     protected override void Start()
     {
