@@ -100,15 +100,23 @@ public class MainCamera : MonoBehaviour
 
     void Update()
     {
-        if(!_locking) return;
-        if(Mathf.Abs(StartAngle - _xzAngle) < angleDiffForStopLocking)
+        if (_locking)
         {
-            _locking = false;
-            return;
+            if(Mathf.Abs(StartAngle - _xzAngle) < angleDiffForStopLocking)
+            {
+                _locking = false;
+                return;
+            }
+            var t = Time.deltaTime * lockSpeed;
+            _xzAngle = Mathf.LerpAngle(_xzAngle, StartAngle, t);
+            Height = Mathf.Lerp(Height, startHeight, t);
+            CalculatePosition();    
         }
-        var t = Time.deltaTime * lockSpeed;
-        _xzAngle = Mathf.LerpAngle(_xzAngle, StartAngle, t);
-        Height = Mathf.Lerp(Height, startHeight, t);
-        CalculatePosition();
+        else if (player.LockedOnATarget)
+        {
+            _xzAngle = StartAngle;
+            CalculatePosition();
+        }
+        
     }
 }
