@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -544,11 +545,13 @@ public class Player : Hittable
         RaycastHit hit;
         _onFloor = Physics.Raycast(transform.position, Vector3.down, out hit, 1.01f);
     }
+    
 
     protected override void Kill()
     {
         Debug.Log("Game Over");
-        Destroy(gameObject);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // Destroy(gameObject);
     }
     
     protected override void Update()

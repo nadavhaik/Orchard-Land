@@ -193,3 +193,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hbImage: {fileID: 8389017055511739658}
   maxHealth: 50
+  hideAfterNotHitFor: 10
