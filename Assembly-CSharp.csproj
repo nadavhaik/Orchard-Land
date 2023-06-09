@@ -41,10 +41,12 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets/Project/Scripts/HP/EnemyHealthBar.cs" />
      <Compile Include="Assets/Project/Scripts/Hittable.cs" />
      <Compile Include="Assets/Project/LibraryCode/PolarCoordinates.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/PlugController.cs" />
      <Compile Include="Assets/Project/Scripts/Enemies/SimpleEnemy.cs" />
+     <Compile Include="Assets/Project/Scripts/HP/PlayerHealthBar.cs" />
      <Compile Include="Assets/Project/Scripts/Player/HasTemporaryHitbox.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Player.cs" />
      <Compile Include="Assets/Project/Scripts/Enviroment/SwordCollidable.cs" />
@@ -56,6 +58,7 @@
      <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
      <Compile Include="Assets/Project/LibraryCode/EnumFuncs.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Arrow.cs" />
+     <Compile Include="Assets/Project/Scripts/HP/HealthBar.cs" />
      <Compile Include="Assets/Project/LibraryCode/MyMath.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bow.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/TubeRenderer.cs" />
@@ -65,14 +68,12 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
-     <Compile Include="Assets/Project/Scripts/HP/HealthBar.cs" />
-     <Compile Include="Assets/Project/Scripts/HP/PlayerHealthBar.cs" />
-     <Compile Include="Assets/Project/Scripts/HP/EnemyHealthBar.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Settings" />
      <Folder Include="Assets/Project/Scripts/Camera" />
      <Folder Include="Assets/Project/Materials/Explosion" />
+     <Folder Include="Assets/Project/Sprites" />
      <Folder Include="Assets/WireBuilder/Scripts" />
      <Folder Include="Assets/Project/Materials/Bow" />
      <Folder Include="Assets/WireBuilder/Models" />
@@ -763,8 +764,8 @@
      <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+     <Reference Include="Unity.2D.Sprite.Editor">
+     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.Flow">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll</HintPath>
@@ -786,6 +787,9 @@
      </Reference>
      <Reference Include="Unity.PlasticSCM.Editor">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.RenderPipelines.Core.Runtime">
+     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.Core">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.Core.dll</HintPath>
@@ -822,9 +826,6 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Sprite.Editor">
-     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -104,6 +104,7 @@ public class Player : Hittable
     private GameObject _lockedOn;
 
     private bool _inSlowMotion = false;
+    private AndroidJavaObject _accPlugin;
 
     protected override void UpdateHealthBar()
     {
@@ -271,7 +272,14 @@ public class Player : Hittable
     public void HandleParry()
     {
         if(_inSlowMotion) return;
+        Handheld.Vibrate();
         EnterSlowMotion(parrySlowMotionDuration);
+    }
+
+    void CheckAccForParry(Vector3 acc)
+    {
+        var accSize = acc.magnitude;
+        if(accSize >= minAccForParry) Parry();
     }
 
     void InitNormalControls()
@@ -279,12 +287,18 @@ public class Player : Hittable
         InitJump(_controls.PlayerNormal.Jump);
         InitMove(_controls.PlayerNormal.Move);
         InitRotate(_controls.PlayerNormal.Rotate);
+       
+// #if UNITY_ANDROID
+//       _accPlugin = new AndroidJavaClass("jp.kshoji.unity.sensor.UnitySensorPlugin").CallStatic<AndroidJavaObject>("getInstance");
+//       _accPlugin.Call("startSensorListening", "accelerometer");
+// #endif   
+    
 
         _controls.PlayerNormal.UseItem.performed += _ => PullItem();
         _controls.PlayerNormal.Motion.performed += ctx =>
         {
-            var acc = ctx.ReadValue<Vector3>().magnitude;
-            if(acc >= minAccForParry) Parry();
+            var accVec = ctx.ReadValue<Vector3>();
+            CheckAccForParry(accVec);
         };
         
 
@@ -421,6 +435,9 @@ public class Player : Hittable
     void Awake()
     {
         _controls = new Controls();
+#if UNITY_ANDROID // Shame on you, Unity!
+        Input.gyro.enabled = true;
+#endif
         _currentItemEquipped = defaultItem;
         InitNormalControls();
         InitBombControls();
@@ -537,6 +554,15 @@ public class Player : Hittable
     protected override void Update()
     {
         base.Update();
+        
+#if UNITY_ANDROID // Shame on you, Unity!
+        if (_controls.PlayerNormal.Motion.enabled)
+        {
+            var acc = Input.acceleration;
+            CheckAccForParry(acc);
+        }
+#endif
+        
         CheckIfOnFloor();
         Move(_leftStick);
         Rotate(_rightStick);
@@ -617,4 +643,14 @@ public class Player : Hittable
     }
 
 
+//     private void OnApplicationQuit()
+//     {
+// #if UNITY_ANDROID
+//         if (_accPlugin != null)
+//         {
+//             _accPlugin.Call("terminate");
+//             _accPlugin = null;
+//         }
+// #endif
+//     }
 }
