@@ -68,36 +68,68 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/FPSUpdater.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <Folder Include="Assets/Settings" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
+     <Folder Include="Assets/TextMesh Pro/Sprites" />
+     <Folder Include="Assets/TextMesh Pro/Resources/Sprite Assets" />
      <Folder Include="Assets/Project/Scripts/Camera" />
      <Folder Include="Assets/Project/Materials/Explosion" />
      <Folder Include="Assets/Project/Sprites" />
      <Folder Include="Assets/WireBuilder/Scripts" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
      <Folder Include="Assets/Project/Materials/Bow" />
      <Folder Include="Assets/WireBuilder/Models" />
      <Folder Include="Assets/WireBuilder/Presets" />
+     <Folder Include="Assets/TextMesh Pro/Resources/Fonts &amp; Materials" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
+     <Folder Include="Assets/TextMesh Pro/Resources" />
      <Folder Include="Assets/Project/Audio" />
      <Folder Include="Assets/Project/Materials" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
      <Folder Include="Assets/Project/Scripts/Camera/Switching Camera" />
      <Folder Include="Assets/Project/LibraryCode" />
+     <Folder Include="Assets/TextMesh Pro" />
      <Folder Include="Assets/WireBuilder/Prefabs" />
      <Folder Include="Assets/WireBuilder/Materials" />
      <Folder Include="Assets/Project/Scripts/GeneralPrefabs" />
      <Folder Include="Assets/Project/Scripts/Player" />
      <None Include="Assets/Project/external credits.txt" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
+     <None Include="Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF.shader" />
      <Folder Include="Assets/Project/Scripts/Enemies" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
+     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
+     <Folder Include="Assets/TextMesh Pro/Shaders" />
+     <Folder Include="Assets/TextMesh Pro/Resources/Style Sheets" />
      <Folder Include="Assets/TutorialInfo/Scripts" />
+     <Folder Include="Assets/TextMesh Pro/Fonts" />
      <Folder Include="Assets/TutorialInfo/Icons" />
      <Folder Include="Assets/TutorialInfo" />
+     <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
      <Folder Include="Assets/Project/Scripts/Enviroment/Pendulum" />
      <Folder Include="Assets/Project/Scripts" />
      <Folder Include="Assets/Scenes" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
      <Folder Include="Assets/WireBuilder" />
      <Folder Include="Assets/Project/Scripts/Enviroment" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
      <Folder Include="Assets/Project" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt" />
+     <Folder Include="Assets/TextMesh Pro/Documentation" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader" />
      <Folder Include="Assets/Project/Scripts/HP" />
+     <None Include="Assets/TextMesh Pro/Sprites/EmojiOne.json" />
+     <None Include="Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" />
      <Reference Include="UnityEngine">
      <HintPath>/home/nadavh/Unity/Hub/Editor/2021.3.23f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
@@ -826,6 +858,9 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
+     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

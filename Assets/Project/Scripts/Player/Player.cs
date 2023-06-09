@@ -215,6 +215,7 @@ public class Player : Hittable
 
     void LockCamera()
     {
+        // Debug.Log("Called LockCamera()");
         _cameraLocked = true;
         var currentPosition = transform.position;
         var colliders = Physics.OverlapSphere(currentPosition, maxLockDistance)
@@ -557,7 +558,6 @@ public class Player : Hittable
     protected override void Update()
     {
         base.Update();
-        
 #if UNITY_ANDROID // Shame on you, Unity!
         if (_controls.PlayerNormal.Motion.enabled)
         {

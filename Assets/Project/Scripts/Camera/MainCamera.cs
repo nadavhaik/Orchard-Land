@@ -94,6 +94,7 @@ public class MainCamera : MonoBehaviour
     {
         _locked = false;
         _locking = false;
+        
     }
 
     // Update is called once per frame
