@@ -161,7 +161,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &44025031361985767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,5 +192,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hbImage: {fileID: 8389017055511739658}
-  maxHealth: 50
-  hideAfterNotHitFor: 10
+  maxHealth: 100
+  hideAfterNotHitFor: 30

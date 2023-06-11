@@ -93,6 +93,7 @@ public class Player : Hittable
     private bool _onFloor;
     private bool _isInvincable = false;
     private Rigidbody _playerRigidBody;
+    private CharacterController _characterController;
     
     private PlayerItem _currentItemEquipped;
     private Bomb _currentBombInstance;
@@ -124,6 +125,7 @@ public class Player : Hittable
     void Jump()
     {
         if(!_onFloor) return;
+        
        _playerRigidBody.AddForce(0, jumpForce, 0);
     }
 
@@ -474,11 +476,13 @@ public class Player : Hittable
         healthBar = uiHealthBar;
 
         _playerRigidBody = GetComponent<Rigidbody>();
+        // Destroy(_playerRigidBody);
         _mainCameraObj = mainCamera.GetComponent<Camera>();
         
-        var playerCollider = GetComponent<Collider>();
+        var playerCollider = GetComponent<CapsuleCollider>();
         var swordCollider = sword.GetComponent<Collider>();
         var shieldCollider = shield.GetComponent<Collider>();
+        Destroy(GetComponent<BoxCollider>());
         
         
         
