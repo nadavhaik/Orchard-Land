@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -215,7 +216,6 @@ public class Player : Hittable
 
     void LockCamera()
     {
-        // Debug.Log("Called LockCamera()");
         _cameraLocked = true;
         var currentPosition = transform.position;
         var colliders = Physics.OverlapSphere(currentPosition, maxLockDistance)
@@ -325,7 +325,7 @@ public class Player : Hittable
                 Stab();
             }
         };
-        _controls.PlayerNormal.Attack.performed += _ => sword.Swing(attackDirectionForTest);
+        // _controls.PlayerNormal.Attack.performed += _ => sword.Swing(attackDirectionForTest);
         _controls.PlayerNormal.PullBow.performed += _ =>
         {
             if(_currentlySwitchingCameras) return;
@@ -564,6 +564,8 @@ public class Player : Hittable
             var acc = Input.acceleration;
             CheckAccForParry(acc);
         }
+
+        // var pressPoint = Gamepad.current[GamepadButton.LeftTrigger].ReadValue();
 #endif
         
         CheckIfOnFloor();

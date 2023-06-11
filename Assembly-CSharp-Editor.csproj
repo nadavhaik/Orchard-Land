@@ -814,6 +814,9 @@
      <Reference Include="Unity.VisualScripting.Shared.Editor">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
+     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
      </Reference>
@@ -831,9 +834,6 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
-     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

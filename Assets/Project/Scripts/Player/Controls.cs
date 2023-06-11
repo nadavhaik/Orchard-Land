@@ -46,15 +46,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Attack"",
-                    ""type"": ""Button"",
-                    ""id"": ""b76b05e5-3342-4de1-ac95-4b2cb611a11a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""TouchPosition"",
                     ""type"": ""Value"",
                     ""id"": ""96a944d3-8ba4-472d-a8a2-52f8f8926091"",
@@ -132,17 +123,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4a04aef8-8f8f-45ef-8f83-de563eafa19b"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""450b8c99-f057-4d00-9cfa-1404704b78de"",
                     ""path"": ""<Touchscreen>/position"",
                     ""interactions"": """",
@@ -177,7 +157,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1c605312-4bfe-4ea2-89dd-8a858371ae3f"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PhoneWithGamepad"",
@@ -199,7 +179,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a6cd5e8d-ba04-4411-a4eb-6cc21e89986c"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PhoneWithGamepad"",
@@ -249,7 +229,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ce2ca1f2-0138-4c12-93e8-33fe7d8e8043"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PhoneWithGamepad"",
@@ -335,10 +315,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""02a741f1-4a29-48f8-b95a-34376792306e"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PhoneWithGamepad"",
                     ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -349,7 +329,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PhoneWithGamepad"",
                     ""action"": ""Put"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -452,7 +432,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""63f4ef87-e83b-4273-9b71-f6359ca55994"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PhoneWithGamepad"",
@@ -520,7 +500,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_PlayerNormal = asset.FindActionMap("PlayerNormal", throwIfNotFound: true);
         m_PlayerNormal_Move = m_PlayerNormal.FindAction("Move", throwIfNotFound: true);
         m_PlayerNormal_Rotate = m_PlayerNormal.FindAction("Rotate", throwIfNotFound: true);
-        m_PlayerNormal_Attack = m_PlayerNormal.FindAction("Attack", throwIfNotFound: true);
         m_PlayerNormal_TouchPosition = m_PlayerNormal.FindAction("TouchPosition", throwIfNotFound: true);
         m_PlayerNormal_TouchPress = m_PlayerNormal.FindAction("TouchPress", throwIfNotFound: true);
         m_PlayerNormal_TouchTap = m_PlayerNormal.FindAction("TouchTap", throwIfNotFound: true);
@@ -611,7 +590,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<IPlayerNormalActions> m_PlayerNormalActionsCallbackInterfaces = new List<IPlayerNormalActions>();
     private readonly InputAction m_PlayerNormal_Move;
     private readonly InputAction m_PlayerNormal_Rotate;
-    private readonly InputAction m_PlayerNormal_Attack;
     private readonly InputAction m_PlayerNormal_TouchPosition;
     private readonly InputAction m_PlayerNormal_TouchPress;
     private readonly InputAction m_PlayerNormal_TouchTap;
@@ -625,7 +603,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public PlayerNormalActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerNormal_Move;
         public InputAction @Rotate => m_Wrapper.m_PlayerNormal_Rotate;
-        public InputAction @Attack => m_Wrapper.m_PlayerNormal_Attack;
         public InputAction @TouchPosition => m_Wrapper.m_PlayerNormal_TouchPosition;
         public InputAction @TouchPress => m_Wrapper.m_PlayerNormal_TouchPress;
         public InputAction @TouchTap => m_Wrapper.m_PlayerNormal_TouchTap;
@@ -648,9 +625,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Rotate.started += instance.OnRotate;
             @Rotate.performed += instance.OnRotate;
             @Rotate.canceled += instance.OnRotate;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
             @TouchPosition.started += instance.OnTouchPosition;
             @TouchPosition.performed += instance.OnTouchPosition;
             @TouchPosition.canceled += instance.OnTouchPosition;
@@ -682,9 +656,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Rotate.started -= instance.OnRotate;
             @Rotate.performed -= instance.OnRotate;
             @Rotate.canceled -= instance.OnRotate;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
             @TouchPosition.started -= instance.OnTouchPosition;
             @TouchPosition.performed -= instance.OnTouchPosition;
             @TouchPosition.canceled -= instance.OnTouchPosition;
@@ -984,7 +955,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
         void OnTouchPosition(InputAction.CallbackContext context);
         void OnTouchPress(InputAction.CallbackContext context);
         void OnTouchTap(InputAction.CallbackContext context);

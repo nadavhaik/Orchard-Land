@@ -47,6 +47,7 @@
      <Compile Include="Assets/WireBuilder/Scripts/PlugController.cs" />
      <Compile Include="Assets/Project/Scripts/Enemies/SimpleEnemy.cs" />
      <Compile Include="Assets/Project/Scripts/HP/PlayerHealthBar.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/FPSUpdater.cs" />
      <Compile Include="Assets/Project/Scripts/Player/HasTemporaryHitbox.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Player.cs" />
      <Compile Include="Assets/Project/Scripts/Enviroment/SwordCollidable.cs" />
@@ -68,7 +69,6 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
-     <Compile Include="Assets/Project/Scripts/Player/FPSUpdater.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
@@ -841,6 +841,9 @@
      <Reference Include="Unity.VisualScripting.Shared.Editor">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
+     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
      </Reference>
@@ -858,9 +861,6 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mobile.AndroidLogcat.Editor">
-     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/ScriptAssemblies/Unity.Mobile.AndroidLogcat.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
