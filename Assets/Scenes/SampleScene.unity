@@ -905,7 +905,7 @@ Camera:
     height: 1
   near clip plane: 3
   far clip plane: 1000
-  field of view: 60
+  field of view: 53.2
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -985,11 +985,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 310275841}
   model: {fileID: 94077034}
-  distanceFromPlayer: 7
+  distanceFromPlayer: 5
   startHeight: 3
   rotationSpeed: 200
   heightChangeSpeed: 10
-  minHeight: -0.5
+  minHeight: 1.6
   maxHeight: 7
   lockSpeed: 10
   angleDiffForStopLocking: 0.5
@@ -5529,6 +5529,7 @@ GameObject:
   - component: {fileID: 1729593367}
   - component: {fileID: 1729593366}
   - component: {fileID: 1729593365}
+  - component: {fileID: 1729593369}
   m_Layer: 0
   m_Name: New Game Object
   m_TagString: Untagged
@@ -18555,6 +18556,20 @@ Transform:
   m_Father: {fileID: 926154611}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1729593369
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729593364}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1841382874}
 --- !u!1 &1737615173
 GameObject:
   m_ObjectHideFlags: 0
@@ -18644,7 +18659,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh76468
+  m_Name: pb_Mesh85356
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
