@@ -479,10 +479,10 @@ public class Player : Hittable
         // Destroy(_playerRigidBody);
         _mainCameraObj = mainCamera.GetComponent<Camera>();
         
-        var playerCollider = GetComponent<CapsuleCollider>();
+        var playerCollider = GetComponent<Collider>();
         var swordCollider = sword.GetComponent<Collider>();
         var shieldCollider = shield.GetComponent<Collider>();
-        Destroy(GetComponent<BoxCollider>());
+        // Destroy(GetComponent<BoxCollider>());
         
         
         

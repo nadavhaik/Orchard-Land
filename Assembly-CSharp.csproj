@@ -69,6 +69,7 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
+     <Compile Include="Assets/Project/Scripts/Level/Level.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
@@ -90,6 +91,7 @@
      <Folder Include="Assets/TextMesh Pro/Resources" />
      <Folder Include="Assets/Project/Audio" />
      <Folder Include="Assets/Project/Materials" />
+     <Folder Include="Assets/Project/Scripts/Level" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
      <Folder Include="Assets/Project/Scripts/Camera/Switching Camera" />
      <Folder Include="Assets/Project/LibraryCode" />
