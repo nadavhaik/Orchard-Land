@@ -41,6 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets/Project/Scripts/Level/Level.cs" />
      <Compile Include="Assets/Project/Scripts/HP/EnemyHealthBar.cs" />
      <Compile Include="Assets/Project/Scripts/Hittable.cs" />
      <Compile Include="Assets/Project/LibraryCode/PolarCoordinates.cs" />
@@ -69,7 +70,6 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
-     <Compile Include="Assets/Project/Scripts/Level/Level.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
@@ -122,6 +122,7 @@
      <Folder Include="Assets/Scenes" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
      <Folder Include="Assets/WireBuilder" />
+     <Folder Include="Assets/Project/Textures" />
      <Folder Include="Assets/Project/Scripts/Enviroment" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
      <Folder Include="Assets/Project" />
