@@ -224,6 +224,42 @@ public class Sword : MonoBehaviour
         
         Invoke(nameof(SwingAfterCooldown), cooldown);
     }
+
+    void RotateBeforeSwing(AttackDirection direction)
+    {
+        float zRotation = -1;
+        switch (direction)
+        {
+            case AttackDirection.NorthToSouth:
+                zRotation = 0;
+                break;
+            case AttackDirection.SouthToNorth:
+                zRotation = 180;
+                break;
+            case AttackDirection.EastToWest:
+                zRotation = 90;
+                break;
+            case AttackDirection.WestToEast:
+                zRotation = 270;
+                break;
+            case AttackDirection.NeToSw:
+                zRotation = 45;
+                break;
+            case AttackDirection.SwToNe:
+                zRotation = 225;
+                break;
+            case AttackDirection.NwToSe:
+                zRotation = 315;
+                break;
+            case AttackDirection.SeToNw:
+                zRotation = 135;
+                break;
+            
+        }
+        
+        
+        transform.Rotate(0, 0, -zRotation);
+    }
     
     public void Swing(AttackDirection direction)
     {
@@ -233,13 +269,14 @@ public class Sword : MonoBehaviour
         _movementCurve = GetMovementCurve(direction);
         var attackStartPosition = _movementCurve(0);
         var attackEndPosition = _movementCurve(1);
+        RotateBeforeSwing(direction);
 
 
         transform.position = model.transform.position;
-        transform.LookAt(attackEndPosition);
+        // transform.LookAt(attackEndPosition);
         _attackEndRot = transform.rotation;
         
-        transform.LookAt(attackStartPosition);
+        // transform.LookAt(attackStartPosition);
         _attackStartRot = transform.rotation;
         transform.position = attackStartPosition;
 
