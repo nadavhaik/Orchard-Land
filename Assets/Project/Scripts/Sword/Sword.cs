@@ -18,7 +18,7 @@ public enum AttackDirection
 }
 
 
-public class Sword : MonoBehaviour
+public abstract class Sword : MonoBehaviour
 {
     public float swingDuration = 1.5f;
     public GameObject handle;
@@ -33,32 +33,29 @@ public class Sword : MonoBehaviour
     public GameObject stabEnd;
     public bool drawControlPoints;
     
-    [Header("Tagging")]
-    public string ActiveSwordTag = "Sword";
 
     private float _attackTimer;
-    private float _cooldownTimer;
-    private float _cooldown;
+    protected float cooldownTimer;
+    protected float cooldown;
     private Quaternion _targetRotation;
     private Vector3 _targetPosition;
     private bool _attacking;
     private Vector3 _originalPos;
     private Quaternion _originalRot;
-    private AttackDirection _attackDirectionAfterCooldown;
+    protected AttackDirection attackDirectionAfterCooldown;
 
 
-    private Func<float, Vector3> _movementCurve = _ => Vector3.zero;
+    protected Func<float, Vector3> movementCurve = _ => Vector3.zero;
 
     private Quaternion _attackStartRot;
     private Quaternion _attackEndRot;
     private BoxCollider _collider;
     
+    protected AudioSource audioSource;
+
+    protected abstract string activeSwordTag { get; }
     private const string NotActiveTag = "Untagged";
 
-    public UnityEvent opponentDefendedEvent = new();
-    public UnityEvent opponentParriedEvent = new();
-
-    private AudioSource _audioSource;
 
     public bool Attacking
     {
@@ -67,24 +64,24 @@ public class Sword : MonoBehaviour
         {
             _attacking = value;
             // _collider.enabled = _attacking;
-            tag = _attacking ? ActiveSwordTag : NotActiveTag;
+            tag = _attacking ? activeSwordTag : NotActiveTag;
         }
     }
     
     public bool PreparingAttack
     {
-        get => _cooldown != 0;
+        get => cooldown != 0;
     }
     
 
-    void Start()
+    protected virtual void Start()
     {
         _originalPos = transform.localPosition;
         _originalRot = transform.localRotation;
         _collider = GetComponent<BoxCollider>();
-        _audioSource = GetComponent<AudioSource>();
-        _cooldown = 0;
-        _cooldownTimer = 0;
+        audioSource = GetComponent<AudioSource>();
+        cooldown = 0;
+        cooldownTimer = 0;
 
         GameObject[] controlPoints = { north, south, east, west, stabStart, stabEnd };
         foreach (var controlPoint in controlPoints)
@@ -94,40 +91,9 @@ public class Sword : MonoBehaviour
 
         Attacking = false;
     }
+    
 
-    private void HandleDefended()
-    {
-        opponentDefendedEvent.Invoke();
-        ResetPosition();
-        _audioSource.Play();
-    }
-
-    private void HandleParried()
-    {
-        Debug.Log("Parried!");
-        opponentParriedEvent.Invoke();
-        ResetPosition();
-        _audioSource.Play();
-    }
-
-    void CheckTrigger(Collider other)
-    {
-        if(!Attacking) return;
-        if (other.CompareTag("DefendingShield")) HandleDefended();
-        else if (other.CompareTag("ParryingShield")) HandleParried();
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        CheckTrigger(other);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-       CheckTrigger(other);
-    }
-
-    void ResetPosition()
+    protected void ResetPosition()
     {
         Attacking = false;
         _targetRotation = _originalRot;
@@ -139,16 +105,16 @@ public class Sword : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (PreparingAttack)
         {
-            transform.position = _movementCurve(_cooldownTimer / _cooldown);
-            _cooldownTimer += Time.deltaTime;
+            transform.position = movementCurve(cooldownTimer / cooldown);
+            cooldownTimer += Time.deltaTime;
         }
         if (Attacking)
         {
-            transform.position = _movementCurve(_attackTimer / swingDuration);
+            transform.position = movementCurve(_attackTimer / swingDuration);
             transform.rotation = Quaternion.Lerp(_attackStartRot, _attackEndRot, _attackTimer / swingDuration);
             _attackTimer += Time.deltaTime;
         }
@@ -161,12 +127,12 @@ public class Sword : MonoBehaviour
         return !Attacking;
     }
 
-    Func<float, Vector3> GetMovementCurve(Vector3 from, Vector3 to)
+    protected Func<float, Vector3> GetMovementCurve(Vector3 from, Vector3 to)
     {
         return t => Vector3.Lerp(from, to, t);
     }
 
-    Func<float, Vector3> GetMovementCurve(AttackDirection direction)
+    protected Func<float, Vector3> GetMovementCurve(AttackDirection direction)
     {
         return t =>
         {
@@ -203,26 +169,6 @@ public class Sword : MonoBehaviour
             throw new ArgumentException("Illegal direction: " + direction);
 
         };
-    }
-
-    void SwingAfterCooldown()
-    {
-        _cooldown = 0;
-        Swing(_attackDirectionAfterCooldown);
-    }
-
-    public void SwingPredictably(AttackDirection direction, float cooldown)
-    {
-        if(!CanAttack()) return;
-        
-        var cooldownStart = transform.position;
-
-        _movementCurve = GetMovementCurve(cooldownStart, GetMovementCurve(direction)(0));
-        _attackDirectionAfterCooldown = direction;
-        _cooldown = cooldown;
-        _cooldownTimer = 0f;
-        
-        Invoke(nameof(SwingAfterCooldown), cooldown);
     }
 
     void RotateBeforeSwing(AttackDirection direction)
@@ -266,9 +212,9 @@ public class Sword : MonoBehaviour
         if(!CanAttack()) return;
         
         _attackTimer = 0f;
-        _movementCurve = GetMovementCurve(direction);
-        var attackStartPosition = _movementCurve(0);
-        var attackEndPosition = _movementCurve(1);
+        movementCurve = GetMovementCurve(direction);
+        var attackStartPosition = movementCurve(0);
+        var attackEndPosition = movementCurve(1);
         RotateBeforeSwing(direction);
 
 
@@ -298,10 +244,10 @@ public class Sword : MonoBehaviour
     {
         if(!CanAttack()) return;
         
-        _movementCurve = t => Vector3.Lerp(stabStart.transform.position, stabEnd.transform.position, t);
+        movementCurve = t => Vector3.Lerp(stabStart.transform.position, stabEnd.transform.position, t);
 
-        transform.position = _movementCurve(0);
-        transform.LookAt(_movementCurve(1));
+        transform.position = movementCurve(0);
+        transform.LookAt(movementCurve(1));
         _attackStartRot = _attackEndRot = transform.rotation;
 
         StartAttack();

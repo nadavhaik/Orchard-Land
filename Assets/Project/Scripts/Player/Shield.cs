@@ -14,6 +14,8 @@ public class Shield : MonoBehaviour
     public GameObject parryEnd;
     public float parryDuration = 2f;
     public GameObject model;
+    public GameObject gripPoint;
+    public PlayerHands hands;
 
     public ShieldState CurrentState { get; private set; }
     private float _parryTimer;

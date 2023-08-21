@@ -38,13 +38,13 @@ public class Player : Hittable
     
     [Header("Movement")]
     public float movementConstant = 5f;
-
+    public PlayerHands hands;
     public float bowRotationConstant = 5f;
     public float jumpForce = 50f;
 
     [Header("Items and Equipment")]
     public PlayerItem defaultItem = PlayerItem.Bomb;
-    public Sword sword;
+    public PlayerSword sword;
     public Shield shield;
     public Bomb bomb;
     public Bow bow;
@@ -227,7 +227,8 @@ public class Player : Hittable
         {
             _lockedOn = colliders.First().gameObject;
         }
-        shield.Defend();
+        hands.Defend();
+        // shield.Defend();
         mainCamera.Lock();
     }
 
@@ -235,7 +236,7 @@ public class Player : Hittable
     {
         _cameraLocked = false;
         _lockedOn = null;
-        shield.PutOnBack();
+        hands.PutShieldOnBack();
         mainCamera.Unlock();
     }
 

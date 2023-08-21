@@ -18,7 +18,7 @@ public class RealEnemy : Enemy
     public float maxTimeBetweenAttacks = 10f;
     public float stunTime = 3f;
     public float cooldownForPredictableAttacks = 0.5f;
-    public Sword enemySword;
+    public EnemySword enemySword;
     public float parryForce = 2f;
     private bool _stunned = false;
 

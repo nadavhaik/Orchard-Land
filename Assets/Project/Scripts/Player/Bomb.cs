@@ -10,6 +10,10 @@ public class Bomb : MonoBehaviour
     public GameObject explosion;
     public float mass;
 
+    [Header("Grip Points")] 
+    public GameObject leftGripPoint;
+    public GameObject rightGripPoint;
+
     private AudioSource _audioSource;
 
     // Start is called before the first frame update
