@@ -1104,7 +1104,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &333552498
 Transform:
   m_ObjectHideFlags: 0
@@ -3409,6 +3409,37 @@ MonoBehaviour:
   rightHand: {fileID: 986358530}
   sword: {fileID: 1595149093}
   shield: {fileID: 1715496434}
+--- !u!1 &1095347814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1095347815}
+  m_Layer: 0
+  m_Name: Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1095347815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095347814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.08, z: 1.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1595149091}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1132673892
 GameObject:
   m_ObjectHideFlags: 0
@@ -3696,6 +3727,7 @@ GameObject:
   - component: {fileID: 1156861065}
   - component: {fileID: 1156861066}
   - component: {fileID: 1156861067}
+  - component: {fileID: 1156861068}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -3718,6 +3750,7 @@ Transform:
   - {fileID: 1032985073}
   - {fileID: 1187538721}
   - {fileID: 968412012}
+  - {fileID: 1528086197}
   m_Father: {fileID: 334259809}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -15.075, y: 0, z: 0}
@@ -3860,6 +3893,31 @@ MonoBehaviour:
   opponentParriedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1156861068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156861062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ceb339997c8304e9354d4ce5ddc9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _emit: 1
+  _emitTime: 0
+  _material: {fileID: 2100000, guid: 5f402d1520e5fa74fa21e08f85b71370, type: 2}
+  _lifeTime: 0.5
+  _colors: []
+  _sizes: []
+  _minVertexDistance: 0.1
+  _maxVertexDistance: 10
+  _maxAngle: 3
+  _autoDestruct: 0
+  subdivisions: 4
+  _base: {fileID: 968412012}
+  _tip: {fileID: 1528086197}
 --- !u!4 &1168715800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 11f19bd8a1092818eb93f6d6e13e5a4e,
@@ -4822,6 +4880,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1450258609}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1450258612 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5077703288087099799, guid: fe06bac81cf8ce6fda3649b55f6dd155,
+    type: 3}
+  m_PrefabInstance: {fileID: 1450258609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1452932462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5094,6 +5158,37 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 6274674114455036997, guid: eff1307f3b93015bc83f1e7c474e2775,
     type: 3}
   maxHealth: 100
+--- !u!1 &1528086196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1528086197}
+  m_Layer: 0
+  m_Name: Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1528086197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528086196}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.104, y: -0.275, z: 1.392}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1156861063}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1565581439
 GameObject:
   m_ObjectHideFlags: 0
@@ -5188,6 +5283,7 @@ GameObject:
   - component: {fileID: 1595149091}
   - component: {fileID: 1595149092}
   - component: {fileID: 1595149093}
+  - component: {fileID: 1595149094}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Sword
@@ -5213,6 +5309,7 @@ Transform:
   - {fileID: 983335371}
   - {fileID: 553803431}
   - {fileID: 704929946}
+  - {fileID: 1095347815}
   m_Father: {fileID: 94077035}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -15.075, y: 0, z: 0}
@@ -5253,6 +5350,31 @@ MonoBehaviour:
   backPosition: {fileID: 2063956544}
   drawControlPoints: 0
   ActiveSwordTag: Sword
+--- !u!114 &1595149094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595149090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ceb339997c8304e9354d4ce5ddc9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _emit: 1
+  _emitTime: 0
+  _material: {fileID: 2100000, guid: 5f402d1520e5fa74fa21e08f85b71370, type: 2}
+  _lifeTime: 1
+  _colors: []
+  _sizes: []
+  _minVertexDistance: 0.1
+  _maxVertexDistance: 10
+  _maxAngle: 3
+  _autoDestruct: 0
+  subdivisions: 4
+  _base: {fileID: 1450258612}
+  _tip: {fileID: 1095347815}
 --- !u!1 &1607846709
 GameObject:
   m_ObjectHideFlags: 0

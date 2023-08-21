@@ -110,6 +110,8 @@ public class Player : Hittable
     private bool _inSlowMotion = false;
     private AndroidJavaObject _accPlugin;
 
+    
+
     protected override void UpdateHealthBar()
     {
         

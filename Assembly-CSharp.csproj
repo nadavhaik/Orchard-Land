@@ -76,6 +76,8 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
+     <Compile Include="Assets/MeleeWeaponTrail/Scripts/Interpolate.cs" />
+     <Compile Include="Assets/MeleeWeaponTrail/Scripts/MeleeWeaponTrail.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
@@ -96,13 +98,16 @@
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
      <Folder Include="Assets/TextMesh Pro/Resources" />
+     <Folder Include="Assets/MeleeWeaponTrail/Example" />
      <Folder Include="Assets/Project/Audio" />
      <Folder Include="Assets/Project/Materials" />
      <Folder Include="Assets/Project/Scripts/Level" />
+     <Folder Include="Assets/MeleeWeaponTrail" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
      <Folder Include="Assets/Project/Scripts/Camera/Switching Camera" />
      <Folder Include="Assets/Project/LibraryCode" />
      <Folder Include="Assets/TextMesh Pro" />
+     <None Include="Assets/MeleeWeaponTrail/README.txt" />
      <Folder Include="Assets/WireBuilder/Prefabs" />
      <Folder Include="Assets/WireBuilder/Materials" />
      <Folder Include="Assets/Project/Scripts/GeneralPrefabs" />
@@ -111,6 +116,7 @@
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
      <None Include="Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
+     <Folder Include="Assets/MeleeWeaponTrail/Example/Textures" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF.shader" />
      <Folder Include="Assets/Project/Scripts/Enemies" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
@@ -124,6 +130,7 @@
      <Folder Include="Assets/TutorialInfo/Icons" />
      <Folder Include="Assets/TutorialInfo" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
+     <Folder Include="Assets/MeleeWeaponTrail/Scripts" />
      <Folder Include="Assets/Project/Scripts/Enviroment/Pendulum" />
      <Folder Include="Assets/Project/Scripts" />
      <Folder Include="Assets/Scenes" />

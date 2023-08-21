@@ -51,6 +51,8 @@ public abstract class Sword : MonoBehaviour
     private Quaternion _attackStartRot;
     private Quaternion _attackEndRot;
     private BoxCollider _collider;
+    protected MeleeWeaponTrail trail;
+
     
     protected AudioSource audioSource;
 
@@ -81,6 +83,8 @@ public abstract class Sword : MonoBehaviour
         _originalRot = transform.localRotation;
         _collider = GetComponent<BoxCollider>();
         audioSource = GetComponent<AudioSource>();
+        trail = GetComponent<MeleeWeaponTrail>();
+        trail.Hide();
         cooldown = 0;
         cooldownTimer = 0;
 
@@ -94,9 +98,10 @@ public abstract class Sword : MonoBehaviour
     }
     
 
-    public void ResetPosition()
+    public virtual void ResetPosition()
     {
         Attacking = false;
+        trail.Hide();
         _targetRotation = _originalRot;
         _targetPosition = _originalPos;
 
@@ -216,10 +221,10 @@ public abstract class Sword : MonoBehaviour
         transform.Rotate(0, 0, -zRotation);
     }
     
-    public void Swing(AttackDirection direction)
+    public virtual void Swing(AttackDirection direction)
     {
         if(!CanAttack()) return;
-        
+        trail.Draw();
         _attackTimer = 0f;
         movementCurve = GetMovementCurve(direction);
         var attackStartPosition = movementCurve(0);
