@@ -224,7 +224,7 @@ public abstract class Sword : MonoBehaviour
     public virtual void Swing(AttackDirection direction)
     {
         if(!CanAttack()) return;
-        trail.Draw();
+        // trail.Draw();
         _attackTimer = 0f;
         movementCurve = GetMovementCurve(direction);
         var attackStartPosition = movementCurve(0);
@@ -246,6 +246,7 @@ public abstract class Sword : MonoBehaviour
     private void StartAttack()
     {
         _attackTimer = 0f; // for animation interpolations only!
+        trail.Draw();
 
         // resetting the logical timer:  
         CancelInvoke(nameof(ResetPosition));
@@ -257,6 +258,7 @@ public abstract class Sword : MonoBehaviour
     public void Stab()
     {
         if(!CanAttack()) return;
+        
         
         movementCurve = t => Vector3.Lerp(stabStart.transform.position, stabEnd.transform.position, t);
 
