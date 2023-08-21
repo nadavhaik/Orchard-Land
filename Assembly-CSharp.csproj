@@ -51,10 +51,14 @@
      <Compile Include="Assets/Project/Scripts/Player/FPSUpdater.cs" />
      <Compile Include="Assets/Project/Scripts/Player/HasTemporaryHitbox.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Player.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/PlayerHands.cs" />
      <Compile Include="Assets/Project/Scripts/Enviroment/SwordCollidable.cs" />
+     <Compile Include="Assets/Project/Scripts/LookingAtCamera.cs" />
+     <Compile Include="Assets/Project/LibraryCode/PositionRotation.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireBuilder.cs" />
      <Compile Include="Assets/Project/Scripts/Sword/Sword.cs" />
      <Compile Include="Assets/Project/Scripts/Enemies/RealEnemy.cs" />
+     <Compile Include="Assets/Project/Scripts/Sword/PlayerSword.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Controls.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/Switching Camera/SwitchingCamera.cs" />
      <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
@@ -63,6 +67,8 @@
      <Compile Include="Assets/Project/Scripts/HP/HealthBar.cs" />
      <Compile Include="Assets/Project/LibraryCode/MyMath.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bow.cs" />
+     <Compile Include="Assets/Project/Scripts/Sword/EnemySword.cs" />
+     <Compile Include="Assets/Project/Scripts/GeneralPrefabs/LockableTarget.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/TubeRenderer.cs" />
      <Compile Include="Assets/Project/Scripts/Enemies/Enemy.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bomb.cs" />
@@ -70,10 +76,6 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
-     <Compile Include="Assets/Project/Scripts/Sword/PlayerSword.cs" />
-     <Compile Include="Assets/Project/Scripts/Sword/EnemySword.cs" />
-     <Compile Include="Assets/Project/Scripts/Player/PlayerHands.cs" />
-     <Compile Include="Assets/Project/LibraryCode/PositionRotation.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

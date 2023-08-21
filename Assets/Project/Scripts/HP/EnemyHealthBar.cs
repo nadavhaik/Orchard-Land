@@ -18,23 +18,6 @@ public class EnemyHealthBar : HealthBar
         Invoke(nameof(Hide), hideAfterNotHitFor);
     }
     
-
-    // Update is called once per frame
-    void Update()
-    {
-        foreach (var camera in Camera.allCameras)
-        {
-            if (camera.enabled)
-            {
-                transform.LookAt(camera.transform.position);
-                transform.Rotate(Vector3.up, 180);
-                break;
-            }
-        }
-
-        
-    }
-
     protected override void Start()
     {
         base.Start();

@@ -52,6 +52,7 @@ public class Player : Hittable
     public float bombThrowForce = 50f;
     public float bombThrowingAngle = 30f;
     public float minBombPlaceForce = 0f;
+    public float throwAnimationDuration = 0.5f;
     [FormerlySerializedAs("max0ombPlaceForce")] public float maxBombPlaceForce = 2f;
     public float arrowsCooldown = 0.2f;
     public float ignoreArrowSelfCollisionFor = 0.1f;
@@ -104,7 +105,7 @@ public class Player : Hittable
     private Camera _mainCameraObj;
     
     private bool _cameraLocked;
-    private GameObject _lockedOn;
+    private LockableTarget _lockedOn;
 
     private bool _inSlowMotion = false;
     private AndroidJavaObject _accPlugin;
@@ -179,8 +180,11 @@ public class Player : Hittable
 
     void HoldBomb()
     {
-        _currentBombInstance = Instantiate(bomb, gameObject.transform);
-        _currentBombInstance.transform.position = bombHold.transform.position;
+        _currentBombInstance = Instantiate(bomb, model.transform);
+        var bombTrans = _currentBombInstance.transform;
+        bombTrans.position = bombHold.transform.position;
+        bombTrans.rotation = model.transform.rotation;
+        hands.HoldBomb(_currentBombInstance);
     }
     
     void PullItem()
@@ -225,18 +229,34 @@ public class Player : Hittable
             .OrderBy(collider => Vector3.Distance(currentPosition, collider.transform.position));
         if (colliders.Any())
         {
-            _lockedOn = colliders.First().gameObject;
+            _lockedOn = colliders.First().gameObject.GetComponent<LockableTarget>();
+            _lockedOn.Target();
         }
-        hands.Defend();
-        // shield.Defend();
+
+        if (_controls.PlayerNormal.enabled)
+        {
+            // shield.Defend();
+            hands.DefensivePosition();    
+        } 
+        
+       
         mainCamera.Lock();
     }
 
     void UnlockCamera()
     {
         _cameraLocked = false;
-        _lockedOn = null;
-        hands.PutShieldOnBack();
+        if(_lockedOn != null)
+        {
+            _lockedOn.Untarget();
+            _lockedOn = null;
+        }
+        
+        if (hands.InDefensivePosition)
+        {
+            hands.PutShieldOnBack();    
+        }
+        
         mainCamera.Unlock();
     }
 
@@ -353,9 +373,17 @@ public class Player : Hittable
         _controls.PlayerNormal.Enable();
     }
 
+    void ReleaseBombFromHands()
+    {
+        hands.ReleaseBomb();
+        _controls.PlayerNormal.Enable();
+    }
+
+    void SeparateBombFromPlayer() => _currentBombInstance.transform.parent = null;
+
     void ThrowBomb()
     {
-        _currentBombInstance.transform.parent = transform.parent;
+        SeparateBombFromPlayer();
         _currentBombInstance.Activate();
         
         var throwingDirection = (Quaternion.AngleAxis(
@@ -364,13 +392,14 @@ public class Player : Hittable
         _currentBombInstance.GetComponent<Rigidbody>().AddForce(throwForce3d);
         
         _controls.HoldingBomb.Disable();
-        _controls.PlayerNormal.Enable();
+        Invoke(nameof(ReleaseBombFromHands), throwAnimationDuration);
     }
 
     void PutBomb()
     {
+        SeparateBombFromPlayer();
         _currentBombInstance.transform.position = bombPut.transform.position;
-        _currentBombInstance.transform.parent = transform.parent;
+       
 
         _currentBombInstance.Activate();
         
@@ -382,12 +411,14 @@ public class Player : Hittable
         _currentBombInstance.GetComponent<Rigidbody>().AddForce(model.transform.rotation * pushForce);
         
         _controls.HoldingBomb.Disable();
-        _controls.PlayerNormal.Enable();
+        ReleaseBombFromHands();
     }
     void InitBombControls()
     {
         InitMove(_controls.HoldingBomb.Move);
         InitJump(_controls.HoldingBomb.Jump);
+        InitRotate(_controls.HoldingBomb.Rotate);
+        
         
 
         _controls.HoldingBomb.Put.performed += _ => PutBomb();

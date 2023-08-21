@@ -24,13 +24,14 @@ public abstract class Sword : MonoBehaviour
     public GameObject handle;
     public GameObject model;
 
-    [Header("Attack Control Points")] 
+    [Header("Control Points")] 
     public GameObject north;
     public GameObject south;
     public GameObject east;
     public GameObject west;
     public GameObject stabStart;
     public GameObject stabEnd;
+    public GameObject backPosition;
     public bool drawControlPoints;
     
 
@@ -93,7 +94,7 @@ public abstract class Sword : MonoBehaviour
     }
     
 
-    protected void ResetPosition()
+    public void ResetPosition()
     {
         Attacking = false;
         _targetRotation = _originalRot;
@@ -101,8 +102,16 @@ public abstract class Sword : MonoBehaviour
 
         transform.localRotation = _targetRotation;
         transform.localPosition = _targetPosition;
-        
     }
+
+    public void PutOnBack()
+    {
+        Attacking = false;
+        transform.position = backPosition.transform.position;
+        transform.rotation = backPosition.transform.rotation;
+    }
+
+    public void Hold() => ResetPosition();
 
     // Update is called once per frame
     protected virtual void Update()

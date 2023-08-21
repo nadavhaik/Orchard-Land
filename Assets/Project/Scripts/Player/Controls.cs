@@ -253,6 +253,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Value"",
+                    ""id"": ""f272954c-8c59-496a-8c21-d5b38062f496"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""1a0d578a-3e64-41c0-bf2d-39424ba1b055"",
@@ -342,6 +351,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0800450-d5bb-4f67-b0ff-4c8b45d35d28"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PhoneWithGamepad"",
+                    ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -513,6 +533,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // HoldingBomb
         m_HoldingBomb = asset.FindActionMap("HoldingBomb", throwIfNotFound: true);
         m_HoldingBomb_Move = m_HoldingBomb.FindAction("Move", throwIfNotFound: true);
+        m_HoldingBomb_Rotate = m_HoldingBomb.FindAction("Rotate", throwIfNotFound: true);
         m_HoldingBomb_Jump = m_HoldingBomb.FindAction("Jump", throwIfNotFound: true);
         m_HoldingBomb_Throw = m_HoldingBomb.FindAction("Throw", throwIfNotFound: true);
         m_HoldingBomb_Put = m_HoldingBomb.FindAction("Put", throwIfNotFound: true);
@@ -745,6 +766,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_HoldingBomb;
     private List<IHoldingBombActions> m_HoldingBombActionsCallbackInterfaces = new List<IHoldingBombActions>();
     private readonly InputAction m_HoldingBomb_Move;
+    private readonly InputAction m_HoldingBomb_Rotate;
     private readonly InputAction m_HoldingBomb_Jump;
     private readonly InputAction m_HoldingBomb_Throw;
     private readonly InputAction m_HoldingBomb_Put;
@@ -754,6 +776,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         private @Controls m_Wrapper;
         public HoldingBombActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_HoldingBomb_Move;
+        public InputAction @Rotate => m_Wrapper.m_HoldingBomb_Rotate;
         public InputAction @Jump => m_Wrapper.m_HoldingBomb_Jump;
         public InputAction @Throw => m_Wrapper.m_HoldingBomb_Throw;
         public InputAction @Put => m_Wrapper.m_HoldingBomb_Put;
@@ -770,6 +793,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Rotate.started += instance.OnRotate;
+            @Rotate.performed += instance.OnRotate;
+            @Rotate.canceled += instance.OnRotate;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -789,6 +815,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Rotate.started -= instance.OnRotate;
+            @Rotate.performed -= instance.OnRotate;
+            @Rotate.canceled -= instance.OnRotate;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -970,6 +999,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface IHoldingBombActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnPut(InputAction.CallbackContext context);

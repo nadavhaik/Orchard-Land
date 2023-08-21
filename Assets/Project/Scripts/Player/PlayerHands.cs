@@ -12,6 +12,7 @@ public class PlayerHands : MonoBehaviour
     private PositionRotation _leftOrigin;
     private PositionRotation _rightOrigin;
     
+    public bool InDefensivePosition { get => shield.CurrentState == ShieldState.Defending; }
     
     void Start()
     {
@@ -33,7 +34,11 @@ public class PlayerHands : MonoBehaviour
         rightHand.transform.localRotation = _rightOrigin.Rotation;
     }
 
-    public void HoldSword() => ResetLeftHand();
+    void HoldSword()
+    {
+        sword.ResetPosition();
+        ResetLeftHand();
+    } 
 
     void HoldShield()
     {
@@ -41,7 +46,7 @@ public class PlayerHands : MonoBehaviour
         rightHand.transform.parent = shield.transform;
     }
 
-    public void Defend()
+    public void DefensivePosition()
     {
         HoldShield();
         shield.Defend();
@@ -57,15 +62,16 @@ public class PlayerHands : MonoBehaviour
 
     public void HoldBomb(Bomb bomb)
     {
+        sword.PutOnBack();
+        PutShieldOnBack();
         leftHand.transform.position = bomb.leftGripPoint.transform.position;
         rightHand.transform.position = bomb.rightGripPoint.transform.position;
-        leftHand.transform.parent = bomb.transform;
-        rightHand.transform.parent = bomb.transform;
+        leftHand.transform.parent = rightHand.transform.parent = bomb.transform;
     }
 
     public void ReleaseBomb()
     {
-        ResetLeftHand();
+        HoldSword();
         ResetRightHand();
     }
 

@@ -9,15 +9,13 @@ public class PlayerSword : Sword
     public string ActiveSwordTag = "Sword";
     protected override string activeSwordTag { get => ActiveSwordTag; }
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        base.Start();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        base.Update();
-    }
+    // protected override void Start()
+    // {
+    //     base.Start();
+    // }
+    //
+    // protected override void Update()
+    // {
+    //     base.Update();
+    // }
 }

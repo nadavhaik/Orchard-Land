@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 4314026813903223297}
   - component: {fileID: 44025031361985767}
   - component: {fileID: 6274674114455036997}
+  - component: {fileID: -8339098517990758038}
   m_Layer: 5
   m_Name: Enemy HP Bar
   m_TagString: Untagged
@@ -104,7 +105,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8823754589657492645}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 0
@@ -112,7 +113,7 @@ RectTransform:
   - {fileID: 3181012802321781357}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -194,3 +195,15 @@ MonoBehaviour:
   hbImage: {fileID: 8389017055511739658}
   maxHealth: 100
   hideAfterNotHitFor: 30
+--- !u!114 &-8339098517990758038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8823754589657492645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f915c8fea086e2acdbcd6e10d763b557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

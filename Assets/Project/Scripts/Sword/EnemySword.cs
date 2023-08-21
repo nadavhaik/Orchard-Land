@@ -12,15 +12,15 @@ public class EnemySword : Sword
     public UnityEvent opponentDefendedEvent = new();
     public UnityEvent opponentParriedEvent = new();
     
-    void Start()
-    {
-        base.Start();
-    }
-
-    void Update()
-    {
-        base.Update();
-    }
+    // protected override void Start()
+    // {
+    //     base.Start();
+    // }
+    //
+    // protected override void Update()
+    // {
+    //     base.Update();
+    // }
     
     private void HandleDefended()
     {
