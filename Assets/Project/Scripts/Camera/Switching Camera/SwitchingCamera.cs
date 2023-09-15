@@ -12,10 +12,22 @@ public class SwitchingCamera : MonoBehaviour
     private Quaternion _startRotation;
     private Camera _dest;
     private Action _afterKilled;
+    private Camera _attachedCamera;
+    private CameraManager _cameraManager;
 
     void Start()
     {
-        // enabled = false;
+        _attachedCamera = GetComponent<Camera>();
+        _cameraManager = FindObjectOfType<CameraManager>();
+        if (_attachedCamera == null)
+        {
+            throw new ArgumentException("No attached camera was found!");
+        }
+
+        if (_cameraManager == null)
+        {
+            throw new ArgumentException("CameraManager wasn't found in current scene!");
+        }
     }
 
 
@@ -25,8 +37,9 @@ public class SwitchingCamera : MonoBehaviour
         _startRotation = start.transform.rotation;
         _dest = dest;
         _afterKilled = afterKilled;
-        start.enabled = false;
-        enabled = true;
+
+        _cameraManager.MainCamera = _attachedCamera;
+        
         
         transform.position = _startPosition;
         transform.rotation = _startRotation;
@@ -39,14 +52,12 @@ public class SwitchingCamera : MonoBehaviour
 
     void Kill()
     {
-        _dest.enabled = true;
-        enabled = false;
+        _cameraManager.MainCamera = _dest;
         _afterKilled();
         Destroy(gameObject);
     }
     
     
-    // Update is called once per frame
     void Update()
     {
         if(!enabled) return;
@@ -54,13 +65,16 @@ public class SwitchingCamera : MonoBehaviour
         var distanceFromDest = Vector3.Distance(transform.position, _dest.transform.position);
         float totalDistance = Vector3.Distance(_startPosition, _dest.transform.position);
         float distancePerFrame = speed * totalDistance * Time.deltaTime;
-        
-        if(distanceFromDest <= distancePerFrame) Kill();
+
+        if (distanceFromDest <= distancePerFrame)
+        {
+            Kill();
+            return;
+        }
         
         var t = 1f - (distanceFromDest / totalDistance) + (distancePerFrame / totalDistance);
         
         transform.position = Vector3.Lerp(_startPosition, _dest.transform.position, t);
         transform.rotation = Quaternion.Lerp(_startRotation, _dest.transform.rotation, t);
-
     }
 }

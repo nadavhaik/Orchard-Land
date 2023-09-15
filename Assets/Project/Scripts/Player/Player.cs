@@ -28,6 +28,9 @@ public class Player : Hittable
     
     [Header("Visuals")] 
     public GameObject model;
+    public Finger fingerPrefab;
+    public Canvas uiCanvas;
+
 
     [Header("CameraControls")] 
     public MainCamera mainCamera;
@@ -110,6 +113,8 @@ public class Player : Hittable
     private bool _inSlowMotion = false;
     private AndroidJavaObject _accPlugin;
 
+    private Finger _currentFinger;
+
     
 
     protected override void UpdateHealthBar()
@@ -142,7 +147,7 @@ public class Player : Hittable
         action.performed += ctx => _leftStick = ctx.ReadValue<Vector2>();
         action.canceled += _ => _leftStick = Vector2.zero;
     }
-    
+
     void InitRotate(InputAction action)
     {
         action.performed += ctx => _rightStick = ctx.ReadValue<Vector2>();
@@ -211,9 +216,18 @@ public class Player : Hittable
         {
             _touchStart = _touchEnd = touchPosition.ReadValue<Vector2>();
             _touching = true;
+            _currentFinger = Instantiate(fingerPrefab, uiCanvas.transform);
+            _currentFinger.canvas = uiCanvas;
+            _currentFinger.rectTransform = uiCanvas.GetComponent<RectTransform>();
             _touchPositionSource = touchPosition;
         };
-        touchPosition.canceled += _ => _touching = false;
+        
+        touchPress.canceled += _ =>
+        {
+            _currentFinger.Decay();
+            _currentFinger = null;
+            _touching = false;
+        };
     }
 
     static bool IsLockable(Collider c)
@@ -309,12 +323,16 @@ public class Player : Hittable
         if(accSize >= minAccForParry) Parry();
     }
 
+
+    
+    
+
     void InitNormalControls()
     {
         InitJump(_controls.PlayerNormal.Jump);
         InitMove(_controls.PlayerNormal.Move);
         InitRotate(_controls.PlayerNormal.Rotate);
-       
+
 // #if UNITY_ANDROID
 //       _accPlugin = new AndroidJavaClass("jp.kshoji.unity.sensor.UnitySensorPlugin").CallStatic<AndroidJavaObject>("getInstance");
 //       _accPlugin.Call("startSensorListening", "accelerometer");
@@ -620,8 +638,12 @@ public class Player : Hittable
                 model.transform.LookAt(_lockedOn.transform.position);    
             }
         }
-        
-        if(_touching) _touchEnd = _touchPositionSource.ReadValue<Vector2>();
+
+        if (_touching)
+        {
+            _touchEnd = _touchPositionSource.ReadValue<Vector2>();
+            _currentFinger.MoveTo(_touchEnd);
+        }
     }
 
     static readonly Dictionary<int, AttackDirection> InterpolatedDirections = new Dictionary<int, AttackDirection>{
