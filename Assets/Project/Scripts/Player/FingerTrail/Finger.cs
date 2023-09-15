@@ -83,13 +83,16 @@ public class Finger : MonoBehaviour
 
     void HandleDecay()
     {
+        var startColor = lineRenderer.startColor;
+        var endColor = lineRenderer.endColor;
+        
         lineRenderer.startColor =
-            new Color(lineRenderer.startColor.r, lineRenderer.startColor.g, lineRenderer.startColor.b,
-                lineRenderer.startColor.a - decayPerSecond * Time.deltaTime);
+            new Color(startColor.r, startColor.g, startColor.b,
+                startColor.a - decayPerSecond * Time.deltaTime);
         
         lineRenderer.endColor =
-            new Color(lineRenderer.endColor.r, lineRenderer.startColor.g, lineRenderer.endColor.b,
-                lineRenderer.endColor.a - decayPerSecond * Time.deltaTime);
+            new Color(endColor.r, startColor.g, endColor.b,
+                endColor.a - decayPerSecond * Time.deltaTime);
 
         if (lineRenderer.startColor.a <= 0)
         {
