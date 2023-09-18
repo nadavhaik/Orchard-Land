@@ -58,6 +58,7 @@ public class Finger : MonoBehaviour
 
     public void Decay()
     {
+        _decaying = true;
         if (_pointsRelToCamera.Count > 1)
         {
             // Vector2 firstPoint2d = CameraManagerPtr.MainCamera.WorldToScreenPoint(_pointsRelToCamera.First()) ;
@@ -73,8 +74,6 @@ public class Finger : MonoBehaviour
             // Vector3 realStart = _pointsRelToCamera.First();
 
             _pointsRelToCamera = new[] { _pointsRelToCamera.First(), _pointsRelToCamera.Last() }.ToList();
-            _decaying = true;
-
             RedrawLine();
         }
        
@@ -91,7 +90,7 @@ public class Finger : MonoBehaviour
                 startColor.a - decayPerSecond * Time.deltaTime);
         
         lineRenderer.endColor =
-            new Color(endColor.r, startColor.g, endColor.b,
+            new Color(endColor.r, endColor.g, endColor.b,
                 endColor.a - decayPerSecond * Time.deltaTime);
 
         if (lineRenderer.startColor.a <= 0)
