@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public abstract class Enemy : Hittable
 {
     public EnemyHealthBar healthBarPrefab;
     public float maxHealth;
+    public UnityEvent onDied = new();
 
     private static bool Is01(float a) {
         return a > 0 && a < 1;
@@ -60,6 +63,7 @@ public abstract class Enemy : Hittable
     protected override void Kill()
     {
         // Destroy(healthBar);
+        onDied.Invoke();
         Destroy(gameObject);
     }
 }

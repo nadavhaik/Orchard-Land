@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
@@ -114,8 +115,36 @@ public class Player : Hittable
     private AndroidJavaObject _accPlugin;
 
     private Finger _currentFinger;
+    private SortedSet<Sign> _closeSigns;
+    private Sign _closestSign = null;
 
+    private void DrawClosestSign()
+    {
+        var prevClosestSign = _closestSign; 
+        _closestSign = _closeSigns.FirstOrDefault();
+        
+        if(prevClosestSign == _closestSign) 
+            return;
+        if(prevClosestSign != null) 
+            prevClosestSign.textBox.Hide();
+        if(_closestSign != null)
+            _closestSign.textBox.Show();
+
+    }
+
+    public void OnNearSignEnter(Sign sign)
+    {
+        _closeSigns.Add(sign);
+        DrawClosestSign();
+    }
     
+    public void OnNearSignExit(Sign sign)
+    {
+        _closeSigns.Remove(sign);
+        DrawClosestSign();
+    }
+
+
 
     protected override void UpdateHealthBar()
     {
@@ -521,10 +550,18 @@ public class Player : Hittable
         SetHealthReducerHandler("Explosion", 20f);
         SetHealthReducerHandler("EnemySword", 200f);
     }
+
+    private void InitCloseSignsSet()
+    {
+        _closeSigns = new SortedSet<Sign>(FunctionalComparer<Sign>.Create(
+            sign => Vector3.Distance(sign.transform.position, model.transform.position)));
+    }
     
     protected override void Start()
     {
         base.Start();
+
+        InitCloseSignsSet();
         healthBar = uiHealthBar;
 
         _playerRigidBody = GetComponent<Rigidbody>();
@@ -614,6 +651,7 @@ public class Player : Hittable
     protected override void Update()
     {
         base.Update();
+        
 #if UNITY_ANDROID // Shame on you, Unity!
         if (_controls.PlayerNormal.Motion.enabled)
         {

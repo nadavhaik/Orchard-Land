@@ -67,6 +67,9 @@ public class MeleeWeaponTrail : MonoBehaviour
 	Mesh _trailMesh;
 	Vector3 _lastPosition;
 	private Renderer _renderer;
+	
+	private bool _shouldHide;
+	private bool _shouldShow;
 
 	[System.Serializable]
 	public class Point
@@ -95,15 +98,32 @@ public class MeleeWeaponTrail : MonoBehaviour
 
 		_minVertexDistanceSqr = _minVertexDistance * _minVertexDistance;
 		_maxVertexDistanceSqr = _maxVertexDistance * _maxVertexDistance;
+
+		if (_shouldShow)
+			_renderer.enabled = true;
+		else if (_shouldHide)
+			_renderer.enabled = false;
 	}
 
 	public void Hide()
 	{
+		if (_renderer == null)
+		{
+			_shouldShow = false;
+			_shouldHide = true;
+			return;
+		}
 		_renderer.enabled = false;
 	}
 
 	public void Draw()
 	{
+		if (_renderer == null)
+		{
+			_shouldShow = true;
+			_shouldHide = false;
+			return;
+		}
 		_renderer.enabled = true;
 	}
 
