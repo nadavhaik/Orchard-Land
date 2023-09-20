@@ -29,6 +29,7 @@ public class Shield : MonoBehaviour
         _parryTimer = 0f;
         CurrentState = ShieldState.Parrying;
     }
+    
 
     public void Defend()
     {

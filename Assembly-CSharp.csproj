@@ -82,7 +82,7 @@
      <Compile Include="Assets/WireBuilder/Scripts/TubeRenderer.cs" />
      <Compile Include="Assets/Project/Scripts/Enemies/Enemy.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bomb.cs" />
-     <Compile Include="Assets/Project/Scripts/Player/Shield.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/Shield/Shield.cs" />
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
@@ -120,6 +120,7 @@
      <None Include="Assets/MeleeWeaponTrail/README.txt" />
      <Folder Include="Assets/WireBuilder/Prefabs" />
      <Folder Include="Assets/WireBuilder/Materials" />
+     <Folder Include="Assets/Project/Scripts/Player/Shield" />
      <Folder Include="Assets/Project/Scripts/GeneralPrefabs" />
      <Folder Include="Assets/Project/Scripts/Player" />
      <None Include="Assets/Project/external credits.txt" />
