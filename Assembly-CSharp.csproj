@@ -46,6 +46,7 @@
      <Compile Include="Assets/Project/Scripts/Hittable.cs" />
      <Compile Include="Assets/Project/LibraryCode/PolarCoordinates.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/PlugController.cs" />
+     <Compile Include="Assets/Project/Scripts/Spinning Plank/PlankTip.cs" />
      <Compile Include="Assets/MeleeWeaponTrail/Scripts/Interpolate.cs" />
      <Compile Include="Assets/Project/Scripts/Enemies/SimpleEnemy.cs" />
      <Compile Include="Assets/Project/Scripts/HP/PlayerHealthBar.cs" />
@@ -67,7 +68,9 @@
      <Compile Include="Assets/Project/Scripts/Sword/PlayerSword.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/CameraManager.cs" />
      <Compile Include="Assets/MeleeWeaponTrail/Scripts/MeleeWeaponTrail.cs" />
+     <Compile Include="Assets/Project/Scripts/Triggers/GeographicSingleUseTrigger.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Controls.cs" />
+     <Compile Include="Assets/Project/Scripts/Spinning Plank/WheelPlank.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/Switching Camera/SwitchingCamera.cs" />
      <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/CameraUICanvas.cs" />
@@ -93,7 +96,6 @@
      <Folder Include="Assets/Settings" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets/Project/Scripts/Sword" />
-     <Folder Include="Assets/Project/Scripts/FenceDoor" />
      <Folder Include="Assets/TextMesh Pro/Sprites" />
      <Folder Include="Assets/TextMesh Pro/Resources/Sprite Assets" />
      <Folder Include="Assets/Project/Scripts/Camera" />
@@ -125,6 +127,7 @@
      <Folder Include="Assets/Project/Scripts/Player" />
      <None Include="Assets/Project/external credits.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
+     <Folder Include="Assets/Project/Scripts/Triggers" />
      <None Include="Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader" />
      <Folder Include="Assets/MeleeWeaponTrail/Example/Textures" />
@@ -142,6 +145,7 @@
      <Folder Include="Assets/TutorialInfo/Icons" />
      <Folder Include="Assets/TutorialInfo" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt" />
+     <Folder Include="Assets/Project/Scripts/Spinning Plank" />
      <Folder Include="Assets/MeleeWeaponTrail/Scripts" />
      <Folder Include="Assets/Project/Scripts/Enviroment/Pendulum" />
      <Folder Include="Assets/Project/Scripts" />
