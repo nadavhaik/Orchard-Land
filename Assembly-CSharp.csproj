@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets/Project/Scripts/Level/Level.cs" />
+     <Compile Include="Assets/Project/Scripts/Camera/CameraShake.cs" />
      <Compile Include="Assets/Project/Scripts/HP/EnemyHealthBar.cs" />
      <Compile Include="Assets/Project/Scripts/Hittable.cs" />
      <Compile Include="Assets/Project/LibraryCode/PolarCoordinates.cs" />
@@ -89,7 +90,6 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
-     <Compile Include="Assets/Project/Scripts/Camera/CameraShake.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Project/Scripts/Player/FingerTrail" />
@@ -415,11 +415,11 @@
      <Reference Include="Unity.Burst.Cecil.Rocks">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Library/PackageCache/com.unity.burst@1.8.2/Unity.Burst.CodeGen/Unity.Burst.Cecil.Rocks.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-     </Reference>
      <Reference Include="DOTween">
      <HintPath>/home/nadavh/UnityProjects/Adventure/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+     <HintPath>/home/nadavh/UnityProjects/Adventure/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Android.Types">
      <HintPath>/home/nadavh/Unity/Hub/Editor/2021.3.23f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll</HintPath>
