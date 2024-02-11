@@ -9,7 +9,6 @@ public class WheelPlank : MonoBehaviour
     public float spinSpeed = 720f;
     public GameObject rotAround;
     public bool refresh = false;
-    private bool _spinning = true;
     private Collider _collider;
     private Vector3 _originalCenter;
     private Vector3 _originalPos;
@@ -29,22 +28,18 @@ public class WheelPlank : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (!_spinning)
+        if (!IsSpinning)
         {
             if (refresh)
             {
                 refresh = false;
-                _spinning = true;
+                IsSpinning = true;
             }
             
             return;
         }
         transform.Rotate(Time.fixedDeltaTime * new Vector3(spinSpeed, 0f, 0f));
     }
-
-    public void Stop()
-    {
-        _spinning = false;
-    }
     
+    public bool IsSpinning { get; set; } = true;
 }

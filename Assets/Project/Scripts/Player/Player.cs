@@ -79,6 +79,8 @@ public class Player : Hittable
     public float parrySlowMotionDuration = 1.0f;
     public float regularMotionTimeScale = 1.0f;
     public float slowMotionTimeScale = 0.5f;
+    public float parryShakeDuration = 1.0f;
+    public float parryStrength = 0.5f;
     
 
     private double _lastTapTime = 0;
@@ -217,6 +219,7 @@ public class Player : Hittable
     void HoldBomb()
     {
         _currentBombInstance = Instantiate(bomb, model.transform);
+        HandleParry(); // TODO: REMOVE
         var bombTrans = _currentBombInstance.transform;
         bombTrans.position = bombHold.transform.position;
         bombTrans.rotation = model.transform.rotation;
@@ -343,6 +346,7 @@ public class Player : Hittable
     {
         if(_inSlowMotion) return;
         Handheld.Vibrate();
+        CameraShake.Shake(parryShakeDuration, parryStrength);
         EnterSlowMotion(parrySlowMotionDuration);
     }
 
