@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class CameraManager : MonoBehaviour
     private Camera _mainCamera;
     public Camera initialCamera;
     public UnityEvent<Camera> onChangeCamera = new();
+    public static CameraManager Instance;
     public Camera MainCamera
     {
         get
@@ -26,6 +28,12 @@ public class CameraManager : MonoBehaviour
             onChangeCamera.Invoke(value);
         }
     }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
         MainCamera = initialCamera;

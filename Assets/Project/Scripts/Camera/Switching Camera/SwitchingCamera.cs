@@ -13,32 +13,26 @@ public class SwitchingCamera : MonoBehaviour
     private Camera _dest;
     private Action _afterKilled;
     private Camera _attachedCamera;
-    private CameraManager _cameraManager;
 
     void Start()
     {
-        _attachedCamera = GetComponent<Camera>();
-        _cameraManager = FindObjectOfType<CameraManager>();
-        if (_attachedCamera == null)
-        {
-            throw new ArgumentException("No attached camera was found!");
-        }
-
-        if (_cameraManager == null)
-        {
-            throw new ArgumentException("CameraManager wasn't found in current scene!");
-        }
+        
     }
 
 
     public void Init(Camera start, Camera dest, Action afterKilled)
     {
+        _attachedCamera = GetComponent<Camera>();
+        if (_attachedCamera == null)
+        {
+            throw new ArgumentException("No attached camera was found!");
+        }
         _startPosition = start.transform.position;
         _startRotation = start.transform.rotation;
         _dest = dest;
         _afterKilled = afterKilled;
 
-        _cameraManager.MainCamera = _attachedCamera;
+        CameraManager.Instance.MainCamera = _attachedCamera;
         
         
         transform.position = _startPosition;
@@ -52,7 +46,7 @@ public class SwitchingCamera : MonoBehaviour
 
     void Kill()
     {
-        _cameraManager.MainCamera = _dest;
+        CameraManager.Instance.MainCamera = _dest;
         _afterKilled();
         Destroy(gameObject);
     }
