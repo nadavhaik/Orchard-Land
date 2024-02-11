@@ -81,6 +81,7 @@ public class Player : Hittable
     public float slowMotionTimeScale = 0.5f;
     public float parryShakeDuration = 1.0f;
     public float parryStrength = 0.5f;
+    public float parryShakeDelay = 0.5f;
     
 
     private double _lastTapTime = 0;
@@ -346,7 +347,7 @@ public class Player : Hittable
     {
         if(_inSlowMotion) return;
         Handheld.Vibrate();
-        CameraShake.Shake(parryShakeDuration, parryStrength);
+        CameraShake.Shake(parryShakeDuration, parryStrength, parryShakeDelay);
         EnterSlowMotion(parrySlowMotionDuration);
     }
 
