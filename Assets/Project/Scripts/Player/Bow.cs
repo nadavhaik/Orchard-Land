@@ -9,6 +9,7 @@ public class Bow : MonoBehaviour
     public bool debugControlPoints;
     public GameObject arrowStart;
     public GameObject arrowEnd;
+    public GameObject sliders;
     public float minRotation = -90f;
     public float maxRotation = 90f;
 

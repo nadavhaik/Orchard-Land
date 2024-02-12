@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
@@ -26,28 +27,24 @@ public enum ControlScheme
 public class Player : Hittable
 {
     public HealthBar uiHealthBar;
-    
-    [Header("Visuals")] 
-    public GameObject model;
+
+    [Header("Visuals")] public GameObject model;
     public Finger fingerPrefab;
     public Canvas uiCanvas;
 
 
-    [Header("CameraControls")] 
-    public MainCamera mainCamera;
+    [Header("CameraControls")] public MainCamera mainCamera;
     public Camera bowCamera;
     public SwitchingCamera switchingCamera;
     public float maxLockDistance = 5f;
     public float minUnlockDistance = 15f;
-    
-    [Header("Movement")]
-    public float movementConstant = 5f;
+
+    [Header("Movement")] public float movementConstant = 5f;
     public PlayerHands hands;
     public float bowRotationConstant = 5f;
     public float jumpForce = 50f;
 
-    [Header("Items and Equipment")]
-    public PlayerItem defaultItem = PlayerItem.Bomb;
+    [Header("Items and Equipment")] public PlayerItem defaultItem = PlayerItem.Bomb;
     public PlayerSword sword;
     public Shield shield;
     public Bomb bomb;
@@ -57,22 +54,23 @@ public class Player : Hittable
     public float bombThrowingAngle = 30f;
     public float minBombPlaceForce = 0f;
     public float throwAnimationDuration = 0.5f;
-    [FormerlySerializedAs("max0ombPlaceForce")] public float maxBombPlaceForce = 2f;
+
+    [FormerlySerializedAs("max0ombPlaceForce")]
+    public float maxBombPlaceForce = 2f;
+
     public float arrowsCooldown = 0.2f;
     public float ignoreArrowSelfCollisionFor = 0.1f;
 
 
-    [Header("Items Control Points")] 
-    public bool drawControlPoints;
+    [Header("Items Control Points")] public bool drawControlPoints;
     public GameObject bombHold;
     public GameObject bombPut;
     public GameObject bowHold;
     public GameObject bowBack;
-    
-    
-    
-    [Header("Controls")] 
-    public float minSwipeForSwing = 1f;
+
+
+
+    [Header("Controls")] public float minSwipeForSwing = 1f;
     public float maxDistForDoubleTap = 10f;
     public double maxTimeForDoubleTap = 0.30f;
     public float minAccForParry = 2.0f;
@@ -82,12 +80,14 @@ public class Player : Hittable
     public float parryShakeDuration = 1.0f;
     public float parryStrength = 0.5f;
     public float parryShakeDelay = 0.5f;
-    
+    public UnityEvent arrowCooldownStartEvent;
+    public UnityEvent arrowCooldownEndEvent;
+
 
     private double _lastTapTime = 0;
     private Vector2 _lastTapPosition;
     public AttackDirection attackDirectionForTest;
-    
+
     private Controls _controls;
     private InputAction _touchPositionSource;
     private Vector2 _leftStick;
@@ -96,13 +96,13 @@ public class Player : Hittable
     private Vector2 _touchStart;
     private Vector2 _touchEnd;
     private bool _touching;
-    
-    
+
+
     private bool _onFloor;
     private bool _isInvincable = false;
     private Rigidbody _playerRigidBody;
     private CharacterController _characterController;
-    
+
     private PlayerItem _currentItemEquipped;
     private Bomb _currentBombInstance;
     private Arrow _currentArrowInstance;
@@ -110,7 +110,7 @@ public class Player : Hittable
 
     private bool _currentlySwitchingCameras;
     private Camera _mainCameraObj;
-    
+
     private bool _cameraLocked;
     private LockableTarget _lockedOn;
 
@@ -123,14 +123,14 @@ public class Player : Hittable
 
     private void DrawClosestSign()
     {
-        var prevClosestSign = _closestSign; 
+        var prevClosestSign = _closestSign;
         _closestSign = _closeSigns.FirstOrDefault();
-        
-        if(prevClosestSign == _closestSign) 
+
+        if (prevClosestSign == _closestSign)
             return;
-        if(prevClosestSign != null) 
+        if (prevClosestSign != null)
             prevClosestSign.textBox.Hide();
-        if(_closestSign != null)
+        if (_closestSign != null)
             _closestSign.textBox.Show();
 
     }
@@ -140,7 +140,7 @@ public class Player : Hittable
         _closeSigns.Add(sign);
         DrawClosestSign();
     }
-    
+
     public void OnNearSignExit(Sign sign)
     {
         _closeSigns.Remove(sign);
@@ -151,22 +151,24 @@ public class Player : Hittable
 
     protected override void UpdateHealthBar()
     {
-        
+
     }
 
     public bool LockedOnATarget
     {
         get => _lockedOn != null;
     }
-    
-    protected override void AnimateHit() { }
+
+    protected override void AnimateHit()
+    {
+    }
 
 
     void Jump()
     {
-        if(!_onFloor) return;
-        
-       _playerRigidBody.AddForce(0, jumpForce, 0);
+        if (!_onFloor) return;
+
+        _playerRigidBody.AddForce(0, jumpForce, 0);
     }
 
     void InitJump(InputAction action)
@@ -187,12 +189,20 @@ public class Player : Hittable
     }
 
     private Stack<Action> _cancelIgnoreSelfArrow = new();
+
     private void CancelIgnoreSelfArrow()
     {
         _cancelIgnoreSelfArrow.Pop()();
     }
 
-    private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
+    public void SetArrowTension(float newTension)
+    {
+        _currentArrowInstance.transform.position = Vector3.Lerp(bow.arrowStart.transform.position, 
+            bow.arrowEnd.transform.position, 
+            newTension);
+    }
+
+private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     {
         var collider1 = arrow1.GetComponent<Collider>();
         var collider2 = arrow2.GetComponent<Collider>();
@@ -215,6 +225,7 @@ public class Player : Hittable
         _currentArrowInstance.transform.position = bow.arrowStart.transform.position;
         _currentArrowInstance.transform.rotation = bow.transform.rotation;
         _currentArrowInstance.transform.parent = bow.transform;
+        arrowCooldownEndEvent.Invoke();
     }
 
     void HoldBomb()
@@ -479,6 +490,21 @@ public class Player : Hittable
         _controls.HoldingBomb.Cancel.performed += _ => CancelBomb();
         _controls.HoldingBomb.Throw.performed += _ => ThrowBomb();
     }
+
+    public void ShootBow()
+    {
+        if(_currentArrowInstance == null) return;
+        _currentArrowInstance.transform.position = bow.arrowEnd.transform.position;
+        // _currentBombInstance.transform.LookAt(bow.arrowStart.transform.position);
+        bow.Shoot(_currentArrowInstance);
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(),
+            _currentArrowInstance.GetComponent<Collider>());
+            
+        _prevArrowInstance = _currentArrowInstance;
+        _currentArrowInstance = null;
+        arrowCooldownStartEvent.Invoke();
+        Invoke( nameof(InitArrow), arrowsCooldown);
+    }
     
 
     void InitBowPovControls()
@@ -488,16 +514,7 @@ public class Player : Hittable
         InitTouch(_controls.BowPov.TouchPress, _controls.BowPov.TouchPosition);
         _controls.BowPov.ButtonShoot.performed += _ =>
         {
-            if(_currentArrowInstance == null) return;
-            _currentArrowInstance.transform.position = bow.arrowEnd.transform.position;
-            // _currentBombInstance.transform.LookAt(bow.arrowStart.transform.position);
-            bow.Shoot(_currentArrowInstance);
-            Physics.IgnoreCollision(gameObject.GetComponent<Collider>(),
-                _currentArrowInstance.GetComponent<Collider>());
-            
-            _prevArrowInstance = _currentArrowInstance;
-            _currentArrowInstance = null;
-            Invoke( nameof(InitArrow), arrowsCooldown);
+            // ShootBow();
         };
         _controls.BowPov.Cancel.performed += _ =>
         {
@@ -539,12 +556,14 @@ public class Player : Hittable
 
     void WieldBow()
     {
+        bow.sliders.SetActive(true);
         bow.transform.position = bowHold.transform.position;
         bow.transform.rotation = bowHold.transform.rotation;
     }
 
     void UnwieldBow()
     {
+        bow.sliders.SetActive(false);
         bow.transform.position = bowBack.transform.position;
         bow.transform.rotation = bowBack.transform.rotation;
     }

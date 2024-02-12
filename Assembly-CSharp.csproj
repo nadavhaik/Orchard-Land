@@ -46,6 +46,7 @@
      <Compile Include="Assets/Project/Scripts/HP/EnemyHealthBar.cs" />
      <Compile Include="Assets/Project/Scripts/Hittable.cs" />
      <Compile Include="Assets/Project/LibraryCode/PolarCoordinates.cs" />
+     <Compile Include="Assets/Project/Scripts/Player/BowSlider.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/PlugController.cs" />
      <Compile Include="Assets/Project/Scripts/Spinning Plank/PlankTip.cs" />
      <Compile Include="Assets/MeleeWeaponTrail/Scripts/Interpolate.cs" />
