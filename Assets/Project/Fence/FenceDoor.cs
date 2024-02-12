@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(AudioSource))]
 public class FenceDoor : MonoBehaviour
 {
     public float animationDuration = 3f;
@@ -10,17 +11,20 @@ public class FenceDoor : MonoBehaviour
     private Vector3 _endPosition;
     private float _timeForAnimation = 0f;
     private BoxCollider _collider;
+    private AudioSource _audioSource;
     protected virtual void Start()
     {
         _endPosition = transform.position - Vector3.up * transform.lossyScale.y;
         _collider = GetComponent<BoxCollider>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void Open()
     {
         if(_opening) return;
-        Destroy(_collider);
+        _audioSource.Play();
         _opening = true;
+        Destroy(_collider);
     }
 
     

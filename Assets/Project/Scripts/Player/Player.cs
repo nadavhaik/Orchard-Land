@@ -356,6 +356,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     public void HandleParry()
     {
         if(_inSlowMotion) return;
+        shield.PlayParrySfx();
         Handheld.Vibrate();
         CameraShake.Shake(parryShakeDuration, parryStrength, parryShakeDelay);
         EnterSlowMotion(parrySlowMotionDuration);

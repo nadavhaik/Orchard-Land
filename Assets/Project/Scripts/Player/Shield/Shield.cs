@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum ShieldState {OnBack, Defending, Parrying}
 
+[RequireComponent(typeof(AudioSource))]
 public class Shield : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class Shield : MonoBehaviour
     public ShieldState CurrentState { get; private set; }
     private float _parryTimer;
     private Collider _collider;
+    private AudioSource _audioSource;
 
     public void Parry()
     {
@@ -29,6 +31,8 @@ public class Shield : MonoBehaviour
         _parryTimer = 0f;
         CurrentState = ShieldState.Parrying;
     }
+
+    public void PlayParrySfx() => _audioSource.Play();
     
 
     public void Defend()
@@ -52,6 +56,7 @@ public class Shield : MonoBehaviour
     void Start()
     {
         _collider = GetComponent<Collider>();
+        _audioSource = GetComponent<AudioSource>();
         _collider.enabled = false;
         PutOnBack();
     }

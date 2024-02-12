@@ -10,6 +10,8 @@ public class Bow : MonoBehaviour
     public GameObject arrowStart;
     public GameObject arrowEnd;
     public GameObject sliders;
+    public AudioSource weakShotSFX;
+    public AudioSource strongShotSFX;
     public float minRotation = -90f;
     public float maxRotation = 90f;
 
@@ -37,6 +39,14 @@ public class Bow : MonoBehaviour
         var arrowMaxTensionPosition = arrowEnd.transform.position;
         float tension = Vector2.Distance(arrowCurrentPosition, arrowMinTensionPosition) /
                         Vector2.Distance(arrowMaxTensionPosition, arrowMinTensionPosition);
+        if (tension < 0.6)
+        {
+            weakShotSFX.Play();
+        }
+        else
+        {
+            strongShotSFX.Play();
+        }
         arrow.Shoot(tension);
     }
 }
