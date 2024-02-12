@@ -229,12 +229,12 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
 
     void HoldBomb()
     {
-        _currentBombInstance = Instantiate(bomb, model.transform);
-        HandleParry(); // TODO: REMOVE
-        var bombTrans = _currentBombInstance.transform;
-        bombTrans.position = bombHold.transform.position;
-        bombTrans.rotation = model.transform.rotation;
-        hands.HoldBomb(_currentBombInstance);
+        // _currentBombInstance = Instantiate(bomb, model.transform);
+        // HandleParry(); // TODO: REMOVE
+        // var bombTrans = _currentBombInstance.transform;
+        // bombTrans.position = bombHold.transform.position;
+        // bombTrans.rotation = model.transform.rotation;
+        // hands.HoldBomb(_currentBombInstance);
     }
     
     void PullItem()
@@ -245,9 +245,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
             case PlayerItem.None:
                 return;
             case PlayerItem.Bomb:
-                _controls.HoldingBomb.Enable();
-                HoldBomb();
-                break;
+                return;
         }
 
         _controls.PlayerNormal.Disable();
@@ -574,7 +572,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     {
         SetHealthReducerHandler("SimpleEnemy", 10f);
         SetHealthReducerHandler("Explosion", 20f);
-        SetHealthReducerHandler("EnemySword", 200f);
+        SetHealthReducerHandler("EnemySword", 50f);
     }
 
     private void InitCloseSignsSet()
@@ -769,6 +767,11 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     private void OnDisable()
     {
         _controls.Disable();
+    }
+
+    public void Save()
+    {
+        
     }
 
 

@@ -27,6 +27,7 @@ public abstract class Enemy : Hittable
         directionBetween = directionBetween.normalized;
      
         float distance = Vector3.Distance(camera.transform.position, point);
+        if (distance > camera.farClipPlane) return false;
      
         if(Physics.Raycast(camera.transform.position, directionBetween, out depthCheck, distance + 0.05f)) {
             if(Vector3.Distance(point, depthCheck.point) > 0.5f) {
