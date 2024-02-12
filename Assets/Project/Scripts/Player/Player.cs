@@ -194,12 +194,11 @@ public class Player : Hittable
     {
         _cancelIgnoreSelfArrow.Pop()();
     }
-
-    public void SetArrowTension(float newTension)
+    
+    public float ArrowTension
     {
-        _currentArrowInstance.transform.position = Vector3.Lerp(bow.arrowStart.transform.position, 
-            bow.arrowEnd.transform.position, 
-            newTension);
+        set => _currentArrowInstance.transform.position = Vector3.Lerp(bow.arrowStart.transform.position, 
+            bow.arrowEnd.transform.position, value);
     }
 
 private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
@@ -491,10 +490,9 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
         _controls.HoldingBomb.Throw.performed += _ => ThrowBomb();
     }
 
-    public void ShootBow()
+    public void ShootArrow()
     {
         if(_currentArrowInstance == null) return;
-        _currentArrowInstance.transform.position = bow.arrowEnd.transform.position;
         // _currentBombInstance.transform.LookAt(bow.arrowStart.transform.position);
         bow.Shoot(_currentArrowInstance);
         Physics.IgnoreCollision(gameObject.GetComponent<Collider>(),
@@ -505,7 +503,27 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
         arrowCooldownStartEvent.Invoke();
         Invoke( nameof(InitArrow), arrowsCooldown);
     }
-    
+
+    private void CancelBow()
+    {
+        if(_currentlySwitchingCameras) return;
+        _controls.BowPov.Disable();
+        _currentlySwitchingCameras = true;
+            
+        if (_currentArrowInstance != null)
+        {
+            Destroy(_currentArrowInstance.gameObject);
+        }
+            
+        mainCamera.ResetPosition();
+        Instantiate(switchingCamera).Init(bowCamera, _mainCameraObj, () =>
+            {
+                _currentlySwitchingCameras = false;
+                _controls.LockCamera.LockCamera.Enable();
+            });
+        UnwieldBow();
+        _controls.PlayerNormal.Enable();
+    }
 
     void InitBowPovControls()
     {
@@ -514,28 +532,11 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
         InitTouch(_controls.BowPov.TouchPress, _controls.BowPov.TouchPosition);
         _controls.BowPov.ButtonShoot.performed += _ =>
         {
-            // ShootBow();
+            CancelBow();
         };
         _controls.BowPov.Cancel.performed += _ =>
         {
-            if(_currentlySwitchingCameras) return;
-            _controls.BowPov.Disable();
-            _currentlySwitchingCameras = true;
-            
-            if (_currentArrowInstance != null)
-            {
-                Destroy(_currentArrowInstance.gameObject);
-            }
-            
-            mainCamera.ResetPosition();
-            Instantiate(switchingCamera).Init(bowCamera, _mainCameraObj, 
-                () =>
-                {
-                    _currentlySwitchingCameras = false;
-                    _controls.LockCamera.LockCamera.Enable();
-                });
-            UnwieldBow();
-            _controls.PlayerNormal.Enable();
+            // CancelBow();
         };
     }
     

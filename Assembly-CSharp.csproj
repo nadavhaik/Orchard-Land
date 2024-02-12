@@ -91,10 +91,12 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/MainCamera.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
+     <Compile Include="Assets/Project/Scripts/Target/Target.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Project/Scripts/Player/FingerTrail" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
+     <Folder Include="Assets/Military target/Render" />
      <Folder Include="Assets/Settings" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets/Project/Scripts/Sword" />
@@ -115,6 +117,7 @@
      <Folder Include="Assets/MeleeWeaponTrail/Example" />
      <Folder Include="Assets/Project/Audio" />
      <Folder Include="Assets/Project/Materials" />
+     <Folder Include="Assets/Military target/Materials" />
      <Folder Include="Assets/Project/Scripts/Level" />
      <Folder Include="Assets/MeleeWeaponTrail" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
@@ -124,6 +127,7 @@
      <None Include="Assets/MeleeWeaponTrail/README.txt" />
      <Folder Include="Assets/WireBuilder/Prefabs" />
      <Folder Include="Assets/WireBuilder/Materials" />
+     <Folder Include="Assets/Military target/LODs" />
      <Folder Include="Assets/Project/Scripts/Player/Shield" />
      <Folder Include="Assets/Project/Scripts/GeneralPrefabs" />
      <Folder Include="Assets/Project/Scripts/Player" />
@@ -137,6 +141,7 @@
      <Folder Include="Assets/Project/Scripts/Enemies" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
+     <Folder Include="Assets/Military target" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Surface.cginc" />
      <Folder Include="Assets/TextMesh Pro/Shaders" />
@@ -153,10 +158,13 @@
      <Folder Include="Assets/Project/Scripts" />
      <Folder Include="Assets/Scenes" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader" />
+     <Folder Include="Assets/Project/Scripts/Target" />
      <Folder Include="Assets/WireBuilder" />
      <Folder Include="Assets/Project/Textures" />
      <Folder Include="Assets/Project/Fence" />
+     <Folder Include="Assets/Military target/Prefabs" />
      <Folder Include="Assets/Project/Scripts/Enviroment" />
+     <Folder Include="Assets/Military target/Textures" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF Overlay.shader" />
      <Folder Include="Assets/Project" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader" />

@@ -18,6 +18,7 @@ public class Arrow : MonoBehaviour
     private bool _isActive;
     private const string NotActiveTag = "Untagged"; 
     private const string ActiveArrowTag = "Arrow";
+    private static readonly Func<float, float> TensionFunction = x => Mathf.Pow(2, x) - 1; 
     public bool IsActive
     {
         get => _isActive; 
@@ -82,7 +83,7 @@ public class Arrow : MonoBehaviour
         _rb.mass = mass;
 
         // rb.isKinematic = true;
-        var shootingForce3d = shootingForce * tension * transform.forward;
+        var shootingForce3d = shootingForce * TensionFunction(tension) * transform.forward;
         _rb.AddForce(shootingForce3d, ForceMode.Acceleration);
         
         IsActive = true;

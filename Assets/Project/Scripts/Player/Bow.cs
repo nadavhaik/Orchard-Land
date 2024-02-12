@@ -32,14 +32,11 @@ public class Bow : MonoBehaviour
 
     public void Shoot(Arrow arrow)
     {
-        float tension = Vector2.Distance(arrow.transform.position, arrowStart.transform.position) /
-                        Vector2.Distance(arrowEnd.transform.position, arrowStart.transform.position);
+        var arrowMinTensionPosition = arrowStart.transform.position;
+        var arrowCurrentPosition = arrow.transform.position;
+        var arrowMaxTensionPosition = arrowEnd.transform.position;
+        float tension = Vector2.Distance(arrowCurrentPosition, arrowMinTensionPosition) /
+                        Vector2.Distance(arrowMaxTensionPosition, arrowMinTensionPosition);
         arrow.Shoot(tension);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

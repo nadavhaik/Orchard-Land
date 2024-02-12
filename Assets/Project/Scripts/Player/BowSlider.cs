@@ -10,8 +10,15 @@ public class BowSlider : MonoBehaviour, IPointerUpHandler
     private Slider _slider;
     public BowSlider otherSlider;
     private Player _player;
-    private bool _cyclicTriggerFlag = false;
+    
     private bool _inCoolDown = false;
+    private float _currentValue = 0f;
+
+    public float Value
+    {
+        get => _slider.value;
+        set => _slider.value = value;
+    }
     void Start()
     {
         _slider = GetComponent<Slider>();
@@ -23,31 +30,22 @@ public class BowSlider : MonoBehaviour, IPointerUpHandler
                 _slider.value = 0;
                 return;
             }
-            _cyclicTriggerFlag = false;
-            otherSlider.OnOtherValueChanged(val);
-            _player.SetArrowTension(val);
+            otherSlider.Value = val;
+            _player.ArrowTension = val;
         });
         _player.arrowCooldownStartEvent.AddListener(() => _inCoolDown = true);
         _player.arrowCooldownEndEvent.AddListener(() => _inCoolDown = false);
-    }
-    
-    private void OnOtherValueChanged(float newValue)
-    {
-        if(_cyclicTriggerFlag) return;
-        _cyclicTriggerFlag = true;
-        _slider.value = newValue;
-        _cyclicTriggerFlag = false;
     }
 
     public void Reset()
     {
         _slider.value = 0;
-        otherSlider.OnOtherValueChanged(0);
+        otherSlider.Value = 0;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _player.ShootBow();
+        _player.ShootArrow();
         Reset();
     }
 }
