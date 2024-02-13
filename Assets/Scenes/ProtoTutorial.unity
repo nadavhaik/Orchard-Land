@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18029143, g: 0.22572419, b: 0.30693057, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2776,13 +2776,14 @@ MonoBehaviour:
   slowMotionTimeScale: 0.1
   parryShakeDuration: 1
   parryStrength: 0.5
-  parryShakeDelay: 0.1
+  parryShakeDelay: 0.5
   arrowCooldownStartEvent:
     m_PersistentCalls:
       m_Calls: []
   arrowCooldownEndEvent:
     m_PersistentCalls:
       m_Calls: []
+  bossSpawnPoint: {fileID: 0}
   attackDirectionForTest: 4
 --- !u!4 &310275842
 Transform:
@@ -2792,7 +2793,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310275839}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.004245, y: 1, z: -40}
+  m_LocalPosition: {x: -7.004245, y: 1, z: -54.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3621,31 +3622,7 @@ MonoBehaviour:
   returnForce: 2000
   onParriedEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 310275841}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: HandleParry
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 496320057}
-        m_TargetAssemblyTypeName: FenceDoor, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &363306021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4375,18 +4352,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 496320055}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &496320057 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6801684718375188789, guid: 896506738154c5266b30091a4d6fd7ab,
-    type: 3}
-  m_PrefabInstance: {fileID: 496320055}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 812f801a7b5c826b780f263e7f3285dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &514221718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6693,6 +6658,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7ef4da7c5e89afc8ac84f56913a097d, type: 3}
+--- !u!1 &860682428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 860682429}
+  m_Layer: 0
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &860682429
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860682428}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.004245, y: 1, z: -7.19}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1546513617}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &871263446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10320,7 +10316,7 @@ GameObject:
   - component: {fileID: 1409841984}
   - component: {fileID: 1409841987}
   m_Layer: 0
-  m_Name: DoorCloseTrigger
+  m_Name: EnterBossTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10422,6 +10418,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1657718812}
         m_TargetAssemblyTypeName: ClosingDoor, Assembly-CSharp
         m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 310275841}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: SaveInBoss
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11577,6 +11585,7 @@ Transform:
   - {fileID: 207147541}
   - {fileID: 1375737369}
   - {fileID: 443720254}
+  - {fileID: 860682429}
   m_Father: {fileID: 886439485}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

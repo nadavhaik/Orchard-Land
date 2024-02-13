@@ -5,9 +5,7 @@ using UnityEngine.Serialization;
 
 public class MainCamera : MonoBehaviour
 {
-
-
-    public Player player;
+    
     public GameObject model;
 
     public float distanceFromPlayer = 10f;
@@ -24,6 +22,7 @@ public class MainCamera : MonoBehaviour
     private float _yOffset;
     private bool _locked;
     private bool _locking;
+    private Player _player;
 
     private float Height
     {
@@ -52,6 +51,7 @@ public class MainCamera : MonoBehaviour
 
     void Start()
     {
+        _player = FindObjectOfType<Player>();
         ResetPosition();
     }
 
@@ -113,7 +113,7 @@ public class MainCamera : MonoBehaviour
             Height = Mathf.Lerp(Height, startHeight, t);
             CalculatePosition();    
         }
-        else if (player.LockedOnATarget)
+        else if (_player.LockedOnATarget)
         {
             _xzAngle = StartAngle;
             CalculatePosition();

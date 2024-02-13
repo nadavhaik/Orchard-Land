@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class SceneData
 {
-    public static bool ShouldRestartInBoss { get; set; }
+    public static bool ShouldRespawnInBoss { get; set; } = false;
 }

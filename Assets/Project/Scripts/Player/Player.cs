@@ -83,6 +83,9 @@ public class Player : Hittable
     public UnityEvent arrowCooldownStartEvent;
     public UnityEvent arrowCooldownEndEvent;
 
+    [Header("Spawn Points")] 
+    public GameObject bossSpawnPoint;
+
 
     private double _lastTapTime = 0;
     private Vector2 _lastTapPosition;
@@ -120,6 +123,9 @@ public class Player : Hittable
     private Finger _currentFinger;
     private SortedSet<Sign> _closeSigns;
     private Sign _closestSign = null;
+    private Action _onSlowMotionExit = () => { };
+
+    private bool _killed = false;
 
     private void DrawClosestSign()
     {
@@ -341,14 +347,21 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
         _inSlowMotion = false;
         Time.timeScale = regularMotionTimeScale;
         Time.fixedDeltaTime /= slowMotionTimeScale;
+        _onSlowMotionExit();
     }
-    public void EnterSlowMotion(float duration)
+    
+    public void EnterSlowMotion(float duration, Action onExit)
     {
         Debug.Log("Entered Slow motion!");
+        _onSlowMotionExit = onExit;
         _inSlowMotion = true;
         Time.timeScale = slowMotionTimeScale;
         Time.fixedDeltaTime *= slowMotionTimeScale;
         Invoke(nameof(StopSlowMotion), duration * slowMotionTimeScale);
+    }
+    public void EnterSlowMotion(float duration)
+    {
+        EnterSlowMotion(duration, () => { });
     }
 
     public void HandleParry()
@@ -366,9 +379,6 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
         if(accSize >= minAccForParry) Parry();
     }
 
-
-    
-    
 
     void InitNormalControls()
     {
@@ -572,7 +582,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     {
         SetHealthReducerHandler("SimpleEnemy", 10f);
         SetHealthReducerHandler("Explosion", 20f);
-        SetHealthReducerHandler("EnemySword", 50f);
+        SetHealthReducerHandler("EnemySword", 500f); // TODO: REDUCE
     }
 
     private void InitCloseSignsSet()
@@ -580,10 +590,22 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
         _closeSigns = new SortedSet<Sign>(FunctionalComparer<Sign>.Create(
             sign => Vector3.Distance(sign.transform.position, model.transform.position)));
     }
+
+    public void SaveInBoss() => SceneData.ShouldRespawnInBoss = true;
+    
+    private void MoveToBossRespawnPoint() => transform.position = bossSpawnPoint.transform.position;
+    void OnLevelWasLoaded()
+    {
+        
+    }
     
     protected override void Start()
     {
         base.Start();
+        if (SceneData.ShouldRespawnInBoss)
+        {
+            MoveToBossRespawnPoint();
+        }
 
         InitCloseSignsSet();
         healthBar = uiHealthBar;
@@ -663,13 +685,18 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
         RaycastHit hit;
         _onFloor = Physics.Raycast(transform.position, Vector3.down, out hit, 1.01f);
     }
-    
+
 
     protected override void Kill()
     {
+        if(_killed) return;
+        _killed = true;
         Debug.Log("Game Over");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // Destroy(gameObject);
+        _controls.Disable();
+        EnterSlowMotion(1, () =>
+        {
+            SceneManager.LoadScene("Game Over");
+        });
     }
     
     protected override void Update()
@@ -759,6 +786,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
 
     private void OnEnable()
     {
+        // SceneManager.sceneLoaded += OnSceneLoaded;
         _controls.PlayerNormal.Enable();
         _controls.LockCamera.Enable();
         _controls.BowPov.Disable();
@@ -766,13 +794,21 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
 
     private void OnDisable()
     {
+        // SceneManager.sceneLoaded -= OnSceneLoaded;
         _controls.Disable();
     }
-
-    public void Save()
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        
+        // here you can use scene.buildIndex or scene.name to check which scene was loaded
+        if (scene.name == "Game Over")
+        {
+            
+            // Destroy the gameobject this script is attached to
+            Destroy(gameObject);
+        }
     }
+    
 
 
 //     private void OnApplicationQuit()

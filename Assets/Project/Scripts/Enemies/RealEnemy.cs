@@ -8,7 +8,6 @@ public enum EnemyState {Idle, Fighting, Attacking ,WalkingBack}
 public class RealEnemy : Enemy
 {
     // Start is called before the first frame update
-    public Player player;
     public float speed = 10f;
     public Camera lineOfSight;
     public float yieldDistance = 5f;
@@ -27,6 +26,7 @@ public class RealEnemy : Enemy
     private Quaternion _startRotation;
     private EnemyState _currentState = EnemyState.Idle;
     private Rigidbody _rb;
+    private Player _player;
     
     void MarkNotStunned() => _stunned = false;
     void Stun()
@@ -41,13 +41,14 @@ public class RealEnemy : Enemy
     protected override void Start()
     {
         base.Start();
+        _player = FindObjectOfType<Player>();
         _rb = GetComponent<Rigidbody>();
         _startPosition = transform.position;
         _startRotation = transform.rotation;
         
         enemySword.opponentDefendedEvent.AddListener(OnDefended);
         enemySword.opponentParriedEvent.AddListener(OnParried);
-        enemySword.opponentParriedEvent.AddListener(player.HandleParry);
+        enemySword.opponentParriedEvent.AddListener(_player.HandleParry);
     }
 
     void OnDefended()
@@ -69,9 +70,9 @@ public class RealEnemy : Enemy
         
     }
 
-    private bool SeesPlayer() => PointInCameraView(player.transform.position, lineOfSight) ||
-                                 PointInCameraView(player.sword.transform.position, lineOfSight) ||
-                                 PointInCameraView(player.shield.transform.position, lineOfSight);
+    private bool SeesPlayer() => PointInCameraView(_player.transform.position, lineOfSight) ||
+                                 PointInCameraView(_player.sword.transform.position, lineOfSight) ||
+                                 PointInCameraView(_player.shield.transform.position, lineOfSight);
 
     private void Yield()
     {
@@ -87,7 +88,7 @@ public class RealEnemy : Enemy
 
     private void Fight()
     {
-        var playerPos = player.transform.position;
+        var playerPos = _player.transform.position;
         transform.LookAt(playerPos);
         if (Vector3.Distance(transform.position, playerPos) > minAttackDistance)
             transform.position += Time.deltaTime * speed * transform.forward;
@@ -113,12 +114,12 @@ public class RealEnemy : Enemy
         if(_stunned) return;
         if (_currentState == EnemyState.Attacking)
         {
-            transform.LookAt(player.transform.position);
+            transform.LookAt(_player.transform.position);
             return;
         }
 
         if (_currentState == EnemyState.Fighting &&
-            Vector3.Distance(player.transform.position, transform.position) > yieldDistance)
+            Vector3.Distance(_player.transform.position, transform.position) > yieldDistance)
         {
             _currentState = EnemyState.WalkingBack;
         } else if (_currentState != EnemyState.Attacking && SeesPlayer())

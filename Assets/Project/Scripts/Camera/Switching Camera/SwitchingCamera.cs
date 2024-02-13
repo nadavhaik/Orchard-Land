@@ -14,12 +14,6 @@ public class SwitchingCamera : MonoBehaviour
     private Action _afterKilled;
     private Camera _attachedCamera;
 
-    void Start()
-    {
-        
-    }
-
-
     public void Init(Camera start, Camera dest, Action afterKilled)
     {
         _attachedCamera = GetComponent<Camera>();
