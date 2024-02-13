@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18029143, g: 0.22572419, b: 0.30693057, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1343,6 +1343,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 234992473}
     m_Modifications:
+    - target: {fileID: 1277639914462462456, guid: 754fa602334c952b8a7c3d4f1da8dc6f,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.23921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277639914462462456, guid: 754fa602334c952b8a7c3d4f1da8dc6f,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277639914462462456, guid: 754fa602334c952b8a7c3d4f1da8dc6f,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277639914462462456, guid: 754fa602334c952b8a7c3d4f1da8dc6f,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1277639915475218409, guid: 754fa602334c952b8a7c3d4f1da8dc6f,
         type: 3}
       propertyPath: m_text
@@ -2793,7 +2813,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310275839}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.004245, y: 1, z: -52.77}
+  m_LocalPosition: {x: -6, y: 1, z: -110}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3137,7 +3157,7 @@ MonoBehaviour:
   speed: 5
   lineOfSight: {fileID: 1147645876}
   yieldDistance: 50
-  minAttackDistance: 1.5
+  minAttackDistance: 3
   maxDistanceFromStartPoint: 1
   minTimeBetweenAttacks: 0.5
   maxTimeBetweenAttacks: 1
@@ -3620,7 +3640,19 @@ MonoBehaviour:
   returnForce: 2000
   onParriedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 496320057}
+        m_TargetAssemblyTypeName: FenceDoor, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &363306021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4350,6 +4382,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 496320055}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &496320057 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6801684718375188789, guid: 896506738154c5266b30091a4d6fd7ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 496320055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 812f801a7b5c826b780f263e7f3285dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &514221718
 PrefabInstance:
   m_ObjectHideFlags: 0

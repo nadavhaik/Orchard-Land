@@ -582,7 +582,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     {
         SetHealthReducerHandler("SimpleEnemy", 10f);
         SetHealthReducerHandler("Explosion", 20f);
-        SetHealthReducerHandler("EnemySword", 500f); // TODO: REDUCE
+        SetHealthReducerHandler("EnemySword", 50f); // TODO: REDUCE
     }
 
     private void InitCloseSignsSet()
