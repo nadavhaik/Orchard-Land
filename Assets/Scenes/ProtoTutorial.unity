@@ -2783,7 +2783,7 @@ MonoBehaviour:
   arrowCooldownEndEvent:
     m_PersistentCalls:
       m_Calls: []
-  bossSpawnPoint: {fileID: 0}
+  bossSpawnPoint: {fileID: 860682428}
   attackDirectionForTest: 4
 --- !u!4 &310275842
 Transform:
@@ -2793,7 +2793,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310275839}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.004245, y: 1, z: -54.27}
+  m_LocalPosition: {x: -7.004245, y: 1, z: -52.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3058,7 +3058,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fb83e476bfbad3c19df0c82b6e63ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 310275841}
   model: {fileID: 94077034}
   distanceFromPlayer: 5
   startHeight: 3
@@ -3135,7 +3134,6 @@ MonoBehaviour:
   onDied:
     m_PersistentCalls:
       m_Calls: []
-  player: {fileID: 310275841}
   speed: 5
   lineOfSight: {fileID: 1147645876}
   yieldDistance: 50
