@@ -852,7 +852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &66824052
 Transform:
   m_ObjectHideFlags: 0
@@ -3251,7 +3251,19 @@ MonoBehaviour:
   maxHealth: 500
   onDied:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 647776095}
+        m_TargetAssemblyTypeName: FinishedDemoHandler, Assembly-CSharp
+        m_MethodName: FinishDemo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   speed: 5
   lineOfSight: {fileID: 1147645876}
   yieldDistance: 50
@@ -5808,6 +5820,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618515973}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &647776093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 647776094}
+  - component: {fileID: 647776095}
+  m_Layer: 0
+  m_Name: Finish Demo Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &647776094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647776093}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1153582721}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &647776095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647776093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c773532f99deab66b8dfd81511b059dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endingScreenDelay: 2
 --- !u!1001 &655007317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8927,6 +8984,7 @@ Transform:
   - {fileID: 924080725}
   - {fileID: 1657718810}
   - {fileID: 1409841983}
+  - {fileID: 647776094}
   m_Father: {fileID: 886439485}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12679,7 +12737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebaf014f8c4ff8cbac7e004bc5d5f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetHeight: 3
+  targetHeight: 4
   reachedHeightEvent:
     m_PersistentCalls:
       m_Calls:

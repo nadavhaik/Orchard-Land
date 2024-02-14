@@ -97,6 +97,8 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
      <Compile Include="Assets/Project/Scripts/PureUI/GameOver.cs" />
+     <Compile Include="Assets/Project/Scripts/PureUI/GameCompleted.cs" />
+     <Compile Include="Assets/Project/Scripts/FinishedDemoHandler.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Project/Scripts/Player/FingerTrail" />
