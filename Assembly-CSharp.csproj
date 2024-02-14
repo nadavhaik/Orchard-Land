@@ -85,6 +85,7 @@
      <Compile Include="Assets/Project/Scripts/Triggers/GeographicSingleUseTrigger.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/Switching Camera/SwitchingCamera.cs" />
      <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
+     <Compile Include="Assets/Project/Scripts/PureUI/MainScreen.cs" />
      <Compile Include="Assets/Project/Scripts/Camera/CameraUICanvas.cs" />
      <Compile Include="Assets/Project/LibraryCode/EnumFuncs.cs" />
      <Compile Include="Assets/Project/Scripts/HP/HealthBar.cs" />
@@ -96,7 +97,6 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
      <Compile Include="Assets/Project/Scripts/PureUI/GameOver.cs" />
-     <Compile Include="Assets/Project/Scripts/PureUI/MainScreen.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Project/Scripts/Player/FingerTrail" />

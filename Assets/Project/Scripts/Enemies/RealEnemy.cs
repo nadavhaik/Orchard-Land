@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 
 public enum EnemyState {Idle, Fighting, Attacking ,WalkingBack}
 
+[RequireComponent(typeof(AudioSource))]
 public class RealEnemy : Enemy
 {
     // Start is called before the first frame update
@@ -27,6 +28,7 @@ public class RealEnemy : Enemy
     private EnemyState _currentState = EnemyState.Idle;
     private Rigidbody _rb;
     private Player _player;
+    private AudioSource _hitAudioSource;
     
     void MarkNotStunned() => _stunned = false;
     void Stun()
@@ -43,6 +45,7 @@ public class RealEnemy : Enemy
         base.Start();
         _player = FindObjectOfType<Player>();
         _rb = GetComponent<Rigidbody>();
+        _hitAudioSource = GetComponent<AudioSource>();
         _startPosition = transform.position;
         _startRotation = transform.rotation;
         
@@ -67,7 +70,10 @@ public class RealEnemy : Enemy
 
     protected override void AnimateHit()
     {
-        
+        if (!_hitAudioSource.isPlaying)
+        {
+            _hitAudioSource.Play();   
+        }
     }
 
     private bool SeesPlayer() => PointInCameraView(_player.transform.position, lineOfSight) ||

@@ -24,6 +24,7 @@ public enum ControlScheme
     HoldingBomb
 }
 
+[RequireComponent(typeof(AudioSource))]
 public class Player : Hittable
 {
     public HealthBar uiHealthBar;
@@ -124,6 +125,7 @@ public class Player : Hittable
     private SortedSet<Sign> _closeSigns;
     private Sign _closestSign = null;
     private Action _onSlowMotionExit = () => { };
+    private AudioSource _hitAudioSource;
 
     private bool _killed = false;
 
@@ -167,6 +169,10 @@ public class Player : Hittable
 
     protected override void AnimateHit()
     {
+        if (!_hitAudioSource.isPlaying)
+        {
+            _hitAudioSource.Play();   
+        }
     }
 
 
@@ -582,7 +588,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     {
         SetHealthReducerHandler("SimpleEnemy", 10f);
         SetHealthReducerHandler("Explosion", 20f);
-        SetHealthReducerHandler("EnemySword", 50f); // TODO: REDUCE
+        SetHealthReducerHandler("EnemySword", 50f); 
     }
 
     private void InitCloseSignsSet()
@@ -594,10 +600,6 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     public void SaveInBoss() => SceneData.ShouldRespawnInBoss = true;
     
     private void MoveToBossRespawnPoint() => transform.position = bossSpawnPoint.transform.position;
-    void OnLevelWasLoaded()
-    {
-        
-    }
     
     protected override void Start()
     {
@@ -611,15 +613,12 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
         healthBar = uiHealthBar;
 
         _playerRigidBody = GetComponent<Rigidbody>();
-        // Destroy(_playerRigidBody);
         _mainCameraObj = mainCamera.GetComponent<Camera>();
+        _hitAudioSource = GetComponent<AudioSource>();
         
         var playerCollider = GetComponent<Collider>();
         var swordCollider = sword.GetComponent<Collider>();
         var shieldCollider = shield.GetComponent<Collider>();
-        // Destroy(GetComponent<BoxCollider>());
-        
-        
         
         Physics.IgnoreCollision(playerCollider, shieldCollider);
         Physics.IgnoreCollision(swordCollider, shieldCollider);

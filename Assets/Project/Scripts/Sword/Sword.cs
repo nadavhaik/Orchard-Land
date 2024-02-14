@@ -23,6 +23,7 @@ public abstract class Sword : MonoBehaviour
     public float swingDuration = 1.5f;
     public GameObject handle;
     public GameObject model;
+    public AudioSource swingAudioSource;
 
     [Header("Control Points")] 
     public GameObject north;
@@ -239,7 +240,7 @@ public abstract class Sword : MonoBehaviour
         // transform.LookAt(attackStartPosition);
         _attackStartRot = transform.rotation;
         transform.position = attackStartPosition;
-
+        swingAudioSource.Play();
         StartAttack();
     }
 

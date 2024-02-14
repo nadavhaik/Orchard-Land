@@ -17,6 +17,7 @@ public class Shield : MonoBehaviour
     public GameObject model;
     public GameObject gripPoint;
     public PlayerHands hands;
+    public AudioSource parryAudioSource;
 
     public ShieldState CurrentState { get; private set; }
     private float _parryTimer;
@@ -30,6 +31,7 @@ public class Shield : MonoBehaviour
         tag = "ParryingShield";
         _parryTimer = 0f;
         CurrentState = ShieldState.Parrying;
+        parryAudioSource.Play();
     }
 
     public void PlayParrySfx() => _audioSource.Play();
