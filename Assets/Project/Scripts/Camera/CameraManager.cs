@@ -9,7 +9,7 @@ public class CameraManager : MonoBehaviour
     private Camera _mainCamera;
     public Camera initialCamera;
     public UnityEvent<Camera> onChangeCamera = new();
-    public static CameraManager Instance;
+    public static CameraManager Instance { get; private set; }
     public Camera MainCamera
     {
         get
@@ -29,10 +29,7 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+    private void Awake() => Instance = this;
 
     void Start()
     {

@@ -3709,7 +3709,7 @@ Transform:
   m_GameObject: {fileID: 360222062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -4.8, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 936744099}
@@ -3729,7 +3729,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 114
+  m_Constraints: 2
   m_CollisionDetection: 0
 --- !u!65 &360222065
 BoxCollider:
@@ -3764,7 +3764,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b09ee36eff18d53d5a562d4bfc182519, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3842,7 +3842,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09e8ef0db601a351690225083b630f53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plank: {fileID: 936744102}
+  wheelPlank: {fileID: 936744102}
+  plankObj: {fileID: 1985371211}
   returnForce: 2000
   onParriedEvent:
     m_PersistentCalls:
@@ -7098,9 +7099,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886439484}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 8.72}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.7440001}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 234992473}
@@ -7110,8 +7111,8 @@ Transform:
   - {fileID: 2000135545}
   - {fileID: 1546513617}
   - {fileID: 1153582721}
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 926154611}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &924080725 stripped
 Transform:
@@ -7225,6 +7226,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 618515974}
+  - {fileID: 886439485}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7375,7 +7377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33c45ff7cd243cd3697c826cbb41f25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spinSpeed: 720
+  spinSpeed: 500
   rotAround: {fileID: 1918039509}
   refresh: 0
 --- !u!135 &936744103
@@ -14559,7 +14561,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918039509}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -14572,7 +14574,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b09ee36eff18d53d5a562d4bfc182519, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14786,7 +14788,7 @@ GameObject:
   - component: {fileID: 1985371214}
   - component: {fileID: 1985371213}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Plank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14840,7 +14842,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b09ee36eff18d53d5a562d4bfc182519, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

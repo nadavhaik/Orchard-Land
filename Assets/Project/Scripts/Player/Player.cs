@@ -25,6 +25,8 @@ public enum ControlScheme
 }
 
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class Player : Hittable
 {
     public HealthBar uiHealthBar;
@@ -103,7 +105,6 @@ public class Player : Hittable
 
 
     private bool _onFloor;
-    private bool _isInvincable = false;
     private Rigidbody _playerRigidBody;
     private CharacterController _characterController;
 
@@ -289,7 +290,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
     }
 
 
-    void LockCamera()
+    private void LockCamera()
     {
         _cameraLocked = true;
         var currentPosition = transform.position;
@@ -434,6 +435,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
             _controls.PlayerNormal.Disable();
             _controls.LockCamera.Disable();
             _currentlySwitchingCameras = true;
+            LookTheSameDirectionAsMainCamera();
             WieldBow();
             Instantiate(switchingCamera).Init(_mainCameraObj, bowCamera, 
                 () => _currentlySwitchingCameras = false);
@@ -442,6 +444,13 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
             // bowCamera.enabled = true;
             Invoke( nameof(InitArrow), arrowsCooldown);
         };
+    }
+
+    private void LookTheSameDirectionAsMainCamera()
+    {
+        var playerEuler = model.transform.rotation.eulerAngles;
+        var cameraEuler = CameraManager.Instance.MainCamera.transform.rotation.eulerAngles;
+        model.transform.rotation = Quaternion.Euler(playerEuler.x, cameraEuler.y, playerEuler.z);
     }
 
 
@@ -554,13 +563,18 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
             // CancelBow();
         };
     }
-    
-    void Awake()
+
+    private void EnableGyro()
     {
-        _controls = new Controls();
 #if UNITY_ANDROID // Shame on you, Unity!
         Input.gyro.enabled = true;
-#endif
+#endif        
+    }
+    
+    private void Awake()
+    {
+        _controls = new Controls();
+        EnableGyro();
         _currentItemEquipped = defaultItem;
         InitNormalControls();
         InitBombControls();
@@ -667,6 +681,7 @@ private void TemporaryIgnoreSelfArrowCollision(Arrow arrow1, Arrow arrow2)
 
     void RotateTps(Vector2 rotation)
     {
+        if(_cameraLocked) return;
         mainCamera.Rotate(rotation);
     }
 

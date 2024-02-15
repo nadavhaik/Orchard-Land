@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+[RequireComponent(typeof(Camera))]
 public class SwitchingCamera : MonoBehaviour
 {
     public float speed = 5f;
@@ -11,37 +12,29 @@ public class SwitchingCamera : MonoBehaviour
     private Vector3 _startPosition;
     private Quaternion _startRotation;
     private Camera _dest;
-    private Action _afterKilled;
+    private Action _afterSwitched;
     private Camera _attachedCamera;
 
-    public void Init(Camera start, Camera dest, Action afterKilled)
+    public void Init(Camera start, Camera dest, Action afterSwitched)
     {
         _attachedCamera = GetComponent<Camera>();
-        if (_attachedCamera == null)
-        {
-            throw new ArgumentException("No attached camera was found!");
-        }
         _startPosition = start.transform.position;
         _startRotation = start.transform.rotation;
         _dest = dest;
-        _afterKilled = afterKilled;
+        _afterSwitched = afterSwitched;
 
         CameraManager.Instance.MainCamera = _attachedCamera;
-        
         
         transform.position = _startPosition;
         transform.rotation = _startRotation;
     }
 
-    public void Init(Camera start, Camera dest)
-    {
-        Init(start, dest, () => {});
-    }
+    public void Init(Camera start, Camera dest) => Init(start, dest, () => {});
 
     void Kill()
     {
         CameraManager.Instance.MainCamera = _dest;
-        _afterKilled();
+        _afterSwitched();
         Destroy(gameObject);
     }
     

@@ -61,6 +61,7 @@
      <Compile Include="Assets/Project/Scripts/Spinning Plank/WheelPlank.cs" />
      <Compile Include="Assets/Project/Scripts/SceneData.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Arrow.cs" />
+     <Compile Include="Assets/Project/Scripts/FinishedDemoHandler.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bow.cs" />
      <Compile Include="Assets/Project/Scripts/GeneralPrefabs/LockableTarget.cs" />
      <Compile Include="Assets/Project/Scripts/Player/Bomb.cs" />
@@ -89,6 +90,7 @@
      <Compile Include="Assets/Project/Scripts/Camera/CameraUICanvas.cs" />
      <Compile Include="Assets/Project/LibraryCode/EnumFuncs.cs" />
      <Compile Include="Assets/Project/Scripts/HP/HealthBar.cs" />
+     <Compile Include="Assets/Project/Scripts/PureUI/GameCompleted.cs" />
      <Compile Include="Assets/Project/LibraryCode/MyMath.cs" />
      <Compile Include="Assets/Project/Scripts/Text/TextBox.cs" />
      <Compile Include="Assets/Project/Scripts/Sword/EnemySword.cs" />
@@ -97,8 +99,6 @@
      <Compile Include="Assets/Project/Scripts/Enviroment/Pendulum/Pendulum.cs" />
      <Compile Include="Assets/WireBuilder/Scripts/WireController.cs" />
      <Compile Include="Assets/Project/Scripts/PureUI/GameOver.cs" />
-     <Compile Include="Assets/Project/Scripts/PureUI/GameCompleted.cs" />
-     <Compile Include="Assets/Project/Scripts/FinishedDemoHandler.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Project/Audio/SFX" />
      <Folder Include="Assets/Project/Scripts/Player/FingerTrail" />
